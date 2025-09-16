@@ -34,4 +34,8 @@
 | **Other Tools**  | GitHub for source control, Azure Translator for language services (planned) |
 
 ## 📂 Project Structure
-
+NaradX/
+├─ API/ # ASP.NET Core Web API
+├─ WebApp/ # Angular front-end
+├─ Docs/ # Documentation and design files
+└─ README.md
