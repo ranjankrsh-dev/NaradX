@@ -1,0 +1,59 @@
+# ---- Visual Studio / .NET ----
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# Build results
+bin/
+obj/
+[Bb]uild/
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+
+# NuGet
+*.nupkg
+*.snupkg
+packages/
+project.lock.json
+artifacts/
+
+# Entity Framework
+*.mdf
+*.ldf
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.swp
+*.cache
+*.db
+
+# ---- Angular / Node ----
+node_modules/
+dist/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.tsbuildinfo
+
+# ---- OS-specific ----
+# Windows
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Mac
+.DS_Store
+
+# ---- IDEs / Editors ----
+*.iml
+.idea/
+*.vscode/*
+
+# ---- Others you might add later ----
+# environment config files
+.env

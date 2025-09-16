@@ -1,0 +1,41 @@
+﻿@if (User.Identity.IsAuthenticated)
+{
+    <div class="sidebar">
+        <nav class="sidebar-nav">
+            <ul class="nav">
+                @if (User.IsInRole("SuperAdmin") || User.IsInRole("TenantAdmin"))
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="User" asp-action="Dashboard"><i class="icon-speedometer"></i> Dashboard</a>
+                    </li>
+                }
+
+                <li class="nav-title">Contacts</li>
+                <li class="nav-item">
+                    <a asp-controller="Contact" asp-action="ManageContacts" class="nav-link"><i class="fa fa-address-book"></i> Manage Contacts</a>
+                </li>
+
+                @if (User.IsInRole("SuperAdmin") || User.IsInRole("TenantAdmin"))
+                {
+                    <li class="nav-item">
+                        <a href="typography.html" class="nav-link"><i class="icon-pencil"></i> Typography</a>
+                    </li>
+                }
+
+                <li class="nav-title">Components</li>
+                <li class="nav-item nav-dropdown">
+                    <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-puzzle"></i> Base</a>
+                    <ul class="nav-dropdown-items">
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="User" asp-action="Default"><i class="icon-puzzle"></i> Breadcrumb</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="base-cards.html"><i class="icon-puzzle"></i> Cards</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+        <button class="sidebar-minimizer brand-minimizer" type="button"></button>
+    </div>
+}

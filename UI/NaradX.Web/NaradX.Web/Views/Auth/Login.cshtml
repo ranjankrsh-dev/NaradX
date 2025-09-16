@@ -1,0 +1,96 @@
+﻿@model NaradX.Web.Models.Auth.LoginViewModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>NaradX</title>
+    <link href="~/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/lib/simple-line-icons/css/simple-line-icons.min.css" rel="stylesheet" />
+    <link href="~/css/style.css" rel="stylesheet" />
+    <link href="~/lib/toastr/toastr.min.css" rel="stylesheet" />
+</head>
+<body class="app flex-row align-items-center">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card-group">
+                    <div class="card p-4">
+                        <div class="card-body">
+                            <form asp-action="Login" method="post">
+                              @*   <div asp-validation-summary="ModelOnly" class="text-danger"></div> *@
+                                <h1>Login</h1>
+                                <p class="text-muted">Sign In to your account</p>
+
+                                <div class="mb-3">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="icon-user"></i></span>
+                                        </div>
+                                        <input type="text" class="form-control" placeholder="Enter email id" asp-for="Email">
+                                        <div class="invalid-feedback" style="display:block;">
+                                            <span asp-validation-for="Email" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mb-4">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="icon-lock"></i></span>
+                                        </div>
+                                        <input type="password" class="form-control" placeholder="Enter password" asp-for="Password">
+                                        <div class="invalid-feedback" style="display:block;">
+                                            <span asp-validation-for="Password" class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-6">
+                                        <button type="submit" class="btn btn-primary px-4">Login</button>
+                                    </div>
+                                    <div class="col-6 text-right">
+                                        <button type="button" class="btn btn-link px-0" style="display:none;">Forgot password?</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="card text-white bg-primary py-5 d-md-down-none" style="width:44%">
+                        <img class="img-thumbnail" src="~/img/content/messenger.png" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/lib/jquery/js/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/js/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="~/lib/toastr/toastr.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            toastr.options = {
+                "closeButton": true,
+                "progressBar": true
+            }
+            var $toastlast;
+            function getLastToast() {
+                return $toastlast;
+            }
+        });
+    </script>
+    <script>
+        // var resp = @Html.Raw(Json.Serialize(Model));
+        // if (resp) {
+        //     if (!resp.authResponse.isAuthSuccessful) {
+        //         toastr.error(resp.authResponse.errorMessage);
+        //     }
+        // }
+    </script>
+</body>
+</html>
