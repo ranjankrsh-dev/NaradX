@@ -30,11 +30,8 @@ namespace NaradX.Business.Contacts.Queries.GetContacts
 
         public async Task<PaginatedList<ContactDto>> Handle(GetContactsQuery request, CancellationToken cancellationToken)
         {
-            //if (!_tenantService.TenantId.HasValue)
-            //    throw new UnauthorizedAccessException("Tenant not specified");
-
             var contacts = await _contactRepository.GetPaginatedAsync(
-                1,//_tenantService.TenantId.Value
+                request.TenantId,
                 request.PageNumber,
                 request.PageSize,
                 request.SearchTerm,

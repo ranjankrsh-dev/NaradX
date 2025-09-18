@@ -1,4 +1,5 @@
 ﻿using NaradX.Domain.Entities.Base;
+using NaradX.Domain.Entities.Common;
 using NaradX.Domain.Entities.Tenancy;
 using NaradX.Domain.Enums;
 using System;
@@ -15,7 +16,7 @@ namespace NaradX.Domain.Entities.ManageContact
         public int TenantId { get; set; }
         public virtual Tenant Tenant { get; set; } = null!;
 
-        // Required Fields
+        // ===== CORE IDENTITY FIELDS =====
         [Required]
         [MaxLength(100)]
         public string FirstName { get; set; } = null!;
@@ -30,45 +31,53 @@ namespace NaradX.Domain.Entities.ManageContact
         [MaxLength(500)]
         public string DisplayName { get; set; } = null!;
 
+        // ===== CONTACT INFORMATION =====
         [Required]
+        [MaxLength(20)]
         public string PhoneNumber { get; set; } = null!;
-
-        [MaxLength(5)]
-        public string CountryCode { get; set; } = null!;
-
-        // Navigation Properties
-        public virtual ICollection<ChannelPreference> ChannelPreferences { get; set; } = new List<ChannelPreference>();
-        public virtual ICollection<ContactTag> ContactTags { get; set; } = new List<ContactTag>();
 
         [MaxLength(100)]
         public string? Email { get; set; }
 
-        [MaxLength(30)]
-        public string? InstagramHandle { get; set; }
+        // ===== LOCATION & LOCALIZATION =====
+        public int CountryId { get; set; }
+        public virtual Country Country { get; set; } = null!;
 
-        [MaxLength(100)]
-        public string? FacebookPsid { get; set; }
+        public int LanguageId { get; set; }
+        public virtual Language Language { get; set; } = null!;
 
+        [MaxLength(50)]
+        public string? Timezone { get; set; }
+
+        // ===== PROFESSIONAL INFORMATION =====
         [MaxLength(100)]
         public string? Company { get; set; }
 
         [MaxLength(50)]
         public string? Title { get; set; }
 
-        // Preferences
-        [MaxLength(10)]
-        public string LanguagePreference { get; set; } = "en";
+        // ===== SOCIAL MEDIA =====
+        [MaxLength(30)]
+        public string? InstagramHandle { get; set; }
 
-        [MaxLength(50)]
-        public string? Timezone { get; set; }
+        [MaxLength(100)]
+        public string? FacebookPsid { get; set; }
 
-        public ContactSource Source { get; set; } = ContactSource.Manual;
+        // ===== SOURCE & IMPORT INFORMATION =====
+        public ImportSource ImportSource { get; set; } = ImportSource.Manual;
 
-        // Compliance
+        [MaxLength(100)] // Added length constraint
+        public string ContactSource { get; set; } = null!;
+
+        // ===== COMPLIANCE & PREFERENCES =====
         public OptInStatus OptInStatus { get; set; } = OptInStatus.OptedIn;
         public DateTime? OptInDate { get; set; } = DateTime.UtcNow;
 
-        [MaxLength(20)]
+        [MaxLength(50)]
         public string? OptInSource { get; set; }
+
+        // ===== NAVIGATION PROPERTIES =====
+        public virtual ICollection<ChannelPreference> ChannelPreferences { get; set; } = new List<ChannelPreference>();
+        public virtual ICollection<ContactTag> ContactTags { get; set; } = new List<ContactTag>();
     }
 }

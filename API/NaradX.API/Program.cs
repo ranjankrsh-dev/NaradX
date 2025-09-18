@@ -1,4 +1,5 @@
 using AutoMapper;
+using Microsoft.Extensions.DependencyInjection;
 using NaradX.API.Extensions;
 using NaradX.Business.Mappings;
 using NaradX.Infrastructure.Data.Seed;
@@ -8,8 +9,8 @@ var configuration=builder.Configuration;
 
 builder.Services.AddAutoMapper(cfg =>
 {
-    cfg.AddProfile<ContactProfile>();
-    cfg.AddProfile<PaginatedListProfile>();
+    //cfg.AddProfile<ContactProfile>();
+    //cfg.AddProfile<PaginatedListProfile>();
 }, typeof(Program).Assembly);
 
 

@@ -27,8 +27,9 @@ namespace NaradX.API.Controllers
             _configValueService = configValueService;
         }
 
-        [HttpGet]
+        [HttpGet("contact-list")]
         public async Task<ActionResult<PaginatedList<ContactDto>>> GetContacts(
+            [FromQuery] int tenantId,
             [FromQuery] int pageNumber = 1,
             [FromQuery] int pageSize = 10,
             [FromQuery] string? searchTerm = null,
@@ -36,6 +37,7 @@ namespace NaradX.API.Controllers
         {
             var query = new GetContactsQuery
             {
+                TenantId = tenantId,
                 PageNumber = pageNumber,
                 PageSize = pageSize,
                 SearchTerm = searchTerm,
@@ -59,40 +61,15 @@ namespace NaradX.API.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<int>> CreateContact(CreateContactDto dto)
+        public async Task<ActionResult<int>> CreateContact(CreateContactCommand command)
         {
-            var command = new CreateContactCommand
-            {
-                ContactName = dto.ContactName,
-                PhoneNumber = dto.PhoneNumber,
-                Email = dto.Email,
-                Company = dto.Company,
-                Title = dto.Title,
-                Tags = dto.Tags,
-                LanguagePreference = dto.LanguagePreference,
-                Timezone = dto.Timezone
-            };
-
             var result = await _mediator.Send(command);
-            return CreatedAtAction(nameof(GetContact), new { id = result }, result);
+            return Ok(result);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateContact(int id, CreateContactDto dto)
+        public async Task<IActionResult> UpdateContact(UpdateContactCommand command)
         {
-            var command = new UpdateContactCommand
-            {
-                Id = id,
-                ContactName = dto.ContactName,
-                PhoneNumber = dto.PhoneNumber,
-                Email = dto.Email,
-                Company = dto.Company,
-                Title = dto.Title,
-                Tags = dto.Tags,
-                LanguagePreference = dto.LanguagePreference,
-                Timezone = dto.Timezone
-            };
-
             await _mediator.Send(command);
             return NoContent();
         }

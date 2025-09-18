@@ -18,4 +18,9 @@
     <ProjectReference Include="..\NaradX.Utilities\NaradX.Utilities.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Models\Auth\" />
+    <Folder Include="Models\Common\" />
+  </ItemGroup>
+
 </Project>
