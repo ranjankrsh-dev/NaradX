@@ -12,8 +12,8 @@ using NaradX.Infrastructure;
 namespace NaradX.Infrastructure.Migrations
 {
     [DbContext(typeof(NaradXDbContext))]
-    [Migration("20250915031622_changecontact")]
-    partial class changecontact
+    [Migration("20250917175536_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -334,6 +334,117 @@ namespace NaradX.Infrastructure.Migrations
                     b.ToTable("UserRoles", (string)null);
                 });
 
+            modelBuilder.Entity("NaradX.Domain.Entities.Common.ConfigMaster", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ConfigKey")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeactivatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeactivatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsTenantSpecific")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ConfigKey")
+                        .IsUnique()
+                        .HasFilter("[IsActive] = 1");
+
+                    b.ToTable("ConfigMasters", (string)null);
+                });
+
+            modelBuilder.Entity("NaradX.Domain.Entities.Common.ConfigValue", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ConfigMasterId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeactivatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DeactivatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DisplayOrder")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("ItemText")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("ItemValue")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<int?>("TenantId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TenantId");
+
+                    b.HasIndex("ConfigMasterId", "TenantId", "DisplayOrder");
+
+                    b.HasIndex("ConfigMasterId", "TenantId", "ItemValue")
+                        .IsUnique()
+                        .HasFilter("[IsActive] = 1");
+
+                    b.ToTable("ConfigValues", (string)null);
+                });
+
             modelBuilder.Entity("NaradX.Domain.Entities.ManageContact.ChannelPreference", b =>
                 {
                     b.Property<int>("Id")
@@ -465,7 +576,6 @@ namespace NaradX.Infrastructure.Migrations
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("MiddleName")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
@@ -756,6 +866,23 @@ namespace NaradX.Infrastructure.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("NaradX.Domain.Entities.Common.ConfigValue", b =>
+                {
+                    b.HasOne("NaradX.Domain.Entities.Common.ConfigMaster", "ConfigMaster")
+                        .WithMany("ConfigValues")
+                        .HasForeignKey("ConfigMasterId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("NaradX.Domain.Entities.Tenancy.Tenant", "Tenant")
+                        .WithMany()
+                        .HasForeignKey("TenantId");
+
+                    b.Navigation("ConfigMaster");
+
+                    b.Navigation("Tenant");
+                });
+
             modelBuilder.Entity("NaradX.Domain.Entities.ManageContact.ChannelPreference", b =>
                 {
                     b.HasOne("NaradX.Domain.Entities.ManageContact.Contact", "Contact")
@@ -812,6 +939,11 @@ namespace NaradX.Infrastructure.Migrations
             modelBuilder.Entity("NaradX.Domain.Entities.Auth.User", b =>
                 {
                     b.Navigation("UserRoles");
+                });
+
+            modelBuilder.Entity("NaradX.Domain.Entities.Common.ConfigMaster", b =>
+                {
+                    b.Navigation("ConfigValues");
                 });
 
             modelBuilder.Entity("NaradX.Domain.Entities.ManageContact.Contact", b =>

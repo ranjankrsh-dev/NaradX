@@ -6,11 +6,33 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace NaradX.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class initial : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "ConfigMasters",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ConfigKey = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: true),
+                    IsTenantSpecific = table.Column<bool>(type: "bit", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    DeactivatedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeactivatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ConfigMasters", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Permissions",
                 columns: table => new
@@ -146,13 +168,51 @@ namespace NaradX.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ConfigValues",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ConfigMasterId = table.Column<int>(type: "int", nullable: false),
+                    TenantId = table.Column<int>(type: "int", nullable: true),
+                    ItemText = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    ItemValue = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
+                    DisplayOrder = table.Column<int>(type: "int", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsActive = table.Column<bool>(type: "bit", nullable: false),
+                    DeactivatedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeactivatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ConfigValues", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ConfigValues_ConfigMasters_ConfigMasterId",
+                        column: x => x.ConfigMasterId,
+                        principalTable: "ConfigMasters",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ConfigValues_Tenants_TenantId",
+                        column: x => x.TenantId,
+                        principalTable: "Tenants",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Contacts",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     TenantId = table.Column<int>(type: "int", nullable: false),
-                    ContactName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    FirstName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    MiddleName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    LastName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    DisplayName = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
                     PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CountryCode = table.Column<string>(type: "nvarchar(5)", maxLength: 5, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
@@ -162,10 +222,10 @@ namespace NaradX.Infrastructure.Migrations
                     Title = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     LanguagePreference = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     Timezone = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    Source = table.Column<int>(type: "int", nullable: false),
                     OptInStatus = table.Column<int>(type: "int", nullable: false),
                     OptInDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     OptInSource = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
-                    Source = table.Column<int>(type: "int", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -355,6 +415,30 @@ namespace NaradX.Infrastructure.Migrations
                 column: "ContactId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ConfigMasters_ConfigKey",
+                table: "ConfigMasters",
+                column: "ConfigKey",
+                unique: true,
+                filter: "[IsActive] = 1");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ConfigValues_ConfigMasterId_TenantId_DisplayOrder",
+                table: "ConfigValues",
+                columns: new[] { "ConfigMasterId", "TenantId", "DisplayOrder" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ConfigValues_ConfigMasterId_TenantId_ItemValue",
+                table: "ConfigValues",
+                columns: new[] { "ConfigMasterId", "TenantId", "ItemValue" },
+                unique: true,
+                filter: "[IsActive] = 1");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ConfigValues_TenantId",
+                table: "ConfigValues",
+                column: "TenantId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Contacts_TenantId",
                 table: "Contacts",
                 column: "TenantId");
@@ -444,6 +528,9 @@ namespace NaradX.Infrastructure.Migrations
                 name: "ChannelPreferences");
 
             migrationBuilder.DropTable(
+                name: "ConfigValues");
+
+            migrationBuilder.DropTable(
                 name: "ContactTags");
 
             migrationBuilder.DropTable(
@@ -454,6 +541,9 @@ namespace NaradX.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "UserRoles");
+
+            migrationBuilder.DropTable(
+                name: "ConfigMasters");
 
             migrationBuilder.DropTable(
                 name: "Contacts");

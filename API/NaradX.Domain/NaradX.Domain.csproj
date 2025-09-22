@@ -10,4 +10,8 @@
     <ProjectReference Include="..\NaradX.Shared\NaradX.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="System.Text.Json" Version="9.0.9" />
+  </ItemGroup>
+
 </Project>
