@@ -1,4 +1,5 @@
 ﻿using NaradX.Domain.Entities.Auth;
+using NaradX.Domain.Repositories;
 using NaradX.Domain.Repositories.Interfaces;
 using NaradX.Infrastructure.Repositories;
 
@@ -16,7 +17,7 @@ namespace NaradX.API.Extensions
             services.AddScoped<ITenantRepository, TenantRepository>();
             services.AddScoped<IRoleRepository, RoleRepository>();
             services.AddScoped<IContactRepository, ContactRepository>();
-
+            services.AddScoped<ITemplateRepository, TemplateRepository>();
             // Add new repositories here as they are created
             // services.AddScoped<ICampaignRepository, CampaignRepository>();
             // services.AddScoped<ITemplateRepository, TemplateRepository>();

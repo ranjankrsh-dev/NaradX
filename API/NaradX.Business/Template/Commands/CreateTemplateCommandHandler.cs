@@ -1,11 +1,16 @@
 using MediatR;
+using NaradX.Business.Template.Commands;
+using NaradX.Domain.Entities.Template;
+using NaradX.Domain.Repositories;
 
 namespace NaradX.Business.Template.Commands;
 
-public class CreateTemplateCommandHandler : IRequestHandler<CreateTemplateCommand, int>
+public class CreateTemplateCommandHandler(ITemplateRepository templateRepository) : IRequestHandler<CreateTemplateCommand, WhatsAppTemplate>
 {
-    public Task<int> Handle(CreateTemplateCommand request, CancellationToken cancellationToken)
+    private readonly ITemplateRepository _templateRepository = templateRepository;
+
+    public async Task<WhatsAppTemplate> Handle(CreateTemplateCommand request, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        return await _templateRepository.CreateOrderConfirmationTemplateAsync();
     }
 }

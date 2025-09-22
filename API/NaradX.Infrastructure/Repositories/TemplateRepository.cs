@@ -1,11 +1,12 @@
 using NaradX.Domain.Entities.Template;
+using NaradX.Domain.Repositories;
 
 namespace NaradX.Infrastructure.Repositories;
 
-public class TemplateRepository
+public class TemplateRepository : ITemplateRepository
 {
     // Implementation of the TemplateRepository class
-    public WhatsAppTemplate CreateOrderConfirmationTemplate()
+    public async Task<WhatsAppTemplate> CreateOrderConfirmationTemplateAsync()
     {
         return new WhatsAppTemplate
         {
