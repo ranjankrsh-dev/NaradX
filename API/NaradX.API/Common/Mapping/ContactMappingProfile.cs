@@ -21,7 +21,7 @@ namespace NaradX.API.Common.Mapping
 
             // Specific PaginatedList mapping for Contacts
             CreateMap<PaginatedList<Contact>, PaginatedList<ContactDto>>()
-                .ConvertUsing<PaginatedListConverter<Contact, ContactDto>>();
+                .ConvertUsing(new PaginatedListConverter<Contact, ContactDto>());
         }
     }
 

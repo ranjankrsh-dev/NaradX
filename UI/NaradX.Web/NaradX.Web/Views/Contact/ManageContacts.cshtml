@@ -1,4 +1,6 @@
-﻿@{
+﻿@using NaradX.Entities.Response.Contact
+@model NaradX.Entities.Common.PaginatedList<ContactDto>
+@{
     ViewData["Title"] = "Manage Contacts";
 }
 
@@ -9,7 +11,6 @@
                 <h5>Manage Contacts</h5>
             </div>
         </div>
-
         <!-- Filter Box -->
         <div class="filter-box" id="filterBox">
             <div class="row">
@@ -77,7 +78,7 @@
 
                 <div class="row">
                     <div class="col-md-12">
-                   <div class="table-responsive">
+                        <div class="table-responsive">
                             <table class="table employee-table">
                                 <thead>
                                     <tr>
@@ -93,26 +94,48 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>
-                                            <div class="form-check">
-                                                <input class="form-check-input" type="checkbox">
-                                            </div>
-                                        </td>
-                                        <td>Ranjan</td>
-                                        <td>9827395669</td>
-                                        <td>Whatsapp</td>
-                                        <td><span class="badge status-badge status-enabled">Enabled</span></td>
-                                        <td>Import</td>
-                                        <td class="text-center">
-                                            <button class="btn btn-sm btn-outline-secondary">
-                                                <i class="icon-pencil"></i>
-                                            </button>
-                                        </td>
-                                    </tr>
+                                    @foreach (var contact in Model.Items)
+                                    {
+                                        <tr>
+                                            <td>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="checkbox" value="@contact.Id">
+                                                </div>
+                                            </td>
+                                            <td>@contact.DisplayName</td>
+                                            <td>@contact.PhoneNumber</td>
+                                            <td>@contact.ContactSource</td>
+                                            <td>
+                                                <span class="badge status-badge @(contact.Email != null ? "status-enabled" : "status-disabled")">
+                                                    @(contact.Email != null ? "Enabled" : "Disabled")
+                                                </span>
+                                            </td>
+                                            <td>@contact.ImportSource</td>
+                                            <td class="text-center">
+                                                <button class="btn btn-sm btn-outline-secondary">
+                                                    <i class="icon-pencil"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    }
                                 </tbody>
                             </table>
                         </div>
+
+                        <!-- Pagination -->
+                        @if (Model.TotalPages > 1)
+                        {
+                            <nav>
+                                <ul class="pagination">
+                                    @for (int i = 1; i <= Model.TotalPages; i++)
+                                    {
+                                        <li class="page-item @(i == Model.PageNumber ? "active" : "")">
+                                            <a class="page-link" asp-action="ManageContacts" asp-route-pageNumber="@i" asp-route-pageSize="@Model.PageSize">@i</a>
+                                        </li>
+                                    }
+                                </ul>
+                            </nav>
+                        }
                     </div>
                 </div>
             </div>
@@ -146,18 +169,20 @@
                     <label class="form-label">Last Name<span class="text-danger">*</span></label>
                     <input type="text" class="form-control" autocomplete="off" placeholder="Enter last name">
                 </div>
+                <div class="col-md-6">
+                    <label class="form-label">Country<span class="text-danger">*</span></label>
+                    <select class="form-control" onchange="changeCountryCodeInPhone();">
+                        <option value="1">India</option>
+                    </select>
+                </div>
             </div>
             <div class="row mb-3">
                 <div class="col-md-6">
                     <label class="form-label">Phone Number<span class="text-danger">*</span></label>
                     <div class="input-group">
-                        <select class="form-select input-group-text p-0">
-                            <option value="+91">+91</option>
-                            <option value="+1">+1</option>
-                            <option value="+44">+44</option>
-                            <option value="+61">+61</option>
-                            <option value="+65">+65</option>
-                        </select>
+                        <span class="input-group-prepend">
+                            <span class="input-group-text">+91</span>
+                        </span>
                         <input type="tel" class="form-control" id="phoneNumber" placeholder="Enter phone number" autocomplete="off" required>
                     </div>
                 </div>
@@ -421,7 +446,6 @@
             margin-left: 10px;
             color: var(--nx-blue);
         }
-
 
     </style>
 }

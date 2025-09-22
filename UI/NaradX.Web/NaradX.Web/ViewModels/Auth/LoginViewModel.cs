@@ -1,7 +1,7 @@
 ﻿using NaradX.Entities.Response.Auth;
 using System.ComponentModel.DataAnnotations;
 
-namespace NaradX.Web.Models.Auth
+namespace NaradX.Web.ViewModels.Auth
 {
     public class LoginViewModel
     {

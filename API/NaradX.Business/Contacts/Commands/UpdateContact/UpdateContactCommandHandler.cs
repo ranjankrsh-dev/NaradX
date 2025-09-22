@@ -45,11 +45,9 @@ namespace NaradX.Business.Contacts.Commands.UpdateContact
 
             contact.FirstName = request.ContactName;
             contact.PhoneNumber = request.PhoneNumber;
-            contact.CountryCode = ExtractCountryCode(request.PhoneNumber);
             contact.Email = request.Email;
             contact.Company = request.Company;
             contact.Title = request.Title;
-            contact.LanguagePreference = request.LanguagePreference;
             contact.Timezone = request.Timezone;
             contact.UpdatedOn = DateTime.UtcNow;
 

@@ -35,6 +35,9 @@ namespace NaradX.Infrastructure.Data.Seed
 
                 // Seed Config Masters and Values
                 SeedConfigMasterAndValues(context);
+
+                // Seed Countries and Languages
+                SeedCountriesAndLanguages(context);
             }
         }
 
@@ -148,7 +151,7 @@ namespace NaradX.Infrastructure.Data.Seed
                         LastName = "Sharma",
                         PasswordHash = System.Text.Encoding.UTF8.GetBytes(BCrypt.Net.BCrypt.HashPassword("Admin@123")),
                         TenantId = 1,
-                        PhoneNumber= "1234567890",
+                        PhoneNumber = "1234567890",
                         EmailVerified = true,
                         EmailVerifiedAt = DateTime.UtcNow,
                         IsActive = true,
@@ -245,6 +248,268 @@ namespace NaradX.Infrastructure.Data.Seed
 
                 context.ConfigValues.AddRange(dataSourceValues);
                 context.ConfigValues.AddRange(contactSourceValues);
+                context.SaveChanges();
+            }
+        }
+
+        private static void SeedCountriesAndLanguages(NaradXDbContext context)
+        {
+            if (!context.Countries.Any())
+            {
+                var languages = new List<Language>
+        {
+            new Language
+            {
+                Culture = "hi-IN",
+                Name = "Hindi",
+                LocalName = "हिन्दी",
+                IsDefault = true,
+                Description = "Official language of India",
+                CreatedBy = "System",
+                CreatedOn = DateTime.UtcNow
+            },
+            new Language
+            {
+                Culture = "en-IN",
+                Name = "English",
+                LocalName = "English",
+                IsDefault = true,
+                Description = "Official subsidiary language of India",
+                CreatedBy = "System",
+                CreatedOn = DateTime.UtcNow
+            },
+            new Language
+            {
+                Culture = "bn-IN",
+                Name = "Bengali",
+                LocalName = "বাংলা",
+                IsDefault = false,
+                Description = "Official language of West Bengal and Tripura",
+                CreatedBy = "System",
+                CreatedOn = DateTime.UtcNow
+            },
+            new Language
+            {
+                Culture = "te-IN",
+                Name = "Telugu",
+                LocalName = "తెలుగు",
+                IsDefault = false,
+                Description = "Official language of Andhra Pradesh and Telangana",
+                CreatedBy = "System",
+                CreatedOn = DateTime.UtcNow
+            },
+            new Language
+            {
+                Culture = "mr-IN",
+                Name = "Marathi",
+                LocalName = "मराठी",
+                IsDefault = false,
+                Description = "Official language of Maharashtra",
+                CreatedBy = "System",
+                CreatedOn = DateTime.UtcNow
+            },
+            new Language
+            {
+                Culture = "ta-IN",
+                Name = "Tamil",
+                LocalName = "தமிழ்",
+                IsDefault = false,
+                Description = "Official language of Tamil Nadu and Puducherry",
+                CreatedBy = "System",
+                CreatedOn = DateTime.UtcNow
+            },
+            new Language
+            {
+                Culture = "ur-IN",
+                Name = "Urdu",
+                LocalName = "اردو",
+                IsDefault = false,
+                Description = "Official language of Jammu and Kashmir, Telangana, and Uttar Pradesh",
+                CreatedBy = "System",
+                CreatedOn = DateTime.UtcNow
+            },
+            new Language
+            {
+                Culture = "gu-IN",
+                Name = "Gujarati",
+                LocalName = "ગુજરાતી",
+                IsDefault = false,
+                Description = "Official language of Gujarat",
+                CreatedBy = "System",
+                CreatedOn = DateTime.UtcNow
+            },
+            new Language
+            {
+                Culture = "kn-IN",
+                Name = "Kannada",
+                LocalName = "ಕನ್ನಡ",
+                IsDefault = false,
+                Description = "Official language of Karnataka",
+                CreatedBy = "System",
+                CreatedOn = DateTime.UtcNow
+            },
+            new Language
+            {
+                Culture = "or-IN",
+                Name = "Odia",
+                LocalName = "ଓଡ଼ିଆ",
+                IsDefault = false,
+                Description = "Official language of Odisha",
+                CreatedBy = "System",
+                CreatedOn = DateTime.UtcNow
+            },
+            new Language
+            {
+                Culture = "ml-IN",
+                Name = "Malayalam",
+                LocalName = "മലയാളം",
+                IsDefault = false,
+                Description = "Official language of Kerala and Lakshadweep",
+                CreatedBy = "System",
+                CreatedOn = DateTime.UtcNow
+            },
+            new Language
+            {
+                Culture = "pa-IN",
+                Name = "Punjabi",
+                LocalName = "ਪੰਜਾਬੀ",
+                IsDefault = false,
+                Description = "Official language of Punjab",
+                CreatedBy = "System",
+                CreatedOn = DateTime.UtcNow
+            },
+            new Language
+            {
+                Culture = "as-IN",
+                Name = "Assamese",
+                LocalName = "অসমীয়া",
+                IsDefault = false,
+                Description = "Official language of Assam",
+                CreatedBy = "System",
+                CreatedOn = DateTime.UtcNow
+            },
+            new Language
+            {
+                Culture = "mai-IN",
+                Name = "Maithili",
+                LocalName = "मैथिली",
+                IsDefault = false,
+                Description = "Official language in Bihar",
+                CreatedBy = "System",
+                CreatedOn = DateTime.UtcNow
+            },
+            new Language
+            {
+                Culture = "sat-IN",
+                Name = "Santali",
+                LocalName = "ᱥᱟᱱᱛᱟᱲᱤ",
+                IsDefault = false,
+                Description = "Official language in Jharkhand",
+                CreatedBy = "System",
+                CreatedOn = DateTime.UtcNow
+            },
+            new Language
+            {
+                Culture = "ks-IN",
+                Name = "Kashmiri",
+                LocalName = "कॉशुर",
+                IsDefault = false,
+                Description = "Official language of Jammu and Kashmir",
+                CreatedBy = "System",
+                CreatedOn = DateTime.UtcNow
+            },
+            new Language
+            {
+                Culture = "ne-IN",
+                Name = "Nepali",
+                LocalName = "नेपाली",
+                IsDefault = false,
+                Description = "Official language in Sikkim",
+                CreatedBy = "System",
+                CreatedOn = DateTime.UtcNow
+            },
+            new Language
+            {
+                Culture = "sd-IN",
+                Name = "Sindhi",
+                LocalName = "सिन्धी",
+                IsDefault = false,
+                Description = "Official language in India",
+                CreatedBy = "System",
+                CreatedOn = DateTime.UtcNow
+            },
+            new Language
+            {
+                Culture = "kok-IN",
+                Name = "Konkani",
+                LocalName = "कोंकणी",
+                IsDefault = false,
+                Description = "Official language of Goa",
+                CreatedBy = "System",
+                CreatedOn = DateTime.UtcNow
+            },
+            new Language
+            {
+                Culture = "doi-IN",
+                Name = "Dogri",
+                LocalName = "डोगरी",
+                IsDefault = false,
+                Description = "Official language of Jammu and Kashmir",
+                CreatedBy = "System",
+                CreatedOn = DateTime.UtcNow
+            },
+            new Language
+            {
+                Culture = "mni-IN",
+                Name = "Manipuri",
+                LocalName = "মৈতৈলোন্",
+                IsDefault = false,
+                Description = "Official language of Manipur",
+                CreatedBy = "System",
+                CreatedOn = DateTime.UtcNow
+            },
+            new Language
+            {
+                Culture = "brx-IN",
+                Name = "Bodo",
+                LocalName = "बड़ो",
+                IsDefault = false,
+                Description = "Official language of Assam",
+                CreatedBy = "System",
+                CreatedOn = DateTime.UtcNow
+            },
+            new Language
+            {
+                Culture = "sa-IN",
+                Name = "Sanskrit",
+                LocalName = "संस्कृतम्",
+                IsDefault = false,
+                Description = "Classical language of India",
+                CreatedBy = "System",
+                CreatedOn = DateTime.UtcNow
+            }
+        };
+
+                context.Languages.AddRange(languages);
+                context.SaveChanges();
+
+                var countries = new List<Country>
+                {
+                    new Country
+            {
+                Name = "India",
+                Code = "IN",
+                PhoneCode = "91",
+                CurrencyCode = "INR",
+                CurrencySymbol = "₹",
+                Timezone = "IST (UTC+5:30)",
+                Languages = languages,
+                CreatedBy = "System",
+                CreatedOn = DateTime.UtcNow
+            }
+                };
+
+                context.Countries.AddRange(countries);
                 context.SaveChanges();
             }
         }

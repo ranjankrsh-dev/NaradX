@@ -34,6 +34,8 @@ namespace NaradX.Infrastructure
         public DbSet<ContactTag> ContactTags { get; set; }
         public DbSet<ConfigMaster> ConfigMasters { get; set; }
         public DbSet<ConfigValue> ConfigValues { get; set; }
+        public DbSet<Country> Countries { get; set; }
+        public DbSet<Language> Languages { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -64,6 +66,9 @@ namespace NaradX.Infrastructure
 
             // Apply global query filters for soft deletable entities
             ApplyGlobalFilters(modelBuilder);
+
+            // Configure many-to-many relationship between Country and Language
+            ConfigureCountryLanguageRelationship(modelBuilder);
         }
 
         private void ApplyGlobalFilters(ModelBuilder modelBuilder)
@@ -116,6 +121,18 @@ namespace NaradX.Infrastructure
                     entry.Property(nameof(IAuditableEntity.CreatedBy)).IsModified = false;
                 }
             }
+        }
+
+        private void ConfigureCountryLanguageRelationship(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Country>()
+                .HasMany(c => c.Languages)
+                .WithMany(l => l.Countries)
+                .UsingEntity<Dictionary<string, object>>(
+                    "CountryLanguage",
+                    j => j.HasOne<Language>().WithMany().HasForeignKey("LanguageId"),
+                    j => j.HasOne<Country>().WithMany().HasForeignKey("CountryId"),
+                    j => j.HasKey("CountryId", "LanguageId"));
         }
     }
 }

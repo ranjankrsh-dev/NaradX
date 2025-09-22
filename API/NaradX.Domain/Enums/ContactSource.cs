@@ -6,20 +6,10 @@ using System.Threading.Tasks;
 
 namespace NaradX.Domain.Enums
 {
-    public enum ContactSource
+    public enum ImportSource
     {
-        Manual,      // Manually added via UI
-        ExcelImport, // Imported from Excel
-        API,         // Added via API integration
-        CSVImport,   // Imported from CSV
-        Migration    // Migrated from old system
-    }
-
-    public enum Source
-    {
-        Manual,      // Manually added via UI
-        ExcelImport, // Imported from Excel
-        API,         // Added via API integration
-        CSVImport,   // Imported from CSV
+        Manual = 1,      // Manually added via UI
+        ExcelImport = 2, // Imported from Excel
+        API = 3         // Added via API integration
     }
 }

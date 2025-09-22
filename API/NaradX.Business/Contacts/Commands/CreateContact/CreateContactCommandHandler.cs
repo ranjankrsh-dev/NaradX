@@ -3,11 +3,6 @@ using NaradX.Business.Common.Interfaces;
 using NaradX.Domain.Entities.ManageContact;
 using NaradX.Domain.Enums;
 using NaradX.Domain.Repositories.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NaradX.Business.Contacts.Commands.CreateContact
 {
@@ -29,41 +24,34 @@ namespace NaradX.Business.Contacts.Commands.CreateContact
 
         public async Task<int> Handle(CreateContactCommand request, CancellationToken cancellationToken)
         {
-            //if (!_tenantService.TenantId.HasValue)
-            //    throw new UnauthorizedAccessException("Tenant not specified");
-
-            // Check for duplicate using repository
             var phoneExists = await _contactRepository.PhoneNumberExistsAsync(
-                request.PhoneNumber, 1);
+                request.PhoneNumber, request.TenantId);
 
-            //if (phoneExists)
-            //    throw new ConflictException("Contact with this phone number already exists");
+            if (phoneExists)
+            {
+                throw new InvalidOperationException("A contact with the same phone number already exists.");
+            }
 
             var contact = new Contact
             {
-                TenantId = 1,
-                FirstName = request.ContactName,
+                TenantId = request.TenantId,
+                FirstName = request.FirstName,
+                MiddleName = request.MiddleName,
+                LastName = request.LastName,
                 PhoneNumber = request.PhoneNumber,
-                CountryCode = ExtractCountryCode(request.PhoneNumber),
+                ContactSource = request.ContactSource,
+                CountryId = request.CountryId,
+                LanguageId = request.LanguageId,
                 Email = request.Email,
                 Company = request.Company,
-                Title = request.Title,
-                LanguagePreference = request.LanguagePreference,
-                Timezone = request.Timezone,
-                Source = ContactSource.Manual
+                Title = request.JobTitle,
+                ImportSource = ImportSource.Manual
             };
 
             await _contactRepository.AddAsync(contact, cancellationToken);
             await _unitOfWork.SaveChangesAsync(cancellationToken);
 
             return contact.Id;
-        }
-
-        private string ExtractCountryCode(string phoneNumber)
-        {
-            if (phoneNumber.StartsWith("+") && phoneNumber.Length > 1)
-                return phoneNumber.Substring(1, 2);
-            return "1";
         }
     }
 

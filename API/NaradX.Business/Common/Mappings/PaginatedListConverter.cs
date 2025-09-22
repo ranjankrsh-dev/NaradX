@@ -27,7 +27,7 @@ namespace NaradX.Business.Common.Mappings
                 items,
                 source.TotalCount,
                 source.PageNumber,
-                pageSize
+                source.PageSize
             );
         }
     }

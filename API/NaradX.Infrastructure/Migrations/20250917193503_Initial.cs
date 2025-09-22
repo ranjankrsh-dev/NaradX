@@ -6,7 +6,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace NaradX.Infrastructure.Migrations
 {
     /// <inheritdoc />
+<<<<<<<< HEAD:API/NaradX.Infrastructure/Migrations/20250917175536_init.cs
     public partial class init : Migration
+========
+    public partial class Initial : Migration
+>>>>>>>> 339e59c1fdde1edb622417e1c5f2040f83f2644c:API/NaradX.Infrastructure/Migrations/20250917193503_Initial.cs
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -34,6 +38,52 @@ namespace NaradX.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+<<<<<<<< HEAD:API/NaradX.Infrastructure/Migrations/20250917175536_init.cs
+========
+                name: "Countries",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+                    Code = table.Column<string>(type: "nvarchar(2)", maxLength: 2, nullable: false),
+                    PhoneCode = table.Column<string>(type: "nvarchar(5)", maxLength: 5, nullable: false),
+                    CurrencyCode = table.Column<string>(type: "nvarchar(3)", maxLength: 3, nullable: false),
+                    CurrencySymbol = table.Column<string>(type: "nvarchar(5)", maxLength: 5, nullable: false),
+                    Timezone = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Countries", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Languages",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Culture = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    LocalName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    IsDefault = table.Column<bool>(type: "bit", nullable: false),
+                    Description = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: true),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedOn = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Languages", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+>>>>>>>> 339e59c1fdde1edb622417e1c5f2040f83f2644c:API/NaradX.Infrastructure/Migrations/20250917193503_Initial.cs
                 name: "Permissions",
                 columns: table => new
                 {
@@ -132,6 +182,30 @@ namespace NaradX.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "CountryLanguage",
+                columns: table => new
+                {
+                    CountryId = table.Column<int>(type: "int", nullable: false),
+                    LanguageId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CountryLanguage", x => new { x.CountryId, x.LanguageId });
+                    table.ForeignKey(
+                        name: "FK_CountryLanguage_Countries_CountryId",
+                        column: x => x.CountryId,
+                        principalTable: "Countries",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CountryLanguage_Languages_LanguageId",
+                        column: x => x.LanguageId,
+                        principalTable: "Languages",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "RolePermissions",
                 columns: table => new
                 {
@@ -212,20 +286,37 @@ namespace NaradX.Infrastructure.Migrations
                     FirstName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     MiddleName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     LastName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
+<<<<<<<< HEAD:API/NaradX.Infrastructure/Migrations/20250917175536_init.cs
                     DisplayName = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
                     PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CountryCode = table.Column<string>(type: "nvarchar(5)", maxLength: 5, nullable: false),
+========
+                    DisplayName = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false, computedColumnSql: "TRIM(CONCAT([FirstName], ' ', COALESCE([MiddleName] + ' ', ''), [LastName]))", stored: true),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
+>>>>>>>> 339e59c1fdde1edb622417e1c5f2040f83f2644c:API/NaradX.Infrastructure/Migrations/20250917193503_Initial.cs
                     Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
-                    InstagramHandle = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
-                    FacebookPsid = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    CountryId = table.Column<int>(type: "int", nullable: false),
+                    LanguageId = table.Column<int>(type: "int", nullable: false),
+                    Timezone = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     Company = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     Title = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+<<<<<<<< HEAD:API/NaradX.Infrastructure/Migrations/20250917175536_init.cs
                     LanguagePreference = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
                     Timezone = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     Source = table.Column<int>(type: "int", nullable: false),
                     OptInStatus = table.Column<int>(type: "int", nullable: false),
                     OptInDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     OptInSource = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
+========
+                    InstagramHandle = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
+                    FacebookPsid = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
+                    ImportSource = table.Column<int>(type: "int", nullable: false),
+                    ContactSource = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false, defaultValue: "Manual"),
+                    OptInStatus = table.Column<int>(type: "int", nullable: false),
+                    OptInDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    OptInSource = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
+                    TenantId1 = table.Column<int>(type: "int", nullable: true),
+>>>>>>>> 339e59c1fdde1edb622417e1c5f2040f83f2644c:API/NaradX.Infrastructure/Migrations/20250917193503_Initial.cs
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -241,11 +332,28 @@ namespace NaradX.Infrastructure.Migrations
                 {
                     table.PrimaryKey("PK_Contacts", x => x.Id);
                     table.ForeignKey(
+                        name: "FK_Contacts_Countries_CountryId",
+                        column: x => x.CountryId,
+                        principalTable: "Countries",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Contacts_Languages_LanguageId",
+                        column: x => x.LanguageId,
+                        principalTable: "Languages",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
                         name: "FK_Contacts_Tenants_TenantId",
                         column: x => x.TenantId,
                         principalTable: "Tenants",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Contacts_Tenants_TenantId1",
+                        column: x => x.TenantId1,
+                        principalTable: "Tenants",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -436,12 +544,43 @@ namespace NaradX.Infrastructure.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_ConfigValues_TenantId",
                 table: "ConfigValues",
+<<<<<<<< HEAD:API/NaradX.Infrastructure/Migrations/20250917175536_init.cs
                 column: "TenantId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Contacts_TenantId",
                 table: "Contacts",
+========
+>>>>>>>> 339e59c1fdde1edb622417e1c5f2040f83f2644c:API/NaradX.Infrastructure/Migrations/20250917193503_Initial.cs
                 column: "TenantId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Contacts_CountryId",
+                table: "Contacts",
+                column: "CountryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Contacts_LanguageId",
+                table: "Contacts",
+                column: "LanguageId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Contacts_TenantId_Email",
+                table: "Contacts",
+                columns: new[] { "TenantId", "Email" },
+                filter: "[Email] IS NOT NULL AND [IsActive] = 1 AND [IsDeleted] = 0");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Contacts_TenantId_PhoneNumber",
+                table: "Contacts",
+                columns: new[] { "TenantId", "PhoneNumber" },
+                unique: true,
+                filter: "[IsActive] = 1 AND [IsDeleted] = 0");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Contacts_TenantId1",
+                table: "Contacts",
+                column: "TenantId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ContactTags_ContactId",
@@ -452,6 +591,29 @@ namespace NaradX.Infrastructure.Migrations
                 name: "IX_ContactTags_TagId",
                 table: "ContactTags",
                 column: "TagId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Countries_Code",
+                table: "Countries",
+                column: "Code",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Countries_Name",
+                table: "Countries",
+                column: "Name",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CountryLanguage_LanguageId",
+                table: "CountryLanguage",
+                column: "LanguageId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Languages_Culture",
+                table: "Languages",
+                column: "Culture",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_RefreshTokens_UserId",
@@ -534,6 +696,9 @@ namespace NaradX.Infrastructure.Migrations
                 name: "ContactTags");
 
             migrationBuilder.DropTable(
+                name: "CountryLanguage");
+
+            migrationBuilder.DropTable(
                 name: "RefreshTokens");
 
             migrationBuilder.DropTable(
@@ -559,6 +724,12 @@ namespace NaradX.Infrastructure.Migrations
 
             migrationBuilder.DropTable(
                 name: "Users");
+
+            migrationBuilder.DropTable(
+                name: "Countries");
+
+            migrationBuilder.DropTable(
+                name: "Languages");
 
             migrationBuilder.DropTable(
                 name: "Tenants");

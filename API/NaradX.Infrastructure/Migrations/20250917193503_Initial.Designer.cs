@@ -12,8 +12,13 @@ using NaradX.Infrastructure;
 namespace NaradX.Infrastructure.Migrations
 {
     [DbContext(typeof(NaradXDbContext))]
+<<<<<<<< HEAD:API/NaradX.Infrastructure/Migrations/20250917175536_init.Designer.cs
     [Migration("20250917175536_init")]
     partial class init
+========
+    [Migration("20250917193503_Initial")]
+    partial class Initial
+>>>>>>>> 339e59c1fdde1edb622417e1c5f2040f83f2644c:API/NaradX.Infrastructure/Migrations/20250917193503_Initial.Designer.cs
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +29,21 @@ namespace NaradX.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("CountryLanguage", b =>
+                {
+                    b.Property<int>("CountryId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("LanguageId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CountryId", "LanguageId");
+
+                    b.HasIndex("LanguageId");
+
+                    b.ToTable("CountryLanguage");
+                });
 
             modelBuilder.Entity("NaradX.Domain.Entities.Auth.Permission", b =>
                 {
@@ -445,6 +465,117 @@ namespace NaradX.Infrastructure.Migrations
                     b.ToTable("ConfigValues", (string)null);
                 });
 
+            modelBuilder.Entity("NaradX.Domain.Entities.Common.Country", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasMaxLength(2)
+                        .HasColumnType("nvarchar(2)");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CurrencyCode")
+                        .IsRequired()
+                        .HasMaxLength(3)
+                        .HasColumnType("nvarchar(3)");
+
+                    b.Property<string>("CurrencySymbol")
+                        .IsRequired()
+                        .HasMaxLength(5)
+                        .HasColumnType("nvarchar(5)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("PhoneCode")
+                        .IsRequired()
+                        .HasMaxLength(5)
+                        .HasColumnType("nvarchar(5)");
+
+                    b.Property<string>("Timezone")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Code")
+                        .IsUnique();
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("Countries", (string)null);
+                });
+
+            modelBuilder.Entity("NaradX.Domain.Entities.Common.Language", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Culture")
+                        .IsRequired()
+                        .HasMaxLength(10)
+                        .HasColumnType("nvarchar(10)");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<bool>("IsDefault")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("LocalName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("UpdatedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdatedOn")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Culture")
+                        .IsUnique();
+
+                    b.ToTable("Languages", (string)null);
+                });
+
             modelBuilder.Entity("NaradX.Domain.Entities.ManageContact.ChannelPreference", b =>
                 {
                     b.Property<int>("Id")
@@ -514,10 +645,15 @@ namespace NaradX.Infrastructure.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<string>("CountryCode")
+                    b.Property<string>("ContactSource")
                         .IsRequired()
-                        .HasMaxLength(5)
-                        .HasColumnType("nvarchar(5)");
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)")
+                        .HasDefaultValue("Manual");
+
+                    b.Property<int>("CountryId")
+                        .HasColumnType("int");
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -539,8 +675,10 @@ namespace NaradX.Infrastructure.Migrations
 
                     b.Property<string>("DisplayName")
                         .IsRequired()
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                        .HasColumnType("nvarchar(500)")
+                        .HasComputedColumnSql("TRIM(CONCAT([FirstName], ' ', COALESCE([MiddleName] + ' ', ''), [LastName]))", true);
 
                     b.Property<string>("Email")
                         .HasMaxLength(100)
@@ -555,6 +693,9 @@ namespace NaradX.Infrastructure.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<int>("ImportSource")
+                        .HasColumnType("int");
+
                     b.Property<string>("InstagramHandle")
                         .HasMaxLength(30)
                         .HasColumnType("nvarchar(30)");
@@ -565,10 +706,8 @@ namespace NaradX.Infrastructure.Migrations
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
 
-                    b.Property<string>("LanguagePreference")
-                        .IsRequired()
-                        .HasMaxLength(10)
-                        .HasColumnType("nvarchar(10)");
+                    b.Property<int>("LanguageId")
+                        .HasColumnType("int");
 
                     b.Property<string>("LastName")
                         .IsRequired()
@@ -583,20 +722,21 @@ namespace NaradX.Infrastructure.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("OptInSource")
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<int>("OptInStatus")
                         .HasColumnType("int");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("Source")
-                        .HasColumnType("int");
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<int>("TenantId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("TenantId1")
                         .HasColumnType("int");
 
                     b.Property<string>("Timezone")
@@ -615,9 +755,20 @@ namespace NaradX.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TenantId");
+                    b.HasIndex("CountryId");
 
-                    b.ToTable("Contacts");
+                    b.HasIndex("LanguageId");
+
+                    b.HasIndex("TenantId1");
+
+                    b.HasIndex("TenantId", "Email")
+                        .HasFilter("[Email] IS NOT NULL AND [IsActive] = 1 AND [IsDeleted] = 0");
+
+                    b.HasIndex("TenantId", "PhoneNumber")
+                        .IsUnique()
+                        .HasFilter("[IsActive] = 1 AND [IsDeleted] = 0");
+
+                    b.ToTable("Contacts", (string)null);
                 });
 
             modelBuilder.Entity("NaradX.Domain.Entities.ManageContact.ContactTag", b =>
@@ -802,6 +953,21 @@ namespace NaradX.Infrastructure.Migrations
                     b.ToTable("Tenants", (string)null);
                 });
 
+            modelBuilder.Entity("CountryLanguage", b =>
+                {
+                    b.HasOne("NaradX.Domain.Entities.Common.Country", null)
+                        .WithMany()
+                        .HasForeignKey("CountryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("NaradX.Domain.Entities.Common.Language", null)
+                        .WithMany()
+                        .HasForeignKey("LanguageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("NaradX.Domain.Entities.Auth.RefreshToken", b =>
                 {
                     b.HasOne("NaradX.Domain.Entities.Auth.User", "User")
@@ -896,11 +1062,31 @@ namespace NaradX.Infrastructure.Migrations
 
             modelBuilder.Entity("NaradX.Domain.Entities.ManageContact.Contact", b =>
                 {
-                    b.HasOne("NaradX.Domain.Entities.Tenancy.Tenant", "Tenant")
-                        .WithMany("Contacts")
-                        .HasForeignKey("TenantId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                    b.HasOne("NaradX.Domain.Entities.Common.Country", "Country")
+                        .WithMany()
+                        .HasForeignKey("CountryId")
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.HasOne("NaradX.Domain.Entities.Common.Language", "Language")
+                        .WithMany()
+                        .HasForeignKey("LanguageId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("NaradX.Domain.Entities.Tenancy.Tenant", "Tenant")
+                        .WithMany()
+                        .HasForeignKey("TenantId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("NaradX.Domain.Entities.Tenancy.Tenant", null)
+                        .WithMany("Contacts")
+                        .HasForeignKey("TenantId1");
+
+                    b.Navigation("Country");
+
+                    b.Navigation("Language");
 
                     b.Navigation("Tenant");
                 });
