@@ -6,11 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace NaradX.Infrastructure.Migrations
 {
     /// <inheritdoc />
-<<<<<<<< HEAD:API/NaradX.Infrastructure/Migrations/20250917175536_init.cs
-    public partial class init : Migration
-========
-    public partial class Initial : Migration
->>>>>>>> 339e59c1fdde1edb622417e1c5f2040f83f2644c:API/NaradX.Infrastructure/Migrations/20250917193503_Initial.cs
+    public partial class TemplateInit : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -38,8 +34,6 @@ namespace NaradX.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-<<<<<<<< HEAD:API/NaradX.Infrastructure/Migrations/20250917175536_init.cs
-========
                 name: "Countries",
                 columns: table => new
                 {
@@ -83,7 +77,6 @@ namespace NaradX.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
->>>>>>>> 339e59c1fdde1edb622417e1c5f2040f83f2644c:API/NaradX.Infrastructure/Migrations/20250917193503_Initial.cs
                 name: "Permissions",
                 columns: table => new
                 {
@@ -286,28 +279,14 @@ namespace NaradX.Infrastructure.Migrations
                     FirstName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     MiddleName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     LastName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-<<<<<<<< HEAD:API/NaradX.Infrastructure/Migrations/20250917175536_init.cs
-                    DisplayName = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    CountryCode = table.Column<string>(type: "nvarchar(5)", maxLength: 5, nullable: false),
-========
                     DisplayName = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false, computedColumnSql: "TRIM(CONCAT([FirstName], ' ', COALESCE([MiddleName] + ' ', ''), [LastName]))", stored: true),
                     PhoneNumber = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
->>>>>>>> 339e59c1fdde1edb622417e1c5f2040f83f2644c:API/NaradX.Infrastructure/Migrations/20250917193503_Initial.cs
                     Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     CountryId = table.Column<int>(type: "int", nullable: false),
                     LanguageId = table.Column<int>(type: "int", nullable: false),
                     Timezone = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     Company = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     Title = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-<<<<<<<< HEAD:API/NaradX.Infrastructure/Migrations/20250917175536_init.cs
-                    LanguagePreference = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: false),
-                    Timezone = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    Source = table.Column<int>(type: "int", nullable: false),
-                    OptInStatus = table.Column<int>(type: "int", nullable: false),
-                    OptInDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    OptInSource = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: true),
-========
                     InstagramHandle = table.Column<string>(type: "nvarchar(30)", maxLength: 30, nullable: true),
                     FacebookPsid = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     ImportSource = table.Column<int>(type: "int", nullable: false),
@@ -315,8 +294,6 @@ namespace NaradX.Infrastructure.Migrations
                     OptInStatus = table.Column<int>(type: "int", nullable: false),
                     OptInDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     OptInSource = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    TenantId1 = table.Column<int>(type: "int", nullable: true),
->>>>>>>> 339e59c1fdde1edb622417e1c5f2040f83f2644c:API/NaradX.Infrastructure/Migrations/20250917193503_Initial.cs
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -349,11 +326,6 @@ namespace NaradX.Infrastructure.Migrations
                         principalTable: "Tenants",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Contacts_Tenants_TenantId1",
-                        column: x => x.TenantId1,
-                        principalTable: "Tenants",
-                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -544,14 +516,6 @@ namespace NaradX.Infrastructure.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_ConfigValues_TenantId",
                 table: "ConfigValues",
-<<<<<<<< HEAD:API/NaradX.Infrastructure/Migrations/20250917175536_init.cs
-                column: "TenantId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Contacts_TenantId",
-                table: "Contacts",
-========
->>>>>>>> 339e59c1fdde1edb622417e1c5f2040f83f2644c:API/NaradX.Infrastructure/Migrations/20250917193503_Initial.cs
                 column: "TenantId");
 
             migrationBuilder.CreateIndex(
@@ -576,11 +540,6 @@ namespace NaradX.Infrastructure.Migrations
                 columns: new[] { "TenantId", "PhoneNumber" },
                 unique: true,
                 filter: "[IsActive] = 1 AND [IsDeleted] = 0");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Contacts_TenantId1",
-                table: "Contacts",
-                column: "TenantId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ContactTags_ContactId",

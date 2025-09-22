@@ -12,13 +12,8 @@ using NaradX.Infrastructure;
 namespace NaradX.Infrastructure.Migrations
 {
     [DbContext(typeof(NaradXDbContext))]
-<<<<<<<< HEAD:API/NaradX.Infrastructure/Migrations/20250917175536_init.Designer.cs
-    [Migration("20250917175536_init")]
-    partial class init
-========
-    [Migration("20250917193503_Initial")]
-    partial class Initial
->>>>>>>> 339e59c1fdde1edb622417e1c5f2040f83f2644c:API/NaradX.Infrastructure/Migrations/20250917193503_Initial.Designer.cs
+    [Migration("20250922192917_TemplateInit")]
+    partial class TemplateInit
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -736,9 +731,6 @@ namespace NaradX.Infrastructure.Migrations
                     b.Property<int>("TenantId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("TenantId1")
-                        .HasColumnType("int");
-
                     b.Property<string>("Timezone")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
@@ -758,8 +750,6 @@ namespace NaradX.Infrastructure.Migrations
                     b.HasIndex("CountryId");
 
                     b.HasIndex("LanguageId");
-
-                    b.HasIndex("TenantId1");
 
                     b.HasIndex("TenantId", "Email")
                         .HasFilter("[Email] IS NOT NULL AND [IsActive] = 1 AND [IsDeleted] = 0");
@@ -1075,14 +1065,10 @@ namespace NaradX.Infrastructure.Migrations
                         .IsRequired();
 
                     b.HasOne("NaradX.Domain.Entities.Tenancy.Tenant", "Tenant")
-                        .WithMany()
+                        .WithMany("Contacts")
                         .HasForeignKey("TenantId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.HasOne("NaradX.Domain.Entities.Tenancy.Tenant", null)
-                        .WithMany("Contacts")
-                        .HasForeignKey("TenantId1");
 
                     b.Navigation("Country");
 

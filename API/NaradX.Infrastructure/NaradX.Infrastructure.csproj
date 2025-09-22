@@ -23,4 +23,8 @@
     <ProjectReference Include="..\NaradX.Shared\NaradX.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+  </ItemGroup>
+
 </Project>

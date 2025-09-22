@@ -1,11 +1,13 @@
+using NaradX.Domain.Entities.Template;
+
 namespace NaradX.Infrastructure.Repositories;
 
 public class TemplateRepository
 {
     // Implementation of the TemplateRepository class
-    public WhatsAppTemplateRequest CreateOrderConfirmationTemplate()
+    public WhatsAppTemplate CreateOrderConfirmationTemplate()
     {
-        return new WhatsAppTemplateRequest
+        return new WhatsAppTemplate
         {
             Name = "order_confirmation",
             Category = TemplateCategories.Transactional,

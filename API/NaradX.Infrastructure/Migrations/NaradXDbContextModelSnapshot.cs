@@ -728,9 +728,6 @@ namespace NaradX.Infrastructure.Migrations
                     b.Property<int>("TenantId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("TenantId1")
-                        .HasColumnType("int");
-
                     b.Property<string>("Timezone")
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
@@ -750,8 +747,6 @@ namespace NaradX.Infrastructure.Migrations
                     b.HasIndex("CountryId");
 
                     b.HasIndex("LanguageId");
-
-                    b.HasIndex("TenantId1");
 
                     b.HasIndex("TenantId", "Email")
                         .HasFilter("[Email] IS NOT NULL AND [IsActive] = 1 AND [IsDeleted] = 0");
@@ -1067,14 +1062,10 @@ namespace NaradX.Infrastructure.Migrations
                         .IsRequired();
 
                     b.HasOne("NaradX.Domain.Entities.Tenancy.Tenant", "Tenant")
-                        .WithMany()
+                        .WithMany("Contacts")
                         .HasForeignKey("TenantId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.HasOne("NaradX.Domain.Entities.Tenancy.Tenant", null)
-                        .WithMany("Contacts")
-                        .HasForeignKey("TenantId1");
 
                     b.Navigation("Country");
 
