@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace NaradX.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class Initial : Migration
+    public partial class initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -279,7 +279,7 @@ namespace NaradX.Infrastructure.Migrations
                     FirstName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     MiddleName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     LastName = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
-                    DisplayName = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false, computedColumnSql: "TRIM(CONCAT([FirstName], ' ', COALESCE([MiddleName] + ' ', ''), [LastName]))", stored: true),
+                    DisplayName = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false, computedColumnSql: "TRIM(CONCAT([FirstName], ' ', [LastName]))", stored: true),
                     PhoneNumber = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     CountryId = table.Column<int>(type: "int", nullable: false),
@@ -291,10 +291,10 @@ namespace NaradX.Infrastructure.Migrations
                     FacebookPsid = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: true),
                     ImportSource = table.Column<int>(type: "int", nullable: false),
                     ContactSource = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false, defaultValue: "Manual"),
+                    ChannelPreference = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false),
                     OptInStatus = table.Column<int>(type: "int", nullable: false),
                     OptInDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     OptInSource = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
-                    TenantId1 = table.Column<int>(type: "int", nullable: true),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -327,11 +327,6 @@ namespace NaradX.Infrastructure.Migrations
                         principalTable: "Tenants",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Contacts_Tenants_TenantId1",
-                        column: x => x.TenantId1,
-                        principalTable: "Tenants",
-                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -546,11 +541,6 @@ namespace NaradX.Infrastructure.Migrations
                 columns: new[] { "TenantId", "PhoneNumber" },
                 unique: true,
                 filter: "[IsActive] = 1 AND [IsDeleted] = 0");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Contacts_TenantId1",
-                table: "Contacts",
-                column: "TenantId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_ContactTags_ContactId",

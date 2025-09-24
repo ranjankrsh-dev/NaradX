@@ -4,7 +4,8 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NaradX.Entities.Response.Auth;
-using NaradX.Web.Security.Interfaces;
+using NaradX.Web.Services.Interfaces.Common;
+using NaradX.Web.Services.Interfaces.Security;
 using NaradX.Web.ViewModels.Auth;
 using System.Security.Claims;
 

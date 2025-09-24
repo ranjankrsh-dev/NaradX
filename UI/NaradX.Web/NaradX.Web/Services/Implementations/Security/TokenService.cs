@@ -3,12 +3,13 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.IdentityModel.Tokens;
 using NaradX.Entities.Request;
 using NaradX.Entities.Response.Auth;
-using NaradX.Web.Security.Interfaces;
+using NaradX.Web.Services.Interfaces.Common;
+using NaradX.Web.Services.Interfaces.Security;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace NaradX.Web.Security.Implementations
+namespace NaradX.Web.Services.Implementations.Security
 {
     public class TokenService : ITokenService
     {

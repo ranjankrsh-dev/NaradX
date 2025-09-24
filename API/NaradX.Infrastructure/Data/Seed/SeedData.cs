@@ -239,11 +239,11 @@ namespace NaradX.Infrastructure.Data.Seed
                 // For CONTACT_SOURCE - GLOBAL FALLBACK VALUES
                 var contactSourceValues = new List<ConfigValue>
                 {
-                    new ConfigValue { ConfigMasterId = contactSourceMaster.Id, TenantId = null, ItemValue = "WEBSITE", ItemText = "Website", DisplayOrder = 1, IsActive = true, CreatedBy = "System", CreatedOn = DateTime.UtcNow },
-                    new ConfigValue { ConfigMasterId = contactSourceMaster.Id, TenantId = null, ItemValue = "EMAIL", ItemText = "Email", DisplayOrder = 2, IsActive = true, CreatedBy = "System", CreatedOn = DateTime.UtcNow },
-                    new ConfigValue { ConfigMasterId = contactSourceMaster.Id, TenantId = null, ItemValue = "WALKIN", ItemText = "Walk-In", DisplayOrder = 3, IsActive = true, CreatedBy = "System", CreatedOn = DateTime.UtcNow },
-                    new ConfigValue { ConfigMasterId = contactSourceMaster.Id, TenantId = null, ItemValue = "FRIENDS", ItemText = "Friends", DisplayOrder = 4, IsActive = true, CreatedBy = "System", CreatedOn = DateTime.UtcNow },
-                    new ConfigValue { ConfigMasterId = contactSourceMaster.Id, TenantId = null, ItemValue = "SOCIAL_MEDIA", ItemText = "Social Media", DisplayOrder = 5, IsActive = true, CreatedBy = "System", CreatedOn = DateTime.UtcNow }
+                    new ConfigValue { ConfigMasterId = contactSourceMaster.Id, TenantId = 1, ItemValue = "WEBSITE", ItemText = "Website", DisplayOrder = 1, IsActive = true, CreatedBy = "System", CreatedOn = DateTime.UtcNow },
+                    new ConfigValue { ConfigMasterId = contactSourceMaster.Id, TenantId = 1, ItemValue = "EMAIL", ItemText = "Email", DisplayOrder = 2, IsActive = true, CreatedBy = "System", CreatedOn = DateTime.UtcNow },
+                    new ConfigValue { ConfigMasterId = contactSourceMaster.Id, TenantId = 1, ItemValue = "WALKIN", ItemText = "Walk-In", DisplayOrder = 3, IsActive = true, CreatedBy = "System", CreatedOn = DateTime.UtcNow },
+                    new ConfigValue { ConfigMasterId = contactSourceMaster.Id, TenantId = 1, ItemValue = "FRIENDS", ItemText = "Friends", DisplayOrder = 4, IsActive = true, CreatedBy = "System", CreatedOn = DateTime.UtcNow },
+                    new ConfigValue { ConfigMasterId = contactSourceMaster.Id, TenantId = 1, ItemValue = "SOCIAL_MEDIA", ItemText = "Social Media", DisplayOrder = 5, IsActive = true, CreatedBy = "System", CreatedOn = DateTime.UtcNow }
                 };
 
                 context.ConfigValues.AddRange(dataSourceValues);

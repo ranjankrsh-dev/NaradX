@@ -1,5 +1,5 @@
-﻿@using NaradX.Entities.Response.Contact
-@model NaradX.Entities.Common.PaginatedList<ContactDto>
+﻿@using NaradX.Web.ViewModels.Contact
+@model ContactViewModel
 @{
     ViewData["Title"] = "Manage Contacts";
 }
@@ -13,28 +13,40 @@
         </div>
         <!-- Filter Box -->
         <div class="filter-box" id="filterBox">
-            <div class="row">
-                <div class="col-md-3 mb-3">
-                    <label class="form-label">Modified By</label>
-                    <input type="text" class="form-control">
+            <form method="post" asp-action="ManageContacts">
+                <div class="row">
+
+                    <div class="col-md-3">
+                        <div class="callout callout-warning mt-0 mb-0">
+                            <small class="text-muted font-sm">Name</small>
+                            <br>
+                            <input type="text" class="form-control font-xs" placeholder="Enter name" autocomplete="off" asp-for="filters.Name" title="Name">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="callout callout-success mt-0 mb-0">
+                            <small class="text-muted font-sm">Phone No.</small>
+                            <br>
+                            <input type="text" class="form-control font-xs" placeholder="Enter phone number" autocomplete="off" asp-for="filters.Phone" title="Phone">
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="callout callout-primary mt-0 mb-0">
+                            <small class="text-muted font-sm">Status</small>
+                            <br>
+                            <select class="form-control font-sm" asp-for="filters.Status" title="Status">
+                                <option value="">All</option>
+                                <option value="enabled">Enabled</option>
+                                <option value="disabled">Disabled</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-3 d-flex align-items-end">
+                        <button type="reset" class="btn btn-outline-danger mr-2" title="Clear All">Clear All</button>
+                        <button type="submit" class="btn btn-outline-primary" title="Apply">Apply</button>
+                    </div>
                 </div>
-                <div class="col-md-3 mb-3">
-                    <label class="form-label">Created By</label>
-                    <input type="text" class="form-control">
-                </div>
-                <div class="col-md-3 mb-3">
-                    <label class="form-label">Status</label>
-                    <select class="form-control">
-                        <option value="">All</option>
-                        <option value="enabled">Enabled</option>
-                        <option value="disabled">Disabled</option>
-                    </select>
-                </div>
-                <div class="col-md-3 mb-3 d-flex align-items-end">
-                    <button class="btn btn-outline-secondary mr-2">Clear All</button>
-                    <button class="btn nx-btn-primary">Apply</button>
-                </div>
-            </div>
+            </form>
         </div>
 
         <!-- Employee Grid -->
@@ -43,17 +55,22 @@
                 <!-- Search and Actions -->
                 <div class="row mb-2">
                     <div class="col-md-8">
-                        <div class="input-group">
-                            <button class="btn btn-outline-secondary" id="filterBtn">
-                                <svg class="icon-filter" viewBox="0 0 24 24" width="16" height="16">
-                                    <path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z" />
-                                </svg> Filter
-                            </button>
-                            <input type="text" class="form-control" placeholder="Search...">
-                            <button class="btn btn-outline-secondary" type="button">
-                                <i class="icon-magnifier"></i>
-                            </button>
-                        </div>
+                        <form method="post" asp-action="ManageContacts">
+                            <div class="input-group">
+                                <button class="btn btn-outline-secondary" id="filterBtn" type="button">
+                                    <svg class="icon-filter" viewBox="0 0 24 24" width="16" height="16">
+                                        <path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z" />
+                                    </svg> Filter
+                                </button>
+                                <input type="text" class="form-control" placeholder="Search..." asp-for="filters.SearchTerm">
+                                <button class="btn btn-outline-secondary" type="submit" title="Clear">
+                                    <i class="fa fa-remove"></i>
+                                </button>
+                                <button class="btn btn-outline-secondary" type="submit" title="Search">
+                                    <i class="fa fa-search"></i>
+                                </button>
+                            </div>
+                        </form>
                     </div>
                     <div class="col-md-4">
                         <div class="text-right">
@@ -85,16 +102,18 @@
                                         <th>
                                             <input type="checkbox" id="selectAll">
                                         </th>
-                                        <th>Display Name</th>
-                                        <th>Phone Number</th>
+                                        <th>Name</th>
+                                        <th>Phone No.</th>
+                                        <th>Country</th>
+                                        <th>Language</th>
                                         <th>Channel</th>
-                                        <th>Status</th>
                                         <th>Source</th>
+                                        <th>Status</th>
                                         <th class="text-center"><i class="icon-settings"></i></th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach (var contact in Model.Items)
+                                    @foreach (var contact in Model.ContactList.Items)
                                     {
                                         <tr>
                                             <td>
@@ -104,13 +123,15 @@
                                             </td>
                                             <td>@contact.DisplayName</td>
                                             <td>@contact.PhoneNumber</td>
-                                            <td>@contact.ContactSource</td>
+                                            <td>@contact.Country</td>
+                                            <td>@contact.Language</td>
+                                            <td>channel name</td>
+                                            <td>@contact.ImportSource</td>
                                             <td>
                                                 <span class="badge status-badge @(contact.Email != null ? "status-enabled" : "status-disabled")">
                                                     @(contact.Email != null ? "Enabled" : "Disabled")
                                                 </span>
                                             </td>
-                                            <td>@contact.ImportSource</td>
                                             <td class="text-center">
                                                 <button class="btn btn-sm btn-outline-secondary">
                                                     <i class="icon-pencil"></i>
@@ -123,14 +144,14 @@
                         </div>
 
                         <!-- Pagination -->
-                        @if (Model.TotalPages > 1)
+                        @if (Model.ContactList.TotalPages > 1)
                         {
                             <nav>
                                 <ul class="pagination">
-                                    @for (int i = 1; i <= Model.TotalPages; i++)
+                                    @for (int i = 1; i <= Model.ContactList.TotalPages; i++)
                                     {
-                                        <li class="page-item @(i == Model.PageNumber ? "active" : "")">
-                                            <a class="page-link" asp-action="ManageContacts" asp-route-pageNumber="@i" asp-route-pageSize="@Model.PageSize">@i</a>
+                                        <li class="page-item @(i == Model.ContactList.PageNumber ? "active" : "")">
+                                            <a class="page-link" asp-action="ManageContacts" asp-route-pageNumber="@i" asp-route-pageSize="@Model.ContactList.PageSize">@i</a>
                                         </li>
                                     }
                                 </ul>
@@ -144,382 +165,123 @@
 </div>
 
 <!-- New Employee Modal (Right Side) -->
-<div class="modal-side" id="newEmployeeModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title">New Contact</h5>
-            <div>
-                <i class="icon-size-fullscreen expand-btn" id="expandModal"></i>
-                <i class="icon-close expand-btn" id="closeModal"></i>
-            </div>
-        </div>
-        <div class="modal-body">
-            <div class="row mb-3">
-                <div class="col-md-6">
-                    <label class="form-label">First Name<span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" autocomplete="off" placeholder="Enter first name">
-                </div>
-                <div class="col-md-6">
-                    <label class="form-label">Middle Name</label>
-                    <input type="text" class="form-control" autocomplete="off" placeholder="Enter middle name">
-                </div>
-            </div>
-            <div class="row mb-3">
-                <div class="col-md-6">
-                    <label class="form-label">Last Name<span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" autocomplete="off" placeholder="Enter last name">
-                </div>
-                <div class="col-md-6">
-                    <label class="form-label">Country<span class="text-danger">*</span></label>
-                    <select class="form-control" onchange="changeCountryCodeInPhone();">
-                        <option value="1">India</option>
-                    </select>
-                </div>
-            </div>
-            <div class="row mb-3">
-                <div class="col-md-6">
-                    <label class="form-label">Phone Number<span class="text-danger">*</span></label>
-                    <div class="input-group">
-                        <span class="input-group-prepend">
-                            <span class="input-group-text">+91</span>
-                        </span>
-                        <input type="tel" class="form-control" id="phoneNumber" placeholder="Enter phone number" autocomplete="off" required>
+<div>
+    <form method="post" asp-action="AddContact">
+        <div class="modal-side" id="newEmployeeModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">New Contact</h5>
+                    <div>
+                        <i class="icon-size-fullscreen expand-btn" id="expandModal"></i>
+                        <i class="icon-close expand-btn" id="closeModal"></i>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <label class="form-label">Email</label>
-                    <input type="email" class="form-control" id="email" autocomplete="off" placeholder="Enter email address">
+                <div class="modal-body pt-2">
+                    <div class="row mb-2">
+                        <div class="col-md-6">
+                            <label class="form-label">First Name<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" autocomplete="off" placeholder="Enter first name" asp-for="Contact.FirstName">
+                            <span asp-validation-for="Contact.FirstName" class="text-danger font-sm"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Middle Name</label>
+                            <input type="text" class="form-control" autocomplete="off" placeholder="Enter middle name" asp-for="Contact.MiddleName">
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-md-6">
+                            <label class="form-label">Last Name<span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" autocomplete="off" placeholder="Enter last name" asp-for="Contact.LastName">
+                            <span asp-validation-for="Contact.LastName" class="text-danger font-sm"></span>
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-md-6">
+                            <label class="form-label">Country<span class="text-danger">*</span></label>
+                            <select class="form-control" asp-for="Contact.CountryId" onchange="changeCountryCodeInPhone();">
+                                <option value="1">India</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Language<span class="text-danger">*</span></label>
+                            <select class="form-control" asp-for="Contact.LanguageId">
+                                <option value="1">English</option>
+                                <option value="2">Hindi</option>
+                                <option value="3">Spanish</option>
+                                <option value="4">French</option>
+                                <option value="5">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-md-6">
+                            <label class="form-label">Phone Number<span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <span class="input-group-prepend">
+                                    <span class="input-group-text">+91</span>
+                                </span>
+                                <input type="tel" class="form-control" placeholder="Enter phone number" autocomplete="off" asp-for="Contact.PhoneNumber">
+                            </div>
+                            <span asp-validation-for="Contact.PhoneNumber" class="text-danger font-sm"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control" autocomplete="off" placeholder="Enter email address" asp-for="Contact.Email">
+                            <span asp-validation-for="Contact.Email" class="text-danger font-sm"></span>
+                        </div>
+                    </div>
+                    <div class="row mb-2">
+                        <div class="col-md-6">
+                            <label class="form-label">Company</label>
+                            <input type="text" class="form-control" autocomplete="off" placeholder="Enter company name" asp-for="Contact.Company">
+                            <span asp-validation-for="Contact.Company" class="text-danger font-sm"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Job Tittle/Position</label>
+                            <input type="text" class="form-control" autocomplete="off" placeholder="Enter job tittle" asp-for="Contact.JobTitle">
+                            <span asp-validation-for="Contact.JobTitle" class="text-danger font-sm"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label class="form-label">Contact Source</label>
+                            <select class="form-control" asp-for="Contact.ContactSource">
+                                <option value="1">Select source</option>
+                                <option value="2">Website</option>
+                                <option value="3">Phone Call</option>
+                                <option value="4">Referral</option>
+                                <option value="5">Facebook</option>
+                                <option value="6">Instagram</option>
+                                <option value="7">Walk-in</option>
+                                <option value="8">Other</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">Channel Preference</label>
+                            <select class="form-control" asp-for="Contact.ChannelPreference">
+                                <option value="1">Whatsapp</option>
+                                <option value="2">Instagram</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div class="row mb-3">
-                <div class="col-md-6">
-                    <label class="form-label">Company</label>
-                    <input type="text" class="form-control" id="company" autocomplete="off" placeholder="Enter company name">
-                </div>
-                <div class="col-md-6">
-                    <label class="form-label">Title/Position</label>
-                    <input type="text" class="form-control" id="title" autocomplete="off" placeholder="Enter job title">
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <label class="form-label">Source</label>
-                    <select class="form-control" id="source">
-                        <option value="">Select source</option>
-                        <option value="Website">Website</option>
-                        <option value="Phone Call">Phone Call</option>
-                        <option value="Referral">Referral</option>
-                        <option value="Facebook">Facebook</option>
-                        <option value="Instagram">Instagram</option>
-                        <option value="Walk-in">Walk-in</option>
-                        <option value="Other">Other</option>
-                    </select>
-                </div>
-                <div class="col-md-6">
-                    <label class="form-label">Language Preference</label>
-                    <select class="form-control" id="languagePreference">
-                        <option value="English">English</option>
-                        <option value="Hindi">Hindi</option>
-                        <option value="Spanish">Spanish</option>
-                        <option value="French">French</option>
-                        <option value="Other">Other</option>
-                    </select>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-danger mr-3 w-15" id="cancelModal">Cancel</button>
+                    <button type="submit" class="btn btn-outline-success  w-15" id="saveContact">Save</button>
                 </div>
             </div>
         </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-outline-danger mr-3 w-15" id="cancelModal">Cancel</button>
-            <button type="button" class="btn btn-outline-success  w-15" id="saveContact">Save</button>
-        </div>
-    </div>
+    </form>
 </div>
-
-@* <div class="modal-side" id="newEmployeeModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title">New Contact</h5>
-            <div>
-                <i class="icon-size-fullscreen expand-btn" id="expandModal"></i>
-                <i class="icon-close expand-btn" id="closeModal"></i>
-            </div>
-        </div>
-        <div class="modal-body">
-            <div class="row mb-3">
-                <div class="col-md-6">
-                    <label class="form-label">First Name<span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" autocomplete="off" placeholder="Enter first name">
-                </div>
-                <div class="col-md-6">
-                    <label class="form-label">Middle Name</label>
-                    <input type="text" class="form-control" autocomplete="off" placeholder="Enter middle name">
-                </div>
-            </div>
-            <div class="row mb-3">
-                <div class="col-md-6">
-                    <label class="form-label">Last Name<span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" autocomplete="off" placeholder="Enter last name">
-                </div>
-                <div class="col-md-6">
-                    <label class="form-label">Email Id</label>
-                    <input type="text" class="form-control" autocomplete="off" placeholder="Enter email id">
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <label class="form-label">Phone Number<span class="text-danger">*</span></label>
-                    <div class="input-group">
-                        <span class="input-group-prepend">
-                            <span class="input-group-text">+91</span>
-                        </span>
-                        <input type="tel" class="form-control" placeholder="Enter phone number" autocomplete="off">
-                    </div>
-                    <small class="form-text text-muted">Format: without country code, e.g., 9876543210</small>
-                </div>
-            </div>
-        </div>
-        <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" id="cancelModal">Cancel</button>
-            <button type="button" class="btn nx-btn-primary">Save</button>
-        </div>
-    </div>
-</div> *@
 
 <!-- Modal Backdrop -->
 <div class="modal-backdrop fade" id="modalBackdrop" style="display: none;"></div>
 
 @section Styles {
-    <style>
-        :root {
-            --nx-blue: #2c3e50;
-            --nx-light-blue: #3498db;
-            --nx-green: #27ae60;
-            --nx-gray: #f2f2f2;
-        }
-
-        .nx-card {
-            border-radius: 5px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-            border: none;
-            margin-bottom: 20px;
-        }
-
-        .nx-card-header {
-            background-color: white;
-            border-bottom: 1px solid #eaeaea;
-            padding: 15px 20px;
-            font-weight: 600;
-        }
-
-        .nx-card-body {
-            padding: 20px;
-        }
-
-        .nx-btn-primary {
-            background-color: var(--nx-blue);
-            border-color: var(--nx-blue);
-            color: white;
-        }
-
-            .nx-btn-primary:hover {
-                background-color: #1a252f;
-                border-color: #1a252f;
-                color: white;
-            }
-
-        .nx-btn-outline {
-            border-color: var(--nx-blue);
-            color: var(--nx-blue);
-        }
-
-            .nx-btn-outline:hover {
-                background-color: var(--nx-blue);
-                color: white;
-            }
-
-        .employee-table {
-            width: 100%;
-        }
-
-            .employee-table th {
-                background-color: var(--nx-gray);
-                font-weight: 600;
-                padding: 12px 15px;
-            }
-
-            .employee-table td {
-                padding: 12px 15px;
-                border-bottom: 1px solid #eaeaea;
-            }
-
-        .filter-box {
-            background-color: white;
-            border-radius: 5px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-            display: none;
-        }
-
-            .filter-box.show {
-                display: block;
-            }
-
-        .status-badge {
-            padding: 5px 10px;
-            border-radius: 4px;
-            font-size: 0.85rem;
-        }
-
-        .status-enabled {
-            background-color: #e6f7ee;
-            color: #0c9770;
-        }
-
-        .status-disabled {
-            background-color: #fce8e8;
-            color: #d92525;
-        }
-
-        /* Right Side Modal Styles */
-        .modal-side {
-            position: fixed;
-            top: 0;
-            right: 0;
-            width: 600px;
-            height: 100%;
-            margin: 0;
-            transform: translateX(100%);
-            transition: transform 0.3s ease-out;
-            z-index: 1050;
-            overflow-y: auto;
-            background: white;
-            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
-        }
-
-            .modal-side.show {
-                transform: translateX(0);
-            }
-
-            .modal-side .modal-content {
-                height: 100%;
-                border-radius: 0;
-                border: none;
-                background: white;
-            }
-
-            .modal-side .modal-header {
-                border-bottom: 1px solid #dee2e6;
-                padding: 15px 20px;
-                background: white;
-            }
-
-            .modal-side .modal-body {
-                padding: 20px;
-                overflow-y: auto;
-                background: white;
-            }
-
-            .modal-side .modal-footer {
-                border-top: 1px solid #dee2e6;
-                padding: 15px 20px;
-                background: white;
-                justify-content: flex-start !important;
-            }
-
-            .modal-side.modal-fullscreen {
-                width: 100% !important;
-                z-index: 1060;
-            }
-
-        .modal-backdrop {
-            z-index: 1040;
-            background-color: rgba(0, 0, 0, 0.5);
-        }
-
-            .modal-backdrop.show {
-                opacity: 1;
-            }
-
-        .expand-btn {
-            cursor: pointer;
-            font-size: 1.2rem;
-            margin-left: 10px;
-            color: var(--nx-blue);
-        }
-
-    </style>
+    <link href="~/css/contact/contact.css" rel="stylesheet" />
 }
 
 @section Scripts {
-    <script>
-        // Toggle filter box
-        document.getElementById('filterBtn').addEventListener('click', function() {
-            document.getElementById('filterBox').classList.toggle('show');
-        });
-
-        // Select all checkbox
-        document.getElementById('selectAll').addEventListener('change', function() {
-            const checkboxes = document.querySelectorAll('.employee-table tbody input[type="checkbox"]');
-            checkboxes.forEach(checkbox => {
-                checkbox.checked = this.checked;
-            });
-        });
-
-        // Modal functionality
-        const modal = document.getElementById('newEmployeeModal');
-        const backdrop = document.getElementById('modalBackdrop');
-        const newEmployeeBtn = document.getElementById('newEmployeeBtn');
-        const closeModalBtn = document.getElementById('closeModal');
-        const cancelModalBtn = document.getElementById('cancelModal');
-        const expandModalBtn = document.getElementById('expandModal');
-
-        function showModal() {
-            modal.classList.add('show');
-            backdrop.style.display = 'block';
-            setTimeout(() => {
-                backdrop.classList.add('show');
-            }, 10);
-            document.body.style.overflow = 'hidden';
-        }
-
-        function hideModal() {
-            modal.classList.remove('show');
-            backdrop.classList.remove('show');
-            setTimeout(() => {
-                backdrop.style.display = 'none';
-            }, 300);
-            document.body.style.overflow = 'auto';
-            // Reset fullscreen mode when closing
-            modal.classList.remove('modal-fullscreen');
-            expandModalBtn.classList.remove('icon-size-actual');
-            expandModalBtn.classList.add('icon-size-fullscreen');
-        }
-
-        function toggleFullscreen() {
-            modal.classList.toggle('modal-fullscreen');
-            if (modal.classList.contains('modal-fullscreen')) {
-                expandModalBtn.classList.remove('icon-size-fullscreen');
-                expandModalBtn.classList.add('icon-size-actual');
-            } else {
-                expandModalBtn.classList.remove('icon-size-actual');
-                expandModalBtn.classList.add('icon-size-fullscreen');
-            }
-        }
-
-        newEmployeeBtn.addEventListener('click', showModal);
-        closeModalBtn.addEventListener('click', hideModal);
-        cancelModalBtn.addEventListener('click', hideModal);
-        expandModalBtn.addEventListener('click', toggleFullscreen);
-
-        // Close modal when clicking on backdrop
-        backdrop.addEventListener('click', hideModal);
-
-        // Close modal when pressing Escape key
-        document.addEventListener('keydown', function(event) {
-            if (event.key === 'Escape' && modal.classList.contains('show')) {
-                hideModal();
-            }
-        });
-    </script>
+    <script src="~/js/contact/contact.js"></script>
 }
 
