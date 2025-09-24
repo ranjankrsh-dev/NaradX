@@ -12,13 +12,8 @@ using NaradX.Infrastructure;
 namespace NaradX.Infrastructure.Migrations
 {
     [DbContext(typeof(NaradXDbContext))]
-<<<<<<<< HEAD:API/NaradX.Infrastructure/Migrations/20250917175536_init.Designer.cs
     [Migration("20250917175536_init")]
-    partial class init
-========
-    [Migration("20250917193503_Initial")]
     partial class Initial
->>>>>>>> 339e59c1fdde1edb622417e1c5f2040f83f2644c:API/NaradX.Infrastructure/Migrations/20250917193503_Initial.Designer.cs
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

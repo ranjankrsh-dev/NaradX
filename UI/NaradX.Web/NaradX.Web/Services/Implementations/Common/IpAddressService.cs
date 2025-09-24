@@ -1,6 +1,6 @@
-﻿using NaradX.Web.Security.Interfaces;
+﻿using NaradX.Web.Services.Interfaces.Common;
 
-namespace NaradX.Web.Security.Implementations
+namespace NaradX.Web.Services.Implementations.Common
 {
     public class IpAddressService : IIpAddressService
     {

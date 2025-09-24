@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using NaradX.Shared.Common.Model;
+using NaradX.Shared.Models.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,10 +1,10 @@
-﻿using NaradX.Web.Security.Interfaces;
+﻿using NaradX.Web.Services.Interfaces.Common;
 using Newtonsoft.Json;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Text;
 
-namespace NaradX.Web.Security.Implementations
+namespace NaradX.Web.Services.Implementations.Common
 {
     public class ApiHelper : IApiHelper
     {
@@ -89,5 +89,4 @@ namespace NaradX.Web.Security.Implementations
             }
         }
     }
-
 }

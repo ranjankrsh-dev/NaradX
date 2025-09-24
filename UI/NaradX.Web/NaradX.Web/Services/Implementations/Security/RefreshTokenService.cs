@@ -1,6 +1,6 @@
-﻿using NaradX.Web.Security.Interfaces;
+﻿using NaradX.Web.Services.Interfaces.Security;
 
-namespace NaradX.Web.Security.Implementations
+namespace NaradX.Web.Services.Implementations.Security
 {
     public class RefreshTokenService : IRefreshTokenService
     {

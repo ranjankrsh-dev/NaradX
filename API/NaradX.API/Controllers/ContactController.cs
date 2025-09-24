@@ -7,12 +7,12 @@ using NaradX.Business.Contacts.Commands.DeleteContact;
 using NaradX.Business.Contacts.Commands.UpdateContact;
 using NaradX.Business.Contacts.Queries.GetContactById;
 using NaradX.Business.Contacts.Queries.GetContacts;
-using NaradX.Shared.Common.Model;
 using NaradX.Shared.Dto.Contact;
+using NaradX.Shared.Models.Common;
 
 namespace NaradX.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/contact")]
     [ApiController]
     public class ContactController : ControllerBase
     {
@@ -27,13 +27,17 @@ namespace NaradX.API.Controllers
             _configValueService = configValueService;
         }
 
-        [HttpGet("contact-list")]
+        [HttpGet("list")]
         public async Task<ActionResult<PaginatedList<ContactDto>>> GetContacts(
             [FromQuery] int tenantId,
             [FromQuery] int pageNumber = 1,
             [FromQuery] int pageSize = 10,
             [FromQuery] string? searchTerm = null,
-            [FromQuery] string? tag = null)
+            [FromQuery] string? name = null,
+            [FromQuery] string? phone = null,
+            [FromQuery] string? status = null,
+            [FromQuery] string? sortColumn = null,
+            [FromQuery] string? sortDirection = "asc")
         {
             var query = new GetContactsQuery
             {
@@ -41,7 +45,11 @@ namespace NaradX.API.Controllers
                 PageNumber = pageNumber,
                 PageSize = pageSize,
                 SearchTerm = searchTerm,
-                Tag = tag
+                Name = name,
+                Phone = phone,
+                Status = status,
+                SortColumn = sortColumn,
+                SortDirection = sortDirection
             };
 
             var result = await _mediator.Send(query);
@@ -60,7 +68,7 @@ namespace NaradX.API.Controllers
             return Ok(result);
         }
 
-        [HttpPost]
+        [HttpPost("add")]
         public async Task<ActionResult<int>> CreateContact(CreateContactCommand command)
         {
             var result = await _mediator.Send(command);

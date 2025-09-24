@@ -182,5 +182,21 @@ namespace NaradX.Business.Common.Services
 
             return result;
         }
+
+        public void ClearDropdownCache(string? configKey = null, int? tenantId = null)
+        {
+            // If you use a specific cache key format, clear accordingly
+            if (configKey != null)
+            {
+                var cacheKey = $"Dropdown_{configKey}_{tenantId}";
+                _memoryCache.Remove(cacheKey);
+            }
+            else
+            {
+                // If you want to clear all dropdown-related cache, you need to track keys or use a cache library that supports pattern removal.
+                // IMemoryCache does not support pattern removal natively.
+                // For full cache clear, you may need to recreate the cache instance or use a wrapper.
+            }
+        }
     }
 }

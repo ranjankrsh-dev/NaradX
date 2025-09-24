@@ -1,6 +1,6 @@
 ﻿using MediatR;
-using NaradX.Shared.Common.Model;
 using NaradX.Shared.Dto.Contact;
+using NaradX.Shared.Models.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +15,10 @@ namespace NaradX.Business.Contacts.Queries.GetContacts
         public int PageNumber { get; set; } = 1;
         public int PageSize { get; set; } = 10;
         public string? SearchTerm { get; set; }
-        public string? Tag { get; set; }
+        public string? Name { get; set; }
+        public string? Phone { get; set; }
+        public string? Status { get; set; }
+        public string? SortColumn { get; set; }
+        public string? SortDirection { get; set; }
     }
 }

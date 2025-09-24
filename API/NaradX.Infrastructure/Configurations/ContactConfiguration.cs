@@ -36,7 +36,7 @@ namespace NaradX.Infrastructure.Configurations
             // Computed DisplayName
             builder.Property(c => c.DisplayName)
                    .HasMaxLength(500)
-                   .HasComputedColumnSql("TRIM(CONCAT([FirstName], ' ', COALESCE([MiddleName] + ' ', ''), [LastName]))", stored: true);
+                   .HasComputedColumnSql("TRIM(CONCAT([FirstName], ' ', [LastName]))", stored: true);
 
             // Critical indexes only
             builder.HasIndex(c => new { c.TenantId, c.PhoneNumber })

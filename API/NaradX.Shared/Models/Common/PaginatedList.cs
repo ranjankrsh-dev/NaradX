@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NaradX.Shared.Common.Model
+namespace NaradX.Shared.Models.Common
 {
     public class PaginatedList<T>
     {

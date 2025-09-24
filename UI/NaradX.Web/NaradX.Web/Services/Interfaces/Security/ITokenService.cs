@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Security.Claims;
 
-namespace NaradX.Web.Security.Interfaces
+namespace NaradX.Web.Services.Interfaces.Security
 {
     public interface ITokenService
     {

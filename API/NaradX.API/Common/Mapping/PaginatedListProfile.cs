@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using NaradX.Business.Common.Mappings;
-using NaradX.Shared.Common.Model;
+using NaradX.Shared.Models.Common;
 
 namespace NaradX.API.Common.Mapping
 {

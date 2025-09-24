@@ -7,7 +7,7 @@ using NaradX.Shared.Dto.Common;
 
 namespace NaradX.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/config-master")]
     [ApiController]
     public class ConfigMasterController : ControllerBase
     {
@@ -20,7 +20,7 @@ namespace NaradX.API.Controllers
             _configValueService = configValueService;
         }
 
-        [HttpGet("configKey/{configKey}/tenantId/{tenantId}")]
+        [HttpGet("configKey/{configKey}")]
         public async Task<ActionResult<IReadOnlyList<ConfigValueDto>>> GetDropdownValues(string configKey, int? tenantId)
         {
             var values = await _configValueService.GetDropdownValuesAsync(configKey, tenantId);

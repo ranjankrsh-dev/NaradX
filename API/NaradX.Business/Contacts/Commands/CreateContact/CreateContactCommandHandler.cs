@@ -38,13 +38,14 @@ namespace NaradX.Business.Contacts.Commands.CreateContact
                 FirstName = request.FirstName,
                 MiddleName = request.MiddleName,
                 LastName = request.LastName,
-                PhoneNumber = request.PhoneNumber,
-                ContactSource = request.ContactSource,
                 CountryId = request.CountryId,
                 LanguageId = request.LanguageId,
+                PhoneNumber = request.PhoneNumber,
                 Email = request.Email,
                 Company = request.Company,
                 Title = request.JobTitle,
+                ContactSource = request.ContactSource,
+                ChannelPreference = request.ChannelPreference,
                 ImportSource = ImportSource.Manual
             };
 
