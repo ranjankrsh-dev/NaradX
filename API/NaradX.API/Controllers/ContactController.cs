@@ -9,6 +9,7 @@ using NaradX.Business.Contacts.Queries.GetContactById;
 using NaradX.Business.Contacts.Queries.GetContacts;
 using NaradX.Shared.Dto.Contact;
 using NaradX.Shared.Models.Common;
+using NaradX.Shared.Models.Contact;
 
 namespace NaradX.API.Controllers
 {
@@ -27,30 +28,10 @@ namespace NaradX.API.Controllers
             _configValueService = configValueService;
         }
 
-        [HttpGet("list")]
-        public async Task<ActionResult<PaginatedList<ContactDto>>> GetContacts(
-            [FromQuery] int tenantId,
-            [FromQuery] int pageNumber = 1,
-            [FromQuery] int pageSize = 10,
-            [FromQuery] string? searchTerm = null,
-            [FromQuery] string? name = null,
-            [FromQuery] string? phone = null,
-            [FromQuery] string? status = null,
-            [FromQuery] string? sortColumn = null,
-            [FromQuery] string? sortDirection = "asc")
+        [HttpPost("list")]
+        public async Task<ActionResult<PaginatedList<ContactDto>>> GetContacts([FromBody] ContactFilterParams filterParams)
         {
-            var query = new GetContactsQuery
-            {
-                TenantId = tenantId,
-                PageNumber = pageNumber,
-                PageSize = pageSize,
-                SearchTerm = searchTerm,
-                Name = name,
-                Phone = phone,
-                Status = status,
-                SortColumn = sortColumn,
-                SortDirection = sortDirection
-            };
+            var query = new GetContactsQuery(filterParams);
 
             var result = await _mediator.Send(query);
             return Ok(result);

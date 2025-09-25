@@ -10,6 +10,7 @@ namespace NaradX.Entities.Response.Contact
     public class ContactDto
     {
         public int Id { get; set; }
+        public int TenantId { get; set; }
 
         [Required(ErrorMessage = "Please enter first name")]
         [MaxLength(100, ErrorMessage = "First name cannot exceed 50 characters.")]

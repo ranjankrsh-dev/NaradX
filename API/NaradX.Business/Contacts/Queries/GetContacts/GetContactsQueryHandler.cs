@@ -32,27 +32,7 @@ namespace NaradX.Business.Contacts.Queries.GetContacts
 
         public async Task<PaginatedList<ContactDto>> Handle(GetContactsQuery request, CancellationToken cancellationToken)
         {
-            var filterParams = new ContactFilterParams
-            {
-                TenantId = request.TenantId,
-                PageNumber = request.PageNumber,
-                PageSize = request.PageSize,
-                SearchTerm = request.SearchTerm,
-                Name = request.Name,
-                Phone = request.Phone,
-                Status = request.Status,
-                SortColumn = request.SortColumn,
-                SortDirection = request.SortDirection
-            };
-
-            var contacts = await _contactRepository.GetContactsByFiltersAsync(filterParams, cancellationToken);
-
-            //var contacts = await _contactRepository.GetPaginatedAsync(
-            //    request.TenantId,
-            //    request.PageNumber,
-            //    request.PageSize,
-            //    request.SearchTerm,
-            //    cancellationToken);
+            var contacts = await _contactRepository.GetContactsByFiltersAsync(request.ContactFilter, cancellationToken);
 
             return _mapper.Map<PaginatedList<ContactDto>>(contacts);
         }
