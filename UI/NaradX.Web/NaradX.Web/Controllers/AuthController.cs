@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NaradX.Entities.Response.Auth;
 using NaradX.Web.Services.Interfaces.Common;
@@ -116,6 +117,7 @@ namespace NaradX.Web.Controllers
                 HttpContext.Session.SetString("tokenExpiry", response.AccessTokenExpires.ToString("O"));
                 HttpContext.Session.SetString("userEmail", response.Email);
                 HttpContext.Session.SetInt32("userId", response.UserId);
+                HttpContext.Session.SetInt32("tenantId", Convert.ToInt32(principal.FindFirst("tenantId")?.Value));
 
                 // Sign in
                 await HttpContext.SignInAsync(

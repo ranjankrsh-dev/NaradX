@@ -8,6 +8,6 @@ namespace NaradX.Web.ViewModels.Contact
     {
         public ContactDto? Contact { get; set; }
         public PaginatedList<ContactDto>? ContactList { get; set; }
-        public ContactFilters? filters { get; set; }
+        public ContactFilters? Filters { get; set; }
     }
 }

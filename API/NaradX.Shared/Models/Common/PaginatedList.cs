@@ -26,6 +26,11 @@ namespace NaradX.Shared.Models.Common
             PageSize = pageSize; // Add this
         }
 
+        public bool HasPreviousPage => PageNumber > 1;
+        public bool HasNextPage => PageNumber < TotalPages;
+        public int FirstItemIndex => (PageNumber - 1) * PageSize + 1;
+        public int LastItemIndex => Math.Min(PageNumber * PageSize, TotalCount);
+
         public static async Task<PaginatedList<T>> CreateAsync(
             IQueryable<T> source, int pageNumber, int pageSize)
         {

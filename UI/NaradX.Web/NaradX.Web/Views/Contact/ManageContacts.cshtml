@@ -4,6 +4,10 @@
     ViewData["Title"] = "Manage Contacts";
 }
 
+@section Styles {
+    <link href="~/css/contact/contact.css" rel="stylesheet" />
+}
+
 <div class="container-fluid">
     <div class="ui-view">
         <div class="row mb-2">
@@ -15,26 +19,25 @@
         <div class="filter-box" id="filterBox">
             <form method="post" asp-action="ManageContacts">
                 <div class="row">
-
                     <div class="col-md-3">
                         <div class="callout callout-warning mt-0 mb-0">
                             <small class="text-muted font-sm">Name</small>
                             <br>
-                            <input type="text" class="form-control font-xs" placeholder="Enter name" autocomplete="off" asp-for="filters.Name" title="Name">
+                            <input type="text" class="form-control font-xs" placeholder="Enter name" autocomplete="off" asp-for="Filters.Name" title="Name">
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="callout callout-success mt-0 mb-0">
                             <small class="text-muted font-sm">Phone No.</small>
                             <br>
-                            <input type="text" class="form-control font-xs" placeholder="Enter phone number" autocomplete="off" asp-for="filters.Phone" title="Phone">
+                            <input type="text" class="form-control font-xs" placeholder="Enter phone number" autocomplete="off" asp-for="Filters.Phone" title="Phone">
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="callout callout-primary mt-0 mb-0">
                             <small class="text-muted font-sm">Status</small>
                             <br>
-                            <select class="form-control font-sm" asp-for="filters.Status" title="Status">
+                            <select class="form-control font-sm" asp-for="Filters.Status" title="Status">
                                 <option value="">All</option>
                                 <option value="enabled">Enabled</option>
                                 <option value="disabled">Disabled</option>
@@ -42,8 +45,8 @@
                         </div>
                     </div>
                     <div class="col-md-3 d-flex align-items-end">
-                        <button type="reset" class="btn btn-outline-danger mr-2" title="Clear All">Clear All</button>
-                        <button type="submit" class="btn btn-outline-primary" title="Apply">Apply</button>
+                        <button type="button" class="btn btn-outline-danger mr-2" title="Clear All" onclick="clearFilters()">Clear All</button>
+                        <button type="button" class="btn btn-outline-primary" title="Apply" onclick="">Apply</button>
                     </div>
                 </div>
             </form>
@@ -62,11 +65,11 @@
                                         <path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z" />
                                     </svg> Filter
                                 </button>
-                                <input type="text" class="form-control" placeholder="Search..." asp-for="filters.SearchTerm">
-                                <button class="btn btn-outline-secondary" type="submit" title="Clear">
+                                <input id="searchInput" type="text" class="form-control" placeholder="Search contacts..." asp-for="Filters.SearchTerm">
+                                <button class="btn btn-outline-secondary" type="button" title="Clear" onclick="clearFilters()">
                                     <i class="fa fa-remove"></i>
                                 </button>
-                                <button class="btn btn-outline-secondary" type="submit" title="Search">
+                                <button class="btn btn-outline-secondary" type="button" title="Search" onclick="applySearch();">
                                     <i class="fa fa-search"></i>
                                 </button>
                             </div>
@@ -92,16 +95,16 @@
                         <a class="nav-link font-weight-bold text-right" href="#"><i class="fa fa-download"></i> Export All</a>
                     </div>
                 </div>
-
+                
                 <div class="row">
                     <div class="col-md-12">
                         <div class="table-responsive">
                             <table class="table employee-table">
                                 <thead>
                                     <tr>
-                                        <th>
+                                        @*<th>
                                             <input type="checkbox" id="selectAll">
-                                        </th>
+                                        </th> *@
                                         <th>Name</th>
                                         <th>Phone No.</th>
                                         <th>Country</th>
@@ -113,52 +116,82 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach (var contact in Model.ContactList.Items)
-                                    {
-                                        <tr>
-                                            <td>
-                                                <div class="form-check">
-                                                    <input class="form-check-input" type="checkbox" value="@contact.Id">
-                                                </div>
-                                            </td>
-                                            <td>@contact.DisplayName</td>
-                                            <td>@contact.PhoneNumber</td>
-                                            <td>@contact.Country</td>
-                                            <td>@contact.Language</td>
-                                            <td>channel name</td>
-                                            <td>@contact.ImportSource</td>
-                                            <td>
-                                                <span class="badge status-badge @(contact.Email != null ? "status-enabled" : "status-disabled")">
-                                                    @(contact.Email != null ? "Enabled" : "Disabled")
-                                                </span>
-                                            </td>
-                                            <td class="text-center">
-                                                <button class="btn btn-sm btn-outline-secondary">
-                                                    <i class="icon-pencil"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
+                                    @{
+                                        if (Model.ContactList == null || !Model.ContactList.Items.Any())
+                                        {
+                                            <tr>
+                                                <td colspan="8" class="text-center">No contacts found.</td>
+                                            </tr>
+                                        }
+                                        else
+                                        {
+                                            foreach (var contact in Model.ContactList.Items)
+                                            {
+                                                <tr>
+                                                    @* <td><div class="form-check"><input class="form-check-input" type="checkbox" value="@contact.Id"></div></td>*@
+                                                    <td>@contact.DisplayName</td>
+                                                    <td>@contact.PhoneNumber</td>
+                                                    <td>@contact.Country</td>
+                                                    <td>@contact.Language</td>
+                                                    <td>channel name</td>
+                                                    <td>@contact.ImportSource</td>
+                                                    <td>
+                                                        <span class="badge status-badge @(contact.Email != null ? "status-enabled" : "status-disabled")">
+                                                            @(contact.Email != null ? "Enabled" : "Disabled")
+                                                        </span>
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <button class="btn btn-sm btn-outline-secondary">
+                                                            <i class="icon-pencil"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        }
                                     }
                                 </tbody>
                             </table>
                         </div>
+                    </div>
+                </div>
 
-                        <!-- Pagination -->
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="text-muted">
+                            Showing @Model.ContactList.FirstItemIndex to @Model.ContactList.LastItemIndex
+                            of @Model.ContactList.TotalCount entries
+                        </div>
+                    </div>
+                    <div class="col-md-6">
                         @if (Model.ContactList.TotalPages > 1)
                         {
-                            <nav>
-                                <ul class="pagination">
-                                    @for (int i = 1; i <= Model.ContactList.TotalPages; i++)
-                                    {
-                                        <li class="page-item @(i == Model.ContactList.PageNumber ? "active" : "")">
-                                            <a class="page-link" asp-action="ManageContacts" asp-route-pageNumber="@i" asp-route-pageSize="@Model.ContactList.PageSize">@i</a>
-                                        </li>
-                                    }
-                                </ul>
-                            </nav>
+                            <ul class="pagination pagination-sm mb-0 pull-right">
+                                <!-- Previous Page -->
+                                <li class="page-item @(Model.ContactList.HasPreviousPage ? "" : "disabled")">
+                                    <a class="page-link" href="#" onclick="goToPage(@(Model.ContactList.PageNumber - 1))">
+                                        Previous
+                                    </a>
+                                </li>
+
+                                <!-- Page Numbers -->
+                                @for (int i = 1; i <= Model.ContactList.TotalPages; i++)
+                                {
+                                    <li class="page-item @(i == Model.ContactList.PageNumber ? "active" : "")">
+                                        <a class="page-link" href="#" onclick="goToPage(@i)">@i</a>
+                                    </li>
+                                }
+
+                                <!-- Next Page -->
+                                <li class="page-item @(Model.ContactList.HasNextPage ? "" : "disabled")">
+                                    <a class="page-link" href="#" onclick="goToPage(@(Model.ContactList.PageNumber + 1))">
+                                        Next
+                                    </a>
+                                </li>
+                            </ul>
                         }
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
@@ -277,9 +310,19 @@
 <!-- Modal Backdrop -->
 <div class="modal-backdrop fade" id="modalBackdrop" style="display: none;"></div>
 
-@section Styles {
-    <link href="~/css/contact/contact.css" rel="stylesheet" />
-}
+<!-- Filter Form with POST method -->
+<form id="filterForm" method="post" asp-action="ManageContacts">
+    @Html.AntiForgeryToken()
+
+    <!-- Hidden fields to maintain filter state -->
+    <input type="hidden" name="pageNumber" id="pageNumber" value="@Model.Filters?.PageNumber" />
+    <input type="hidden" name="searchTerm" id="searchTerm" value="@Model.Filters?.SearchTerm" />
+    <input type="hidden" name="name" id="nameFilter" value="@Model.Filters?.Name" />
+    <input type="hidden" name="phone" id="phoneFilter" value="@Model.Filters?.Phone" />
+    <input type="hidden" name="status" id="statusFilter" value="@Model.Filters?.Status" />
+</form>
+
+
 
 @section Scripts {
     <script src="~/js/contact/contact.js"></script>

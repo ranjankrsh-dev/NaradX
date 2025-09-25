@@ -4,12 +4,12 @@ document.getElementById('filterBtn').addEventListener('click', function () {
 });
 
 // Select all checkbox
-document.getElementById('selectAll').addEventListener('change', function () {
-    const checkboxes = document.querySelectorAll('.employee-table tbody input[type="checkbox"]');
-    checkboxes.forEach(checkbox => {
-        checkbox.checked = this.checked;
-    });
-});
+//document.getElementById('selectAll').addEventListener('change', function () {
+//    const checkboxes = document.querySelectorAll('.employee-table tbody input[type="checkbox"]');
+//    checkboxes.forEach(checkbox => {
+//        checkbox.checked = this.checked;
+//    });
+//});
 
 // Modal functionality
 const modal = document.getElementById('newEmployeeModal');
@@ -66,3 +66,39 @@ document.addEventListener('keydown', function (event) {
         hideModal();
     }
 });
+
+function goToPage(pageNumber) {
+    document.getElementById('pageNumber').value = pageNumber;
+    document.getElementById('filterForm').submit();
+}
+
+function applySearch() {
+    document.getElementById('pageNumber').value = 1; // Reset to first page
+    document.getElementById('searchTerm').value = document.getElementById('searchInput').value;
+    document.getElementById('filterForm').submit();
+}
+
+function applyFilter(filterType, filterValue) {
+    document.getElementById('pageNumber').value = 1; // Reset to first page
+    document.getElementById(filterType + 'Filter').value = filterValue;
+    document.getElementById('filterForm').submit();
+}
+
+function clearFilters() {
+    document.getElementById('searchTerm').value = '';
+    document.getElementById('nameFilter').value = '';
+    document.getElementById('phoneFilter').value = '';
+    document.getElementById('statusFilter').value = '';
+    document.getElementById('filterForm').submit();
+}
+
+// Utility functions
+function updateFormData(fieldName, value) {
+    document.querySelector(`[name="${fieldName}"]`).value = value;
+}
+
+function getFormData() {
+    const form = document.getElementById('filterForm');
+    const formData = new FormData(form);
+    return new URLSearchParams(formData).toString();
+}

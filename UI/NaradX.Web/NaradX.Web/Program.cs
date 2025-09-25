@@ -1,8 +1,10 @@
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using NaradX.Web.Services.Implementations.Common;
+using NaradX.Web.Services.Implementations.Contact;
 using NaradX.Web.Services.Implementations.Security;
 using NaradX.Web.Services.Interfaces.Common;
+using NaradX.Web.Services.Interfaces.Contact;
 using NaradX.Web.Services.Interfaces.Security;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -66,6 +68,7 @@ builder.Services.AddScoped<IRefreshTokenService, RefreshTokenService>();
 builder.Services.AddScoped<IAuditService, AuditService>();
 builder.Services.AddScoped<IIpAddressService, IpAddressService>();
 builder.Services.AddScoped<IConfigValueService, ConfigValueService>();
+builder.Services.AddScoped<IContactService, ContactService>();
 
 
 var app = builder.Build();
