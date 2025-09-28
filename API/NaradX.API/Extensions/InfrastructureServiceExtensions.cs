@@ -30,7 +30,7 @@ namespace NaradX.API.Extensions
             services.Configure<JwtSettings>(configuration.GetSection("JwtSettings"));
             services.AddScoped<IJwtService, JwtService>();
             services.AddScoped<ITenantService, TenantService>();
-            services.AddScoped<IConfigValueService, ConfigValueService>();
+            services.AddScoped<ICommonServices, CommonServices>();
 
             // JWT Authentication
             var jwtSettings = configuration.GetSection("JwtSettings").Get<JwtSettings>();

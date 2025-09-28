@@ -125,14 +125,11 @@ namespace NaradX.Infrastructure
 
         private void ConfigureCountryLanguageRelationship(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Country>()
-                .HasMany(c => c.Languages)
-                .WithMany(l => l.Countries)
-                .UsingEntity<Dictionary<string, object>>(
-                    "CountryLanguage",
-                    j => j.HasOne<Language>().WithMany().HasForeignKey("LanguageId"),
-                    j => j.HasOne<Country>().WithMany().HasForeignKey("CountryId"),
-                    j => j.HasKey("CountryId", "LanguageId"));
+            modelBuilder.Entity<Language>()
+                .HasOne(l => l.Country)
+                .WithMany(c => c.Languages)
+                .HasForeignKey(l => l.CountryId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

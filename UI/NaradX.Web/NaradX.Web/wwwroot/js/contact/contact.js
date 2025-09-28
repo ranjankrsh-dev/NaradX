@@ -67,38 +67,115 @@ document.addEventListener('keydown', function (event) {
     }
 });
 
+
+
+
+function loadContacts() {
+    const $form = $('#commonFilterForm');
+
+    const formData = $form.serializeArray();
+
+    //formData.push({ name: 'PageNumber', value: pageNumber });
+
+    //const nameFilter = document.querySelector('input[id="filterName"]');
+    //const phoneFilter = document.querySelector('input[id="filterPhone"]');
+    //const statusFilter = document.querySelector('select[id="filterStatus"]');
+
+    //if (nameFilter && nameFilter.value) {
+    //    formData.push({ name: 'Filters.Name', value: nameFilter.value });
+    //}
+    //if (phoneFilter && phoneFilter.value) {
+    //    formData.push({ name: 'Filters.Phone', value: phoneFilter.value });
+    //}
+    //if (statusFilter && statusFilter.value) {
+    //    formData.push({ name: 'Filters.Status', value: statusFilter.value });
+    //}
+
+    const serializedData = $.param(formData);
+
+    $.ajax({
+        url: $form.attr('action'),
+        type: 'POST',
+        data: serializedData,
+        success: function (result) {
+            $('#contactsTableContainer').html('');
+            $('#contactsTableContainer').html(result);
+        },
+        error: function () {
+            alert('Error loading contacts.');
+        }
+    });
+}
+
 function goToPage(pageNumber) {
     document.getElementById('pageNumber').value = pageNumber;
-    document.getElementById('filterForm').submit();
+    loadContacts();
 }
 
 function applySearch() {
-    document.getElementById('pageNumber').value = 1; // Reset to first page
+    document.getElementById('pageNumber').value = 1;
     document.getElementById('searchTerm').value = document.getElementById('searchInput').value;
-    document.getElementById('filterForm').submit();
+    loadContacts();
 }
 
-function applyFilter(filterType, filterValue) {
-    document.getElementById('pageNumber').value = 1; // Reset to first page
-    document.getElementById(filterType + 'Filter').value = filterValue;
-    document.getElementById('filterForm').submit();
+function applyFilter() {
+    document.getElementById('pageNumber').value = 1;
+    document.getElementById('nameFilter').value = document.getElementById('filterName').value;
+    document.getElementById('phoneFilter').value = document.getElementById('filterPhone').value;
+    document.getElementById('statusFilter').value = document.getElementById('filterStatus').value;
+    loadContacts();
 }
 
 function clearFilters() {
+    document.getElementById('pageNumber').value = 1;
     document.getElementById('searchTerm').value = '';
     document.getElementById('nameFilter').value = '';
     document.getElementById('phoneFilter').value = '';
     document.getElementById('statusFilter').value = '';
-    document.getElementById('filterForm').submit();
+
+    document.getElementById('searchInput').value = '';
+    document.getElementById('filterName').value = '';
+    document.getElementById('filterPhone').value = '';
+    const statusDropdown = document.getElementById('filterStatus');
+    statusDropdown.selectedIndex = 0;
+
+    loadContacts();
 }
 
-// Utility functions
-function updateFormData(fieldName, value) {
-    document.querySelector(`[name="${fieldName}"]`).value = value;
-}
+function loadLanguages(currenRow) {
+    var countryId = currenRow.value;
+    const languageDropdown = document.getElementById('LanguageDropdown');
+    if (!countryId || countryId == "-1") {
+        languageDropdown.innerHTML = '';
+        return;
+    }
 
-function getFormData() {
-    const form = document.getElementById('filterForm');
-    const formData = new FormData(form);
-    return new URLSearchParams(formData).toString();
+    fetch(`Contact/GetLanguagesByCountry?countryId=${encodeURIComponent(countryId)}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Clear existing options
+            languageDropdown.innerHTML = '';
+
+            // Optionally add a default placeholder
+            const placeholder = document.createElement('option');
+            placeholder.value = '';
+            placeholder.textContent = 'Select any';
+            languageDropdown.appendChild(placeholder);
+
+            // Add new options
+            data.languages.forEach(item => {
+                const opt = document.createElement('option');
+                opt.value = item.id;
+                opt.textContent = item.name;
+                languageDropdown.appendChild(opt);
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching languages:', error);
+        });
 }

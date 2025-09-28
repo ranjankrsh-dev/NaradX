@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using NaradX.Entities.Common;
+using NaradX.Entities.Enums.Common;
 using NaradX.Entities.Response.Contact;
 using NaradX.Web.Models.Contact;
 using NaradX.Web.Services.Interfaces.Common;
 using NaradX.Web.Services.Interfaces.Contact;
 using NaradX.Web.ViewModels.Contact;
+using System.Text.Json;
 
 namespace NaradX.Web.Controllers
 {
@@ -12,18 +14,18 @@ namespace NaradX.Web.Controllers
     {
         private readonly IApiHelper apiHelper;
         private readonly ILogger<ContactController> logger;
-        private readonly IConfigValueService configValueService;
+        private readonly ICommonServices commonServices;
         private readonly IContactService contactService;
 
         public ContactController(
             IApiHelper apiHelper, 
-            ILogger<ContactController> logger, 
-            IConfigValueService configValueService, 
+            ILogger<ContactController> logger,
+            ICommonServices commonServices, 
             IContactService contactService)
         {
             this.apiHelper = apiHelper;
             this.logger = logger;
-            this.configValueService = configValueService;
+            this.commonServices = commonServices;
             this.contactService = contactService;
         }
 
@@ -37,10 +39,14 @@ namespace NaradX.Web.Controllers
             {
                 filters.TenantId = tenantId;
             }
+            IEnumerable<string> configKeys = Enum.GetNames(typeof(ConfigKeys)).ToList();
+            var aa = await commonServices.GetMultipleConfigValuesAsync(configKeys, tenantId);
 
             ContactViewModel model = new ContactViewModel()
             {
                 ContactList = await contactService.GetContactsAsync(filters),
+                Countries = await commonServices.GetAllCountriesAsync(),
+                ConfigValues = await commonServices.GetMultipleConfigValuesAsync(Enum.GetNames(typeof(ConfigKeys)).ToList(), tenantId)
             };
 
             return View(model);
@@ -58,7 +64,7 @@ namespace NaradX.Web.Controllers
                 ContactList = await contactService.GetContactsAsync(filters),
             };
 
-            return View(model);
+            return PartialView("_ContactTablePartial", model);
         }
 
         [HttpPost]
@@ -76,6 +82,13 @@ namespace NaradX.Web.Controllers
             }
             
             return RedirectToAction("ManageContacts");
+        }
+
+        [HttpGet]
+        public async Task<JsonResult> GetLanguagesByCountry(int countryId)
+        {
+            var langs = await commonServices.GetLanguagesByCountryIdAsync(countryId);
+            return Json(langs);
         }
     }
 }
