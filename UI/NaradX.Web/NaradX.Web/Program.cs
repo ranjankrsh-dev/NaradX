@@ -69,6 +69,7 @@ builder.Services.AddScoped<IAuditService, AuditService>();
 builder.Services.AddScoped<IIpAddressService, IpAddressService>();
 builder.Services.AddScoped<IConfigValueService, ConfigValueService>();
 builder.Services.AddScoped<IContactService, ContactService>();
+builder.Services.AddScoped<ICommonServices, CommonServices>();
 
 
 var app = builder.Build();

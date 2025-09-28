@@ -26,8 +26,10 @@ namespace NaradX.Entities.Response.Contact
         [RegularExpression(@"^\+?[1-9]\d{1,14}$", ErrorMessage = "Phone number is not valid.")]
         public string PhoneNumber { get; set; } = null!;
         public string? Country { get; set; }
+        [Required(ErrorMessage = "Please select country")]
         public int CountryId { get; set; }
         public string? Language { get; set; }
+        [Required(ErrorMessage = "Please select language")]
         public int LanguageId { get; set; }
         public string ContactSource { get; set; } = null!;
         public string ChannelPreference { get; set; } = null!;

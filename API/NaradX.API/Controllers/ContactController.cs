@@ -19,13 +19,11 @@ namespace NaradX.API.Controllers
     {
         private readonly IMediator _mediator;
         private readonly ILogger<ContactController> _logger;
-        private readonly IConfigValueService _configValueService;
 
-        public ContactController(IMediator mediator,ILogger<ContactController> logger, IConfigValueService configValueService)
+        public ContactController(IMediator mediator,ILogger<ContactController> logger)
         {
             _mediator = mediator;
             _logger = logger;
-            _configValueService = configValueService;
         }
 
         [HttpPost("list")]

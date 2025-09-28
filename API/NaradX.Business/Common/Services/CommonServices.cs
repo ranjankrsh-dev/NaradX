@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using NaradX.Business.Common.Interfaces;
 using NaradX.Domain.Entities.Common;
@@ -12,21 +13,24 @@ using System.Threading.Tasks;
 
 namespace NaradX.Business.Common.Services
 {
-    public class ConfigValueService : IConfigValueService
+    public class CommonServices : ICommonServices
     {
-        private readonly IUnitOfWork _context;
-        private readonly IMemoryCache _memoryCache;
+        private readonly IUnitOfWork context;
+        private readonly IMemoryCache memoryCache;
+        private readonly IMapper mapper;
 
-        // Cache configuration
         private readonly MemoryCacheEntryOptions _cacheOptions = new MemoryCacheEntryOptions()
             .SetSlidingExpiration(TimeSpan.FromHours(1)) // Cache for 1 hour after last access
             .SetAbsoluteExpiration(TimeSpan.FromHours(24)); // Absolute expiration after 24 hours
 
-        public ConfigValueService(IUnitOfWork context, IMemoryCache memoryCache)
+        public CommonServices(IUnitOfWork context, IMemoryCache memoryCache,IMapper mapper)
         {
-            _context = context;
-            _memoryCache = memoryCache;
+            this.context = context;
+            this.memoryCache = memoryCache;
+            this.mapper = mapper;
         }
+
+        #region Config Master & Values
 
         public async Task<IReadOnlyList<ConfigValueDto>> GetDropdownValuesAsync(string configKey, int? tenantId)
         {
@@ -34,7 +38,7 @@ namespace NaradX.Business.Common.Services
             var cacheKey = $"Dropdown_{configKey}_{tenantId}";
 
             // 2. Try to get the result from the cache first
-            if (_memoryCache.TryGetValue(cacheKey, out IReadOnlyList<ConfigValueDto> cachedResult))
+            if (memoryCache.TryGetValue(cacheKey, out IReadOnlyList<ConfigValueDto> cachedResult))
             {
                 return cachedResult;
             }
@@ -43,7 +47,7 @@ namespace NaradX.Business.Common.Services
             var result = await GetDropdownFromDatabaseAsync(configKey, tenantId);
 
             // 4. Store the result in the cache
-            _memoryCache.Set(cacheKey, result, _cacheOptions);
+            memoryCache.Set(cacheKey, result, _cacheOptions);
 
             return result;
         }
@@ -57,7 +61,7 @@ namespace NaradX.Business.Common.Services
             var cacheKey = $"BulkDropdown_{string.Join("_", configKeys.OrderBy(k => k))}_{tenantId}";
 
             // 2. Try to get the result from the cache first
-            if (_memoryCache.TryGetValue(cacheKey, out Dictionary<string, IReadOnlyList<ConfigValueDto>> cachedResult))
+            if (memoryCache.TryGetValue(cacheKey, out Dictionary<string, IReadOnlyList<ConfigValueDto>> cachedResult))
             {
                 return cachedResult;
             }
@@ -66,7 +70,7 @@ namespace NaradX.Business.Common.Services
             var result = await GetMultipleDropdownsFromDatabaseAsync(configKeys, tenantId);
 
             // 4. Store the result in the cache
-            _memoryCache.Set(cacheKey, result, _cacheOptions);
+            memoryCache.Set(cacheKey, result, _cacheOptions);
 
             return result;
         }
@@ -74,7 +78,7 @@ namespace NaradX.Business.Common.Services
         private async Task<IReadOnlyList<ConfigValueDto>> GetDropdownFromDatabaseAsync(string configKey, int? tenantId)
         {
             // 1. Find the Config Master entry
-            var configMaster = await _context.GetRepository<ConfigMaster>()
+            var configMaster = await context.GetRepository<ConfigMaster>()
                 .FirstOrDefaultAsync(cm => cm.ConfigKey == configKey && cm.IsActive);
 
             if (configMaster == null)
@@ -84,7 +88,7 @@ namespace NaradX.Business.Common.Services
                 return new List<ConfigValueDto>().AsReadOnly();
             }
 
-            var valuesQuery = await _context.GetRepository<ConfigValue>()
+            var valuesQuery = await context.GetRepository<ConfigValue>()
                 .FindAsync(cv => cv.ConfigMasterId == configMaster.Id && cv.IsActive);
 
             // 2. Apply the retrieval logic: Tenant-specific first, fallback to global
@@ -116,7 +120,7 @@ namespace NaradX.Business.Common.Services
             var result = new Dictionary<string, IReadOnlyList<ConfigValueDto>>();
 
             // 1. Get all relevant Config Masters in one query
-            var configMasters = await _context.GetRepository<ConfigMaster>()
+            var configMasters = await context.GetRepository<ConfigMaster>()
                 .FindAsync(cm => configKeys.Contains(cm.ConfigKey) && cm.IsActive);
 
             if (!configMasters.Any())
@@ -127,7 +131,7 @@ namespace NaradX.Business.Common.Services
             // 2. Get ALL possible values for these configs in one query
             // We'll get both global (TenantId null) and tenant-specific values
 
-            var allValues = await _context.GetRepository<ConfigValue>()
+            var allValues = await context.GetRepository<ConfigValue>()
                 .FindAsync(cv => masterIds.Contains(cv.ConfigMasterId) && cv.IsActive);
 
             // 3. For each requested config key, apply the logic: tenant-specific first, else global
@@ -189,7 +193,7 @@ namespace NaradX.Business.Common.Services
             if (configKey != null)
             {
                 var cacheKey = $"Dropdown_{configKey}_{tenantId}";
-                _memoryCache.Remove(cacheKey);
+                memoryCache.Remove(cacheKey);
             }
             else
             {
@@ -198,5 +202,29 @@ namespace NaradX.Business.Common.Services
                 // For full cache clear, you may need to recreate the cache instance or use a wrapper.
             }
         }
+
+        #endregion
+
+        #region Country and Languages
+
+        public async Task<IReadOnlyList<CountryDto>> GetAllCountriesAsync()
+        {
+            var countries = context.GetRepository<Country>();
+
+            var result = await countries.GetAllAsync();
+
+            return mapper.Map<IReadOnlyList<CountryDto>>(result);
+        }
+
+        public async Task<CountryDto> GetLanguagesByCountryIdAsync(int countryId)
+        {
+            var countries = context.GetRepository<Country>();
+
+            var result = await countries.GetByIdAsync(countryId, c => c.Languages);
+
+            return mapper.Map<CountryDto>(result);
+        }
+
+        #endregion
     }
 }

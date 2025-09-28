@@ -1,0 +1,98 @@
+﻿@using NaradX.Web.ViewModels.Contact
+@model ContactViewModel
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="table-responsive">
+            <table class="table employee-table">
+                <thead>
+                    <tr>
+                        @*<th>
+                                            <input type="checkbox" id="selectAll">
+                                        </th> *@
+                        <th>Name</th>
+                        <th>Phone No.</th>
+                        <th>Country</th>
+                        <th>Language</th>
+                        <th>Channel</th>
+                        <th>Source</th>
+                        <th>Status</th>
+                        <th class="text-center"><i class="icon-settings"></i></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{
+                        if (Model.ContactList == null || !Model.ContactList.Items.Any())
+                        {
+                            <tr>
+                                <td colspan="8" class="text-center">No contacts found.</td>
+                            </tr>
+                        }
+                        else
+                        {
+                            foreach (var contact in Model.ContactList.Items)
+                            {
+                                <tr>
+                                    @* <td><div class="form-check"><input class="form-check-input" type="checkbox" value="@contact.Id"></div></td>*@
+                                    <td>@contact.DisplayName</td>
+                                    <td>@contact.PhoneNumber</td>
+                                    <td>@contact.Country</td>
+                                    <td>@contact.Language</td>
+                                    <td>channel name</td>
+                                    <td>@contact.ImportSource</td>
+                                    <td>
+                                        <span class="badge status-badge @(contact.Email != null ? "status-enabled" : "status-disabled")">
+                                            @(contact.Email != null ? "Enabled" : "Disabled")
+                                        </span>
+                                    </td>
+                                    <td class="text-center">
+                                        <button class="btn btn-sm btn-outline-secondary">
+                                            <i class="icon-pencil"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="text-muted">
+            Showing @Model.ContactList.FirstItemIndex to @Model.ContactList.LastItemIndex
+            of @Model.ContactList.TotalCount entries
+        </div>
+    </div>
+    <div class="col-md-6">
+        @if (Model.ContactList.TotalPages > 1)
+        {
+            <ul class="pagination pagination-sm mb-0 pull-right">
+                <!-- Previous Page -->
+                <li class="page-item @(Model.ContactList.HasPreviousPage ? "" : "disabled")">
+                    <a class="page-link" href="javascript:void(0);" onclick="goToPage(@(Model.ContactList.PageNumber - 1))">
+                        Previous
+                    </a>
+                </li>
+
+                <!-- Page Numbers -->
+                @for (int i = 1; i <= Model.ContactList.TotalPages; i++)
+                {
+                    <li class="page-item @(i == Model.ContactList.PageNumber ? "active" : "")">
+                        <a class="page-link" href="javascript:void(0);" onclick="goToPage(@i)">@i</a>
+                    </li>
+                }
+
+                <!-- Next Page -->
+                <li class="page-item @(Model.ContactList.HasNextPage ? "" : "disabled")">
+                    <a class="page-link" href="javascript:void(0);" onclick="goToPage(@(Model.ContactList.PageNumber + 1))">
+                        Next
+                    </a>
+                </li>
+            </ul>
+        }
+    </div>
+</div>

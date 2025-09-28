@@ -204,8 +204,8 @@ namespace NaradX.Infrastructure.Data.Seed
                 // 1. Seed the ConfigMaster entries
                 var dataSourceMaster = new ConfigMaster
                 {
-                    ConfigKey = "DATA_SOURCE",
-                    Description = "Source of imported data",
+                    ConfigKey = "CHHANNEL_PREFERENCE",
+                    Description = "Contact will be use for channel like whatsapp,facebook",
                     IsTenantSpecific = false,
                     IsActive = true,
                     CreatedBy = "System",
@@ -216,7 +216,7 @@ namespace NaradX.Infrastructure.Data.Seed
                 {
                     ConfigKey = "CONTACT_SOURCE",
                     Description = "How a contact was acquired",
-                    IsTenantSpecific = true,
+                    IsTenantSpecific = false,
                     IsActive = true,
                     CreatedBy = "System",
                     CreatedOn = DateTime.UtcNow
@@ -227,23 +227,21 @@ namespace NaradX.Infrastructure.Data.Seed
 
 
                 // 2. Seed the ConfigValue entries (GLOBAL DEFAULTS)
-                // For DATA_SOURCE
+                // For CHHANNEL_PREFERENCE
                 var dataSourceValues = new List<ConfigValue>
                 {
-                    new ConfigValue { ConfigMasterId = dataSourceMaster.Id, TenantId = null, ItemValue = "API", ItemText = "API", DisplayOrder = 1, IsActive = true, CreatedBy = "System", CreatedOn = DateTime.UtcNow },
-                    new ConfigValue { ConfigMasterId = dataSourceMaster.Id, TenantId = null, ItemValue = "MANUAL_UI", ItemText = "Manual UI", DisplayOrder = 2, IsActive = true, CreatedBy = "System", CreatedOn = DateTime.UtcNow },
-                    new ConfigValue { ConfigMasterId = dataSourceMaster.Id, TenantId = null, ItemValue = "CSV_IMPORT", ItemText = "CSV Import", DisplayOrder = 3, IsActive = true, CreatedBy = "System", CreatedOn = DateTime.UtcNow },
-                    new ConfigValue { ConfigMasterId = dataSourceMaster.Id, TenantId = null, ItemValue = "EXCEL_IMPORT", ItemText = "Excel Import", DisplayOrder = 4, IsActive = true, CreatedBy = "System", CreatedOn = DateTime.UtcNow }
+                    new ConfigValue { ConfigMasterId = dataSourceMaster.Id, TenantId = null, ItemValue = "WHATSAPP", ItemText = "Whatsapp", DisplayOrder = 1, IsActive = true, CreatedBy = "System", CreatedOn = DateTime.UtcNow },
+                    new ConfigValue { ConfigMasterId = dataSourceMaster.Id, TenantId = null, ItemValue = "FACEBOOK", ItemText = "Facebook", DisplayOrder = 2, IsActive = true, CreatedBy = "System", CreatedOn = DateTime.UtcNow }
                 };
 
-                // For CONTACT_SOURCE - GLOBAL FALLBACK VALUES
+                // For CONTACT_SOURCE
                 var contactSourceValues = new List<ConfigValue>
                 {
-                    new ConfigValue { ConfigMasterId = contactSourceMaster.Id, TenantId = 1, ItemValue = "WEBSITE", ItemText = "Website", DisplayOrder = 1, IsActive = true, CreatedBy = "System", CreatedOn = DateTime.UtcNow },
-                    new ConfigValue { ConfigMasterId = contactSourceMaster.Id, TenantId = 1, ItemValue = "EMAIL", ItemText = "Email", DisplayOrder = 2, IsActive = true, CreatedBy = "System", CreatedOn = DateTime.UtcNow },
-                    new ConfigValue { ConfigMasterId = contactSourceMaster.Id, TenantId = 1, ItemValue = "WALKIN", ItemText = "Walk-In", DisplayOrder = 3, IsActive = true, CreatedBy = "System", CreatedOn = DateTime.UtcNow },
-                    new ConfigValue { ConfigMasterId = contactSourceMaster.Id, TenantId = 1, ItemValue = "FRIENDS", ItemText = "Friends", DisplayOrder = 4, IsActive = true, CreatedBy = "System", CreatedOn = DateTime.UtcNow },
-                    new ConfigValue { ConfigMasterId = contactSourceMaster.Id, TenantId = 1, ItemValue = "SOCIAL_MEDIA", ItemText = "Social Media", DisplayOrder = 5, IsActive = true, CreatedBy = "System", CreatedOn = DateTime.UtcNow }
+                    new ConfigValue { ConfigMasterId = contactSourceMaster.Id, TenantId = null, ItemValue = "WEBSITE", ItemText = "Website", DisplayOrder = 1, IsActive = true, CreatedBy = "System", CreatedOn = DateTime.UtcNow },
+                    new ConfigValue { ConfigMasterId = contactSourceMaster.Id, TenantId = null, ItemValue = "EMAIL", ItemText = "Email", DisplayOrder = 2, IsActive = true, CreatedBy = "System", CreatedOn = DateTime.UtcNow },
+                    new ConfigValue { ConfigMasterId = contactSourceMaster.Id, TenantId = null, ItemValue = "WALKIN", ItemText = "Walk-In", DisplayOrder = 3, IsActive = true, CreatedBy = "System", CreatedOn = DateTime.UtcNow },
+                    new ConfigValue { ConfigMasterId = contactSourceMaster.Id, TenantId = null, ItemValue = "FRIENDS", ItemText = "Friends", DisplayOrder = 4, IsActive = true, CreatedBy = "System", CreatedOn = DateTime.UtcNow },
+                    new ConfigValue { ConfigMasterId = contactSourceMaster.Id, TenantId = null, ItemValue = "SOCIAL_MEDIA", ItemText = "Social Media", DisplayOrder = 5, IsActive = true, CreatedBy = "System", CreatedOn = DateTime.UtcNow }
                 };
 
                 context.ConfigValues.AddRange(dataSourceValues);
@@ -251,35 +249,46 @@ namespace NaradX.Infrastructure.Data.Seed
                 context.SaveChanges();
             }
         }
-
         private static void SeedCountriesAndLanguages(NaradXDbContext context)
         {
-            if (!context.Countries.Any())
+            if (!context.Countries.Any(c => c.Code == "IN"))
             {
-                var languages = new List<Language>
-        {
+                var country = new Country
+                {
+                    Name = "India",
+                    Code = "IN",
+                    PhoneCode = "91",
+                    CurrencyCode = "INR",
+                    CurrencySymbol = "₹",
+                    Timezone = "IST (UTC+5:30)",
+                    CreatedBy = "System",
+                    CreatedOn = DateTime.UtcNow,
+                    Languages = new List<Language>
+                    {
+                        new Language
+                        {
+                            Culture = "hi-IN",
+                            Name = "Hindi",
+                            LocalName = "हिन्दी",
+                            IsDefault = true,
+                            Description = "Official language of India",
+                            CreatedBy = "System",
+                            CreatedOn = DateTime.UtcNow
+                        },
+                        new Language
+                        {
+                            CountryId=1,
+                            Culture = "en-IN",
+                            Name = "English",
+                            LocalName = "English",
+                            IsDefault = true,
+                            Description = "Official subsidiary language of India",
+                            CreatedBy = "System",
+                            CreatedOn = DateTime.UtcNow
+                        },
             new Language
             {
-                Culture = "hi-IN",
-                Name = "Hindi",
-                LocalName = "हिन्दी",
-                IsDefault = true,
-                Description = "Official language of India",
-                CreatedBy = "System",
-                CreatedOn = DateTime.UtcNow
-            },
-            new Language
-            {
-                Culture = "en-IN",
-                Name = "English",
-                LocalName = "English",
-                IsDefault = true,
-                Description = "Official subsidiary language of India",
-                CreatedBy = "System",
-                CreatedOn = DateTime.UtcNow
-            },
-            new Language
-            {
+                CountryId=1,
                 Culture = "bn-IN",
                 Name = "Bengali",
                 LocalName = "বাংলা",
@@ -290,6 +299,7 @@ namespace NaradX.Infrastructure.Data.Seed
             },
             new Language
             {
+                CountryId = 1,
                 Culture = "te-IN",
                 Name = "Telugu",
                 LocalName = "తెలుగు",
@@ -299,7 +309,7 @@ namespace NaradX.Infrastructure.Data.Seed
                 CreatedOn = DateTime.UtcNow
             },
             new Language
-            {
+            {CountryId = 1,
                 Culture = "mr-IN",
                 Name = "Marathi",
                 LocalName = "मराठी",
@@ -309,7 +319,7 @@ namespace NaradX.Infrastructure.Data.Seed
                 CreatedOn = DateTime.UtcNow
             },
             new Language
-            {
+            {CountryId = 1,
                 Culture = "ta-IN",
                 Name = "Tamil",
                 LocalName = "தமிழ்",
@@ -319,7 +329,7 @@ namespace NaradX.Infrastructure.Data.Seed
                 CreatedOn = DateTime.UtcNow
             },
             new Language
-            {
+            {CountryId = 1,
                 Culture = "ur-IN",
                 Name = "Urdu",
                 LocalName = "اردو",
@@ -329,7 +339,7 @@ namespace NaradX.Infrastructure.Data.Seed
                 CreatedOn = DateTime.UtcNow
             },
             new Language
-            {
+            {CountryId = 1,
                 Culture = "gu-IN",
                 Name = "Gujarati",
                 LocalName = "ગુજરાતી",
@@ -339,7 +349,7 @@ namespace NaradX.Infrastructure.Data.Seed
                 CreatedOn = DateTime.UtcNow
             },
             new Language
-            {
+            {CountryId = 1,
                 Culture = "kn-IN",
                 Name = "Kannada",
                 LocalName = "ಕನ್ನಡ",
@@ -349,7 +359,7 @@ namespace NaradX.Infrastructure.Data.Seed
                 CreatedOn = DateTime.UtcNow
             },
             new Language
-            {
+            {CountryId = 1,
                 Culture = "or-IN",
                 Name = "Odia",
                 LocalName = "ଓଡ଼ିଆ",
@@ -359,7 +369,7 @@ namespace NaradX.Infrastructure.Data.Seed
                 CreatedOn = DateTime.UtcNow
             },
             new Language
-            {
+            {CountryId = 1,
                 Culture = "ml-IN",
                 Name = "Malayalam",
                 LocalName = "മലയാളം",
@@ -369,7 +379,7 @@ namespace NaradX.Infrastructure.Data.Seed
                 CreatedOn = DateTime.UtcNow
             },
             new Language
-            {
+            {CountryId = 1,
                 Culture = "pa-IN",
                 Name = "Punjabi",
                 LocalName = "ਪੰਜਾਬੀ",
@@ -379,7 +389,7 @@ namespace NaradX.Infrastructure.Data.Seed
                 CreatedOn = DateTime.UtcNow
             },
             new Language
-            {
+            {CountryId = 1,
                 Culture = "as-IN",
                 Name = "Assamese",
                 LocalName = "অসমীয়া",
@@ -389,7 +399,7 @@ namespace NaradX.Infrastructure.Data.Seed
                 CreatedOn = DateTime.UtcNow
             },
             new Language
-            {
+            {CountryId = 1,
                 Culture = "mai-IN",
                 Name = "Maithili",
                 LocalName = "मैथिली",
@@ -399,7 +409,7 @@ namespace NaradX.Infrastructure.Data.Seed
                 CreatedOn = DateTime.UtcNow
             },
             new Language
-            {
+            {CountryId = 1,
                 Culture = "sat-IN",
                 Name = "Santali",
                 LocalName = "ᱥᱟᱱᱛᱟᱲᱤ",
@@ -409,7 +419,7 @@ namespace NaradX.Infrastructure.Data.Seed
                 CreatedOn = DateTime.UtcNow
             },
             new Language
-            {
+            {CountryId = 1,
                 Culture = "ks-IN",
                 Name = "Kashmiri",
                 LocalName = "कॉशुर",
@@ -419,7 +429,7 @@ namespace NaradX.Infrastructure.Data.Seed
                 CreatedOn = DateTime.UtcNow
             },
             new Language
-            {
+            {CountryId = 1,
                 Culture = "ne-IN",
                 Name = "Nepali",
                 LocalName = "नेपाली",
@@ -429,7 +439,7 @@ namespace NaradX.Infrastructure.Data.Seed
                 CreatedOn = DateTime.UtcNow
             },
             new Language
-            {
+            {CountryId = 1,
                 Culture = "sd-IN",
                 Name = "Sindhi",
                 LocalName = "सिन्धी",
@@ -439,7 +449,7 @@ namespace NaradX.Infrastructure.Data.Seed
                 CreatedOn = DateTime.UtcNow
             },
             new Language
-            {
+            {CountryId = 1,
                 Culture = "kok-IN",
                 Name = "Konkani",
                 LocalName = "कोंकणी",
@@ -449,7 +459,7 @@ namespace NaradX.Infrastructure.Data.Seed
                 CreatedOn = DateTime.UtcNow
             },
             new Language
-            {
+            {CountryId = 1,
                 Culture = "doi-IN",
                 Name = "Dogri",
                 LocalName = "डोगरी",
@@ -459,7 +469,7 @@ namespace NaradX.Infrastructure.Data.Seed
                 CreatedOn = DateTime.UtcNow
             },
             new Language
-            {
+            {CountryId = 1,
                 Culture = "mni-IN",
                 Name = "Manipuri",
                 LocalName = "মৈতৈলোন্",
@@ -469,7 +479,7 @@ namespace NaradX.Infrastructure.Data.Seed
                 CreatedOn = DateTime.UtcNow
             },
             new Language
-            {
+            {CountryId = 1,
                 Culture = "brx-IN",
                 Name = "Bodo",
                 LocalName = "बड़ो",
@@ -479,7 +489,7 @@ namespace NaradX.Infrastructure.Data.Seed
                 CreatedOn = DateTime.UtcNow
             },
             new Language
-            {
+            {CountryId = 1,
                 Culture = "sa-IN",
                 Name = "Sanskrit",
                 LocalName = "संस्कृतम्",
@@ -488,31 +498,14 @@ namespace NaradX.Infrastructure.Data.Seed
                 CreatedBy = "System",
                 CreatedOn = DateTime.UtcNow
             }
-        };
-
-                context.Languages.AddRange(languages);
-                context.SaveChanges();
-
-                var countries = new List<Country>
-                {
-                    new Country
-            {
-                Name = "India",
-                Code = "IN",
-                PhoneCode = "91",
-                CurrencyCode = "INR",
-                CurrencySymbol = "₹",
-                Timezone = "IST (UTC+5:30)",
-                Languages = languages,
-                CreatedBy = "System",
-                CreatedOn = DateTime.UtcNow
-            }
+                    }
                 };
 
-                context.Countries.AddRange(countries);
+                context.Countries.Add(country);
                 context.SaveChanges();
             }
         }
+
 
     }
 }

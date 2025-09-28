@@ -17,27 +17,28 @@
         </div>
         <!-- Filter Box -->
         <div class="filter-box" id="filterBox">
-            <form method="post" asp-action="ManageContacts">
+@*             <form id="filterForm" method="post" asp-action="ManageContacts">
+                @Html.AntiForgeryToken() *@
                 <div class="row">
                     <div class="col-md-3">
                         <div class="callout callout-warning mt-0 mb-0">
                             <small class="text-muted font-sm">Name</small>
                             <br>
-                            <input type="text" class="form-control font-xs" placeholder="Enter name" autocomplete="off" asp-for="Filters.Name" title="Name">
+                            <input id="filterName" type="text" class="form-control font-xs" placeholder="Enter name" autocomplete="off" title="Name">
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="callout callout-success mt-0 mb-0">
                             <small class="text-muted font-sm">Phone No.</small>
                             <br>
-                            <input type="text" class="form-control font-xs" placeholder="Enter phone number" autocomplete="off" asp-for="Filters.Phone" title="Phone">
+                        <input id="filterPhone" type="text" class="form-control font-xs" placeholder="Enter phone number" autocomplete="off" title="Phone">
                         </div>
                     </div>
                     <div class="col-md-3">
                         <div class="callout callout-primary mt-0 mb-0">
                             <small class="text-muted font-sm">Status</small>
                             <br>
-                            <select class="form-control font-sm" asp-for="Filters.Status" title="Status">
+                        <select id="filterStatus" class="form-control font-sm" title="Status">
                                 <option value="">All</option>
                                 <option value="enabled">Enabled</option>
                                 <option value="disabled">Disabled</option>
@@ -45,11 +46,11 @@
                         </div>
                     </div>
                     <div class="col-md-3 d-flex align-items-end">
-                        <button type="button" class="btn btn-outline-danger mr-2" title="Clear All" onclick="clearFilters()">Clear All</button>
-                        <button type="button" class="btn btn-outline-primary" title="Apply" onclick="">Apply</button>
+                    <button type="button" class="btn btn-outline-danger mr-2" title="Clear All" onclick="clearFilters();">Clear All</button>
+                    <button type="button" class="btn btn-outline-primary" title="Apply" onclick="applyFilter();">Apply</button>
                     </div>
                 </div>
-            </form>
+           @*  </form> *@
         </div>
 
         <!-- Employee Grid -->
@@ -58,22 +59,23 @@
                 <!-- Search and Actions -->
                 <div class="row mb-2">
                     <div class="col-md-8">
-                        <form method="post" asp-action="ManageContacts">
+@*                         <form id="searchForm" method="post" asp-action="ManageContacts">
+                            @Html.AntiForgeryToken() *@
                             <div class="input-group">
                                 <button class="btn btn-outline-secondary" id="filterBtn" type="button">
                                     <svg class="icon-filter" viewBox="0 0 24 24" width="16" height="16">
                                         <path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z" />
                                     </svg> Filter
                                 </button>
-                                <input id="searchInput" type="text" class="form-control" placeholder="Search contacts..." asp-for="Filters.SearchTerm">
-                                <button class="btn btn-outline-secondary" type="button" title="Clear" onclick="clearFilters()">
+                                <input id="searchInput" type="text" class="form-control" placeholder="Search contacts..." value="@Model.Filters?.SearchTerm">
+                            <button class="btn btn-outline-secondary" type="button" title="Clear" onclick="clearFilters();">
                                     <i class="fa fa-remove"></i>
                                 </button>
-                                <button class="btn btn-outline-secondary" type="button" title="Search" onclick="applySearch();">
+                            <button class="btn btn-outline-secondary" type="submit" title="Search" onclick="applySearch();">
                                     <i class="fa fa-search"></i>
                                 </button>
                             </div>
-                        </form>
+                      @*   </form> *@
                     </div>
                     <div class="col-md-4">
                         <div class="text-right">
@@ -95,101 +97,9 @@
                         <a class="nav-link font-weight-bold text-right" href="#"><i class="fa fa-download"></i> Export All</a>
                     </div>
                 </div>
-                
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="table-responsive">
-                            <table class="table employee-table">
-                                <thead>
-                                    <tr>
-                                        @*<th>
-                                            <input type="checkbox" id="selectAll">
-                                        </th> *@
-                                        <th>Name</th>
-                                        <th>Phone No.</th>
-                                        <th>Country</th>
-                                        <th>Language</th>
-                                        <th>Channel</th>
-                                        <th>Source</th>
-                                        <th>Status</th>
-                                        <th class="text-center"><i class="icon-settings"></i></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @{
-                                        if (Model.ContactList == null || !Model.ContactList.Items.Any())
-                                        {
-                                            <tr>
-                                                <td colspan="8" class="text-center">No contacts found.</td>
-                                            </tr>
-                                        }
-                                        else
-                                        {
-                                            foreach (var contact in Model.ContactList.Items)
-                                            {
-                                                <tr>
-                                                    @* <td><div class="form-check"><input class="form-check-input" type="checkbox" value="@contact.Id"></div></td>*@
-                                                    <td>@contact.DisplayName</td>
-                                                    <td>@contact.PhoneNumber</td>
-                                                    <td>@contact.Country</td>
-                                                    <td>@contact.Language</td>
-                                                    <td>channel name</td>
-                                                    <td>@contact.ImportSource</td>
-                                                    <td>
-                                                        <span class="badge status-badge @(contact.Email != null ? "status-enabled" : "status-disabled")">
-                                                            @(contact.Email != null ? "Enabled" : "Disabled")
-                                                        </span>
-                                                    </td>
-                                                    <td class="text-center">
-                                                        <button class="btn btn-sm btn-outline-secondary">
-                                                            <i class="icon-pencil"></i>
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                            }
-                                        }
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
 
-                <div class="row">
-                    <div class="col-md-6">
-                        <div class="text-muted">
-                            Showing @Model.ContactList.FirstItemIndex to @Model.ContactList.LastItemIndex
-                            of @Model.ContactList.TotalCount entries
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-                        @if (Model.ContactList.TotalPages > 1)
-                        {
-                            <ul class="pagination pagination-sm mb-0 pull-right">
-                                <!-- Previous Page -->
-                                <li class="page-item @(Model.ContactList.HasPreviousPage ? "" : "disabled")">
-                                    <a class="page-link" href="#" onclick="goToPage(@(Model.ContactList.PageNumber - 1))">
-                                        Previous
-                                    </a>
-                                </li>
-
-                                <!-- Page Numbers -->
-                                @for (int i = 1; i <= Model.ContactList.TotalPages; i++)
-                                {
-                                    <li class="page-item @(i == Model.ContactList.PageNumber ? "active" : "")">
-                                        <a class="page-link" href="#" onclick="goToPage(@i)">@i</a>
-                                    </li>
-                                }
-
-                                <!-- Next Page -->
-                                <li class="page-item @(Model.ContactList.HasNextPage ? "" : "disabled")">
-                                    <a class="page-link" href="#" onclick="goToPage(@(Model.ContactList.PageNumber + 1))">
-                                        Next
-                                    </a>
-                                </li>
-                            </ul>
-                        }
-                    </div>
+                <div id="contactsTableContainer">
+                    @await Html.PartialAsync("_ContactTablePartial", Model)
                 </div>
 
             </div>
@@ -199,7 +109,7 @@
 
 <!-- New Employee Modal (Right Side) -->
 <div>
-    <form method="post" asp-action="AddContact">
+    <form id="createForm" method="post" asp-action="AddContact">
         <div class="modal-side" id="newEmployeeModal" tabindex="-1" aria-hidden="true">
             <div class="modal-content">
                 <div class="modal-header">
@@ -231,19 +141,20 @@
                     <div class="row mb-2">
                         <div class="col-md-6">
                             <label class="form-label">Country<span class="text-danger">*</span></label>
-                            <select class="form-control" asp-for="Contact.CountryId" onchange="changeCountryCodeInPhone();">
-                                <option value="1">India</option>
+                            <select id="CountryDropdown" class="form-control" asp-for="Contact.CountryId" onchange="loadLanguages(this);">
+                                <option value="-1">Select any</option>
+                                @foreach(var country in Model.Countries)
+                                {
+                                    <option value="@country.Id">@country.Name</option>
+                                }
                             </select>
+                            <span asp-validation-for="Contact.CountryId" class="text-danger font-sm"></span>
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Language<span class="text-danger">*</span></label>
-                            <select class="form-control" asp-for="Contact.LanguageId">
-                                <option value="1">English</option>
-                                <option value="2">Hindi</option>
-                                <option value="3">Spanish</option>
-                                <option value="4">French</option>
-                                <option value="5">Other</option>
+                            <select id="LanguageDropdown" class="form-control" asp-for="Contact.LanguageId">
                             </select>
+                            <span asp-validation-for="Contact.LanguageId" class="text-danger font-sm"></span>
                         </div>
                     </div>
                     <div class="row mb-2">
@@ -279,21 +190,29 @@
                         <div class="col-md-6">
                             <label class="form-label">Contact Source</label>
                             <select class="form-control" asp-for="Contact.ContactSource">
-                                <option value="1">Select source</option>
-                                <option value="2">Website</option>
-                                <option value="3">Phone Call</option>
-                                <option value="4">Referral</option>
-                                <option value="5">Facebook</option>
-                                <option value="6">Instagram</option>
-                                <option value="7">Walk-in</option>
-                                <option value="8">Other</option>
+                                @{
+                                    if (Model.ConfigValues != null && Model.ConfigValues.TryGetValue("CONTACT_SOURCE", out var configValues))
+                                    {
+                                        foreach(var value in configValues)
+                                        {
+                                            <option value="@value.Value">@value.Text</option>
+                                        }
+                                    }
+                                }
                             </select>
                         </div>
                         <div class="col-md-6">
                             <label class="form-label">Channel Preference</label>
                             <select class="form-control" asp-for="Contact.ChannelPreference">
-                                <option value="1">Whatsapp</option>
-                                <option value="2">Instagram</option>
+                                @{
+                                    if (Model.ConfigValues != null && Model.ConfigValues.TryGetValue("CHHANNEL_PREFERENCE", out var configValues))
+                                    {
+                                        foreach (var value in configValues)
+                                        {
+                                            <option value="@value.Value">@value.Text</option>
+                                        }
+                                    }
+                                }
                             </select>
                         </div>
                     </div>
@@ -310,8 +229,7 @@
 <!-- Modal Backdrop -->
 <div class="modal-backdrop fade" id="modalBackdrop" style="display: none;"></div>
 
-<!-- Filter Form with POST method -->
-<form id="filterForm" method="post" asp-action="ManageContacts">
+<form id="commonFilterForm" method="post" asp-action="ManageContacts">
     @Html.AntiForgeryToken()
 
     <!-- Hidden fields to maintain filter state -->
@@ -321,8 +239,6 @@
     <input type="hidden" name="phone" id="phoneFilter" value="@Model.Filters?.Phone" />
     <input type="hidden" name="status" id="statusFilter" value="@Model.Filters?.Status" />
 </form>
-
-
 
 @section Scripts {
     <script src="~/js/contact/contact.js"></script>
