@@ -43,7 +43,7 @@ namespace NaradX.Business.Contacts.Commands.CreateContact
                 PhoneNumber = request.PhoneNumber,
                 Email = request.Email,
                 Company = request.Company,
-                Title = request.JobTitle,
+                JobTitle = request.JobTitle,
                 ContactSource = request.ContactSource,
                 ChannelPreference = request.ChannelPreference,
                 ImportSource = ImportSource.Manual

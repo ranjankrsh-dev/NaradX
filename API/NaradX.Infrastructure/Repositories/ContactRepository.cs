@@ -60,7 +60,7 @@ namespace NaradX.Infrastructure.Repositories
                     c.PhoneNumber.Contains(searchTerm) ||
                     (c.Email != null && c.Email.Contains(searchTerm)) ||
                     (c.Company != null && c.Company.Contains(searchTerm)) ||
-                    (c.Title != null && c.Title.Contains(searchTerm)));
+                    (c.JobTitle != null && c.JobTitle.Contains(searchTerm)));
             }
 
             var count = await query.CountAsync(cancellationToken);
@@ -140,7 +140,7 @@ namespace NaradX.Infrastructure.Repositories
                 c.PhoneNumber.Contains(searchTerm) ||
                 (c.Email != null && c.Email.Contains(searchTerm)) ||
                 (c.Company != null && c.Company.Contains(searchTerm)) ||
-                (c.Title != null && c.Title.Contains(searchTerm)));
+                (c.JobTitle != null && c.JobTitle.Contains(searchTerm)));
         }
 
         private IQueryable<Contact> ApplyContactSorting(IQueryable<Contact> query, string sortColumn, string sortDirection)
@@ -156,6 +156,34 @@ namespace NaradX.Infrastructure.Repositories
             {
                 return query.OrderBy(e => EF.Property<object>(e, sortColumn));
             }
+        }
+
+        public async Task<int> BulkContactSaveInDatabase(List<ContactDto> validContacts, CancellationToken cancellationToken = default)
+        {
+            using var transaction = await _context.Database.BeginTransactionAsync();
+
+            var contacts = validContacts.Select(c => new Contact
+            {
+                TenantId = 1,
+                FirstName = c.FirstName,
+                LastName = c.LastName,
+                MiddleName = c.MiddleName,
+                CountryId = c.CountryId,
+                LanguageId = c.LanguageId,
+                PhoneNumber = c.PhoneNumber,
+                ContactSource = c.ContactSource,
+                ChannelPreference = c.ChannelPreference,
+                Email = c.Email,
+                Company = c.Company,
+                JobTitle = c.JobTitle,
+                IsActive = true,
+                CreatedOn = DateTime.UtcNow
+            }).ToList();
+
+            await _context.Contacts.AddRangeAsync(contacts, cancellationToken);
+            var result = await _context.SaveChangesAsync(cancellationToken);
+            await transaction.CommitAsync(cancellationToken);
+            return result;
         }
     }
 }

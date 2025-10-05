@@ -1,5 +1,7 @@
 ﻿using NaradX.Entities.Common;
+using NaradX.Entities.Request.Contact;
 using NaradX.Entities.Response.Auth;
+using NaradX.Entities.Response.Common;
 using NaradX.Entities.Response.Contact;
 using NaradX.Web.Models.Contact;
 using NaradX.Web.Services.Implementations.Common;
@@ -24,9 +26,10 @@ namespace NaradX.Web.Services.Implementations.Contact
             return await apiHelper.PostData<ContactFilters, PaginatedList<ContactDto>>(endpoint, filters);
         }
 
-        public Task<ContactDto> GetContactByIdAsync(int contactId)
+        public async Task<ContactDto> GetContactByIdAsync(int contactId)
         {
-            throw new NotImplementedException();
+            string endpoint = $"{BaseUrl}/get-contact-by-id/{contactId}";
+            return await apiHelper.GetData<ContactDto>(endpoint);
         }
 
         public Task<int> AddContactAsync(ContactDto contact)
@@ -39,14 +42,36 @@ namespace NaradX.Web.Services.Implementations.Contact
             return apiHelper.PostData<ContactDto, int>(endpoint, contact);
         }
 
-        public Task<bool> UpdateContactAsync(int contactId, ContactDto contact)
+        public Task<int> UpdateContactAsync(ContactDto contact)
         {
-            throw new NotImplementedException();
+            if (contact == null)
+            {
+                throw new ArgumentNullException(nameof(contact));
+            }
+            string endpoint = $"{BaseUrl}/update";
+            return apiHelper.PutData<ContactDto, int>(endpoint, contact);
         }
 
-        public Task<bool> DeleteContactAsync(int contactId)
+        public Task<int> DeleteContactAsync(int contactId)
         {
-            throw new NotImplementedException();
+            if(contactId <= 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(contactId), "Contact ID must be greater than zero.");
+            }
+            string endpoint = $"{BaseUrl}/delete/{contactId}";
+            return apiHelper.GetData<int>(endpoint);
+        }
+
+        public async Task<BulkUploadValidateResponseDto> GetBulkUploadValidationResponseAsync(BulkUploadValidateRequest bulkUpload)
+        {
+            string endpoint = $"{BaseUrl}/bulk-upload-validate";
+            return await apiHelper.PostMultipartData<BulkUploadValidateRequest, BulkUploadValidateResponseDto>(endpoint, bulkUpload);
+        }
+
+        public async Task<ResponseDto> BulkUploadConfirmAsync(BulkUploadValidateResponseDto bulkUpload)
+        {
+            string endpoint = $"{BaseUrl}/bulk-upload-confirm";
+            return await apiHelper.PostData<BulkUploadValidateResponseDto, ResponseDto>(endpoint, bulkUpload);
         }
     }
 }

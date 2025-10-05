@@ -7,16 +7,18 @@ using System.Threading.Tasks;
 
 namespace NaradX.Business.Contacts.Commands.UpdateContact
 {
-    public class UpdateContactCommand : IRequest<Unit>
+    public class UpdateContactCommand : IRequest<int>
     {
+        public int TenantId { get; set; }
         public int Id { get; set; }
-        public string ContactName { get; set; } = null!;
-        public string PhoneNumber { get; set; } = null!;
-        public string? Email { get; set; }
+        public string FirstName { get; set; } = null!;
+        public string? MiddleName { get; set; }
+        public string LastName { get; set; } = null!;
+        public int CountryId { get; set; }
+        public int LanguageId { get; set; }
+        public string ContactSource { get; set; } = null!;
+        public string ChannelPreference { get; set; } = null!;
         public string? Company { get; set; }
-        public string? Title { get; set; }
-        public List<string>? Tags { get; set; }
-        public string LanguagePreference { get; set; } = "en";
-        public string? Timezone { get; set; }
+        public string? JobTitle { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using NaradX.Domain.Entities.ManageContact;
+using NaradX.Shared.Dto.Contact;
 using NaradX.Shared.Models.Common;
 using NaradX.Shared.Models.Contact;
 
@@ -13,5 +14,7 @@ namespace NaradX.Domain.Repositories.Interfaces
 
         Task<PaginatedList<Contact>> GetContactsByFiltersAsync(ContactFilterParams filterParams, CancellationToken cancellationToken = default);
         IQueryable<Contact> GetQueryable();
+
+        Task<int> BulkContactSaveInDatabase(List<ContactDto> validContacts, CancellationToken cancellationToken = default);
     }
 }
