@@ -25,4 +25,10 @@
     <ProjectReference Include="..\NaradX.Shared\NaradX.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Common\BulkUploadTemplate\Bulk Upload Contact Template.xlsx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

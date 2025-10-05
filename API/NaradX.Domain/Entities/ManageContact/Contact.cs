@@ -50,7 +50,7 @@ namespace NaradX.Domain.Entities.ManageContact
         public string? Company { get; set; }
 
         [MaxLength(50)]
-        public string? Title { get; set; }
+        public string? JobTitle { get; set; }
 
         [MaxLength(30)]
         public string? InstagramHandle { get; set; }

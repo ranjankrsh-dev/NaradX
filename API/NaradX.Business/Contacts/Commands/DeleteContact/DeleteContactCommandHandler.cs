@@ -9,41 +9,33 @@ using System.Threading.Tasks;
 
 namespace NaradX.Business.Contacts.Commands.DeleteContact
 {
-    public class DeleteContactCommandHandler : IRequestHandler<DeleteContactCommand, Unit>
+    public class DeleteContactCommandHandler : IRequestHandler<DeleteContactCommand, int>
     {
         private readonly IContactRepository _contactRepository;
         private readonly IUnitOfWork _unitOfWork;
-        private readonly ITenantService _tenantService;
 
         public DeleteContactCommandHandler(
             IContactRepository contactRepository,
-            IUnitOfWork unitOfWork,
-            ITenantService tenantService)
+            IUnitOfWork unitOfWork)
         {
             _contactRepository = contactRepository;
             _unitOfWork = unitOfWork;
-            _tenantService = tenantService;
         }
 
-        public async Task<Unit> Handle(DeleteContactCommand request, CancellationToken cancellationToken)
+        public async Task<int> Handle(DeleteContactCommand request, CancellationToken cancellationToken)
         {
-            if (!_tenantService.TenantId.HasValue)
-                throw new UnauthorizedAccessException("Tenant not specified");
+            var contact = await _contactRepository.GetByIdAsync(request.Id, cancellationToken);
 
-            var contact = await _contactRepository.GetByIdAsync(
-                request.Id, _tenantService.TenantId.Value, cancellationToken);
+            if (contact == null)
+                return 0;
 
-            //if (contact == null)
-            //    throw new NotFoundException("Contact not found");
-
-            // Soft delete
             contact.IsDeleted = true;
             contact.DeletedOn = DateTime.UtcNow;
 
             _contactRepository.Update(contact);
-            await _unitOfWork.SaveChangesAsync(cancellationToken);
+            var result = await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-            return Unit.Value;
+            return result;
         }
     }
 }

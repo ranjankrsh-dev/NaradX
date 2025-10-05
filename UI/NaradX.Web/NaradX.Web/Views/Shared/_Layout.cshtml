@@ -16,6 +16,8 @@
 
     <!-- Main styles for this application -->
     <link href="~/lib/coreui/css/style.css" rel="stylesheet" />
+    <link href="~/lib/toastr/toastr.min.css" rel="stylesheet" />
+    <link href="~/lib/select2/select2.min.css" rel="stylesheet" />
 
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     @await RenderSectionAsync("Styles", required: false)
@@ -25,7 +27,7 @@
         <button class="navbar-toggler mobile-sidebar-toggler d-lg-none" type="button">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <a class="navbar-brand" href="@Url.Action("Default","Home")"></a>
+        <a class="navbar-brand" href="@Url.Action("Default", "Home")"></a>
         <button class="navbar-toggler sidebar-toggler d-md-down-none" type="button">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -271,7 +273,7 @@
     </header>
     <div class="app-body">
         @await Html.PartialAsync("_Sidebar")
-@*         <div class="sidebar">
+        @*         <div class="sidebar">
             <nav class="sidebar-nav">
                 <ul class="nav">
                     <li class="nav-item">
@@ -597,8 +599,15 @@
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
     <script src="~/js/jquery.unobtrusive-ajax.min.js"></script>
     <script src="~/lib/toastr/toastr.min.js"></script>
+    <script src="~/lib/sweetalert/sweetalert2.js"></script>
+    <script src="~/lib/select2/select2.min.js"></script>
+    <script src="~/js/common/actionhelper.js"></script>
     <script>
         $(document).ready(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+
+            $('[data-toggle="popover"]').popover();
+
             toastr.options = {
                 "closeButton": true,
                 "progressBar": true
@@ -607,7 +616,39 @@
             function getLastToast() {
                 return $toastlast;
             }
+
+
+
+            $('.select2').select2({
+                theme: "bootstrap",
+                placeholder: {
+                    id: '-1', // the value of the option
+                    text: 'Please select any'
+                },
+                allowClear: true,
+                templateResult: formatOptionWithOptgroup, // Custom result rendering
+                templateSelection: function (option) {
+                    return option.text; // Show only the option text in the selected item
+                }
+            });
         });
+
+        // Custom result rendering to display optgroup in search results
+        function formatOptionWithOptgroup(option) {
+            if (!option.id) {
+                return option.text;  // Return placeholder for unselectable options (like optgroup labels)
+            }
+
+            // Find the optgroup label for the option
+            //var optgroupLabel = $(option.element).closest('optgroup').attr('label');
+
+            // Only add the optgroup label in search results, not in the initial dropdown
+            if ($('.select2-search__field').val()) {
+                return $('<span>' + option.text + ' (' + option.id + ')</span>');
+            } else {
+                return option.text;
+            }
+        }
     </script>
 
     @await RenderSectionAsync("Scripts", required: false)

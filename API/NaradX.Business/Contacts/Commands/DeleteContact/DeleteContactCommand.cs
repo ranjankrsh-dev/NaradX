@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace NaradX.Business.Contacts.Commands.DeleteContact
 {
-    public class DeleteContactCommand : IRequest<Unit>
+    public class DeleteContactCommand : IRequest<int>
     {
         public int Id { get; set; }
     }

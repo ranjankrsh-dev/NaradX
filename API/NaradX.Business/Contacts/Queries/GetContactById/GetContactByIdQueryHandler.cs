@@ -14,28 +14,22 @@ namespace NaradX.Business.Contacts.Queries.GetContactById
     public class GetContactByIdQueryHandler : IRequestHandler<GetContactByIdQuery, ContactDto?>
     {
         private readonly IContactRepository _contactRepository;
-        private readonly ITenantService _tenantService;
         private readonly IMapper _mapper;
 
         public GetContactByIdQueryHandler(
             IContactRepository contactRepository,
-            ITenantService tenantService,
             IMapper mapper)
         {
             _contactRepository = contactRepository;
-            _tenantService = tenantService;
             _mapper = mapper;
         }
 
         public async Task<ContactDto?> Handle(GetContactByIdQuery request, CancellationToken cancellationToken)
         {
-            if (!_tenantService.TenantId.HasValue)
-                throw new UnauthorizedAccessException("Tenant not specified");
-
             var contact = await _contactRepository.GetByIdAsync(
-                request.Id, _tenantService.TenantId.Value, cancellationToken);
+                request.Id, cancellationToken);
 
-            return contact == null ? null : _mapper.Map<ContactDto>(contact);
+            return _mapper.Map<ContactDto>(contact);
         }
     }
 }

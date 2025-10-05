@@ -156,3 +156,166 @@
     margin-left: 10px;
     color: var(--nx-blue);
 }
+
+
+
+
+
+
+
+/* Bulk Upload Modal Styles */
+.step-indicator {
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+}
+
+    .step-indicator::before {
+        content: '';
+        position: absolute;
+        top: 15px;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background-color: #e9ecef;
+        z-index: 1;
+    }
+
+.step {
+    display: flex;
+    flex-direction: column;
+/*    align-items: center;*/
+    position: relative;
+    z-index: 2;
+}
+
+.step-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #e9ecef;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #6c757d;
+    transition: all 0.3s ease;
+}
+
+.step.active .step-icon {
+    background-color: #20a8d8;
+    color: white;
+}
+
+.step.completed .step-icon {
+    background-color: #4dbd74;
+    color: white;
+}
+
+.step-label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #6c757d;
+    transition: all 0.3s ease;
+}
+
+.step.active .step-label {
+    color: #2f353a;
+    font-weight: 600;
+}
+
+.form-section {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.upload-area {
+    border: 2px dashed #dee2e6;
+    border-radius: 8px;
+    padding: 15px 15px;
+    text-align: center;
+    background-color: #f8f9fa;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+    .upload-area:hover {
+        border-color: #20a8d8;
+        background-color: #e8f4fc;
+    }
+
+    .upload-area.dragover {
+        border-color: #20a8d8;
+        background-color: #d1ecf1;
+    }
+
+.summary-card {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    margin-bottom: 20px;
+    border-left: 4px solid #20a8d8;
+    text-align: center;
+}
+
+    .summary-card.success {
+        border-left-color: #4dbd74;
+    }
+
+    .summary-card.warning {
+        border-left-color: #ffc107;
+    }
+
+    .summary-card.danger {
+        border-left-color: #f86c6b;
+    }
+
+.summary-value {
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.summary-label {
+    font-size: 14px;
+    color: #6c757d;
+}
+
+.error-badge {
+    font-size: 12px;
+    padding: 4px 8px;
+}
+
+.file-name {
+    font-weight: 500;
+    color: #2f353a;
+}
+
+.file-size {
+    color: #6c757d;
+    font-size: 14px;
+}
+
+.step-content {
+    min-height: 300px;
+}
+
+ Loading state 
+.loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.ms-auto{
+    float:right;
+}
+
+
+.tableFixHead thead th {
+    position: sticky; /*  make the table heads sticky */
+    top: 0px; /*table head will be placed from the top of the table and sticks to it*/
+    background-color: #f2f2f2 !important;
+}

@@ -12,5 +12,6 @@ namespace NaradX.Web.ViewModels.Contact
         public ContactFilters? Filters { get; set; }
         public IReadOnlyList<CountryDto> Countries { get; set; } = new List<CountryDto>();
         public Dictionary<string, IReadOnlyList<ConfigValueDto>> ConfigValues { get; set; } = new Dictionary<string, IReadOnlyList<ConfigValueDto>>();
+        public string RequestType { get; set; } = "Save";
     }
 }
