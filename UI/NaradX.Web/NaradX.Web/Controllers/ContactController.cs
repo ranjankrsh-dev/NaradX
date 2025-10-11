@@ -125,6 +125,13 @@ namespace NaradX.Web.Controllers
             return Json(new { success = true, data = contact });
         }
 
+        [HttpGet]
+        public async Task<IActionResult> DeleteContactById(int contactId)
+        {
+            var contact = await contactService.DeleteContactAsync(contactId);
+            return Json(new { success = true, data = contact });
+        }
+
         #region Bulk Upload Operation
 
         [HttpPost]

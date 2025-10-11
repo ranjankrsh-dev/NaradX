@@ -71,7 +71,7 @@ namespace NaradX.API.Controllers
             return Ok(result);
         }
 
-        [HttpDelete("delete-contact-by-id/{Id}")]
+        [HttpGet("delete-contact-by-id/{Id}")]
         public async Task<IActionResult> DeleteContact(int Id)
         {
             var resp = await _mediator.Send(new DeleteContactCommand { Id = Id });

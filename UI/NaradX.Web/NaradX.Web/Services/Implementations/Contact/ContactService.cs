@@ -58,7 +58,7 @@ namespace NaradX.Web.Services.Implementations.Contact
             {
                 throw new ArgumentOutOfRangeException(nameof(contactId), "Contact ID must be greater than zero.");
             }
-            string endpoint = $"{BaseUrl}/delete/{contactId}";
+            string endpoint = $"{BaseUrl}/delete-contact-by-id/{contactId}";
             return apiHelper.GetData<int>(endpoint);
         }
 
