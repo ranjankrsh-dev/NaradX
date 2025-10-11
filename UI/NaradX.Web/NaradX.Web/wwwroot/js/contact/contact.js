@@ -97,6 +97,15 @@ function goToPage(pageNumber) {
     loadContacts();
 }
 
+document.getElementById("searchInput").addEventListener("keydown", function (event) {
+    if (event.key === "Enter") {
+        event.preventDefault(); // prevent form submission (if inside a form)
+        document.getElementById('pageNumber').value = 1;
+        document.getElementById('searchTerm').value = document.getElementById('searchInput').value;
+        loadContacts();
+    }
+});
+
 function applySearch() {
     document.getElementById('pageNumber').value = 1;
     document.getElementById('searchTerm').value = document.getElementById('searchInput').value;
@@ -611,27 +620,47 @@ function onDeleteContact(thisVal) {
         return;
     }
 
-    const swalWithBootstrapButtons = Swal.mixin({
-        customClass: {
-            confirmButton: "btn btn-success",
-            cancelButton: "btn btn-danger"
-        },
-        buttonsStyling: false
-    });
-
-    swalWithBootstrapButtons.fire({
+    Swal.fire({
         title: "Are you sure?",
-        text: "Once deleted, you will not be able to view this record!",
+        text: "You won't be able to revert this!",
         icon: "warning",
         showCancelButton: true,
-        confirmButtonText: "Yes, delete it!",
-        cancelButtonText: "No, cancel!",
-        reverseButtons: true
-    })
-    .then((willDelete) => {
-        if (willDelete) {
-            alert('yes')
-            }
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: "Contact/DeleteContactById",
+                method: "GET",
+                dataType: "json",
+                contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                data: {
+                    contactId: contactId
+                },
+                success: function (response) {
+                    if (response.success == true) {
+                        Swal.fire({
+                            title: "Deleted",
+                            text: "Record deleted successfully",
+                            icon: "success",
+                            allowOutsideClick: false,
+                            allowEscapeKey: false,
+                            allowEnterKey: true
+                        });
+
+                        $('.swal2-actions .swal2-confirm').on('click', function () {
+                            loadContacts();
+                        })
+                    } else {
+                        toastr.error("Something went wrong", " Please try again later !");
+                    }
+                },
+                error: function (response) {
+                    toastr.error("Something went wrong", " Please try again later !");
+                }
+            });
+        }
     });
 }
 
@@ -656,44 +685,41 @@ function resetEmployeeModal() {
 }
 
 function deleteDataById(id) {
-    swal({
+    Swal.fire({
         title: "Are you sure?",
-        text: "Once deleted, you will not be able to view this record!",
+        text: "You won't be able to revert this!",
         icon: "warning",
-        buttons: true,
-        dangerMode: true,
-        buttons: ["Cancle", "Delete"]
-    })
-        .then((willDelete) => {
-            if (willDelete) {
-                $("#loader").addClass("loaderNew");
-                $.ajax({
-                    url: "DeleteLeadsById",
-                    method: "Post",
-                    dataType: "json",
-                    contentType: "application/x-www-form-urlencoded; charset=utf-8",
-                    data: {
-                        RowId: id
-                    },
-                    success: function (response) {
-                        $("#loader").removeClass("loaderNew");
-                        if (response.IsValid) {
-                            swal(response.Message, {
-                                icon: "success",
-                                closeOnClickOutside: false,
-                                closeOnEsc: false,
-                                allowOutsideClick: false
-                            });
-                            $('.swal-button.swal-button--confirm').on('click', function () {
-                                window.location.reload();
-                            })
-                        }
-                    },
-                    error: function (response) {
-                        $("#loader").removeClass("loaderNew");
-                        toastr.error("Something went wrong", " Please try again later !");
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            $.ajax({
+                url: "DeleteContactById",
+                method: "Post",
+                dataType: "json",
+                contentType: "application/x-www-form-urlencoded; charset=utf-8",
+                data: {
+                    contactId: id
+                },
+                success: function (response) {
+                    if (response) {
+                        swal.fire(response.Message, {
+                            icon: "success",
+                            closeOnClickOutside: false,
+                            closeOnEsc: false,
+                            allowOutsideClick: false
+                        });
+                        $('.swal-button.swal-button--confirm').on('click', function () {
+                            loadContacts();
+                        })
                     }
-                });
-            }
-        });
+                },
+                error: function (response) {
+                    toastr.error("Something went wrong", " Please try again later !");
+                }
+            });
+        }
+    });
 }
