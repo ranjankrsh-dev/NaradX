@@ -3,9 +3,11 @@ using Microsoft.Extensions.DependencyInjection;
 using NaradX.Domain.Entities.Auth;
 using NaradX.Domain.Entities.Common;
 using NaradX.Domain.Entities.Tenancy;
+using NaradX.Domain.Entities.Whatsapp;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -43,6 +45,7 @@ namespace NaradX.Infrastructure.Data.Seed
 
         private static void SeedRoles(NaradXDbContext context)
         {
+
             if (!context.Roles.Any())
             {
                 var roles = new List<Role>

@@ -31,6 +31,7 @@ namespace NaradX.API.Extensions
             services.AddScoped<IJwtService, JwtService>();
             services.AddScoped<ITenantService, TenantService>();
             services.AddScoped<ICommonServices, CommonServices>();
+            services.AddScoped<IWhatsAppSenderService, WhatsAppSenderService>();
 
             // JWT Authentication
             var jwtSettings = configuration.GetSection("JwtSettings").Get<JwtSettings>();

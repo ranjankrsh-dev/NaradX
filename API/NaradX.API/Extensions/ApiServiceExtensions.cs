@@ -4,6 +4,8 @@
     {
         public static IServiceCollection AddApiServices(this IServiceCollection services)
         {
+            services.AddHttpClient();
+
             // API Controllers
             services.AddControllers();
 

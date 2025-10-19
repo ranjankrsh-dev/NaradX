@@ -3,6 +3,7 @@ using NaradX.Domain.Entities.Auth;
 using NaradX.Domain.Entities.Common;
 using NaradX.Domain.Entities.ManageContact;
 using NaradX.Domain.Entities.Tenancy;
+using NaradX.Domain.Entities.Whatsapp;
 using NaradX.Domain.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -36,6 +37,9 @@ namespace NaradX.Infrastructure
         public DbSet<ConfigValue> ConfigValues { get; set; }
         public DbSet<Country> Countries { get; set; }
         public DbSet<Language> Languages { get; set; }
+
+        public DbSet<WhatsAppBusinessConfig> WhatsAppConfigs { get; set; }
+        public DbSet<MessageLog> MessageLogs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
