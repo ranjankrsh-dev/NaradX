@@ -2,6 +2,7 @@
 using NaradX.Domain.Entities.Auth;
 using NaradX.Domain.Entities.Common;
 using NaradX.Domain.Entities.ManageContact;
+using NaradX.Domain.Entities.Template;
 using NaradX.Domain.Entities.Tenancy;
 using NaradX.Domain.Interfaces;
 using System;

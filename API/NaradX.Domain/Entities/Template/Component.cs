@@ -1,20 +1,15 @@
+using NaradX.Domain.Entities.Base;
 using System.Text.Json.Serialization;
 
 namespace NaradX.Domain.Entities.Template;
 
-public class Component
+public class Component : BaseEntity<Guid>
 {
-    [JsonPropertyName("type")]
-    public string Type { get; set; }
+    public string Type { get; set; } = string.Empty;
+    public string Text { get; set; } = string.Empty;
+    public Example? Example { get; set; }
 
-    [JsonPropertyName("format")]
-    public string Format { get; set; }
-
-    [JsonPropertyName("text")]
-    public string Text { get; set; }
-
-    [JsonPropertyName("buttons")]
-    public List<Button> Buttons { get; set; }
+    //public List<Button>? Buttons { get; set; }
 }
 
 

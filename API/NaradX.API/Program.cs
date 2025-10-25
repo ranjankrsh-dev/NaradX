@@ -1,11 +1,12 @@
-using AutoMapper;
-using Microsoft.Extensions.DependencyInjection;
 using NaradX.API.Extensions;
-using NaradX.Business.Mappings;
 using NaradX.Infrastructure.Data.Seed;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration=builder.Configuration;
+// Add logging
+builder.Logging.ClearProviders();
+builder.Logging.AddConsole();
+builder.Logging.SetMinimumLevel(LogLevel.Information);
 
 builder.Services.AddAutoMapper(cfg =>
 {

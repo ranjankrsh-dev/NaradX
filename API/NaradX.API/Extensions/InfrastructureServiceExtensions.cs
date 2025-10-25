@@ -5,8 +5,10 @@ using NaradX.Business.Common.Interfaces;
 using NaradX.Business.Common.Models;
 using NaradX.Business.Common.Services;
 using NaradX.Infrastructure;
-using System;
+using NaradX.Infrastructure.Gateways.WhatsApp;
+using Refit;
 using System.Text;
+using System.Text.Json;
 
 namespace NaradX.API.Extensions
 {
@@ -50,6 +52,26 @@ namespace NaradX.API.Extensions
                     };
                 });
 
+            // Configure WhatsApp options
+            services.Configure<WhatsAppOptions>(configuration.GetSection("WhatsAppOptions"));
+            
+            var whatsAppOptions = configuration.GetSection("WhatsAppOptions").Get<WhatsAppOptions>();
+    
+            // Configure Refit settings
+            var refitSettings = new RefitSettings
+            {
+                ContentSerializer = new SystemTextJsonContentSerializer(new JsonSerializerOptions
+                {
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                    WriteIndented = true
+                })
+            };
+
+            // Register WhatsApp API client
+            services.AddRefitClient<IWhatsAppApiGateway>(refitSettings)
+                .ConfigureHttpClient(c => {
+                    c.BaseAddress = new Uri(whatsAppOptions.BaseUrl);
+                });
 
             return services;
         }
