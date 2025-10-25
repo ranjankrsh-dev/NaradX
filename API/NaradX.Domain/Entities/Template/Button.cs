@@ -1,18 +1,10 @@
-using System.Text.Json.Serialization;
+using NaradX.Domain.Entities.Base;
 
 namespace NaradX.Domain.Entities.Template;
 
-public class Button
+public class Button : BaseEntity<Guid>
 {
-    [JsonPropertyName("type")]
-    public string Type { get; set; }
-
-    [JsonPropertyName("text")]
-    public string Text { get; set; }
-
-    [JsonPropertyName("url")]
-    public string Url { get; set; }
-
-    [JsonPropertyName("phone_number")]
-    public string PhoneNumber { get; set; }
+    public string Type { get; set; } = string.Empty;
+    public string Text { get; set; } = string.Empty;
+    public string Action { get; set; } = string.Empty;
 }

@@ -1,18 +1,13 @@
+using NaradX.Domain.Entities.Base;
 using System.Text.Json.Serialization;
 
 namespace NaradX.Domain.Entities.Template;
 
-public class WhatsAppTemplate
+public class WhatsAppTemplateDTO
 {
-    [JsonPropertyName("name")]
-    public string Name { get; set; }
-
-    [JsonPropertyName("category")]
-    public string Category { get; set; }
-
-    [JsonPropertyName("language")]
-    public string Language { get; set; }
-
-    [JsonPropertyName("components")]
-    public List<Component> Components { get; set; } = new List<Component>();
+    public string Name { get; set; } = string.Empty;
+    public string Category { get; set; } = string.Empty;
+    public string Language { get; set; } = string.Empty;
+    public string ParameterFormat { get; set; } = string.Empty;
+    public List<Component> Components { get; set; } = [];
 }
