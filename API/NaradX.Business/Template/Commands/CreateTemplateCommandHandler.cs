@@ -15,6 +15,6 @@ public class CreateTemplateCommandHandler : IRequestHandler<CreateTemplateComman
 
     public async Task<CreateTemplateResponse> Handle(CreateTemplateCommand request, CancellationToken cancellationToken)
     {
-        return await _templateRepository.CreateWhatsAppMessageTemplate(request.WhatsAppTemplate, cancellationToken);
+        return await _templateRepository.CreateWhatsAppMessageTemplateAsync(request.WhatsAppTemplate, cancellationToken);
     }
 }

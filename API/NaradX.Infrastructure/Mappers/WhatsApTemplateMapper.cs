@@ -17,4 +17,17 @@ public class WhatsAppTemplateMapper
                 : [.. WhatsAppTemplateComponentMapper.ToEntity(whatsAppMessageTemplateDTO.Components)]
         };
     }
+
+    public static WhatsAppMessageTemplateDTO ToDTO(WhatsAppTemplate whatsAppTemplate)
+    {
+        return new WhatsAppMessageTemplateDTO
+        {
+            Category = whatsAppTemplate.Category,
+            Language = whatsAppTemplate.Language,
+            Name = whatsAppTemplate.Name,
+            Components = whatsAppTemplate.Components == null
+                ? []
+                : [.. WhatsAppTemplateComponentMapper.ToDTO(whatsAppTemplate.Components)]
+        };
+    }
 }

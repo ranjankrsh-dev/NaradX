@@ -17,4 +17,15 @@ public class WhatsAppTemplateComponentMapper
                 Text = dto.Text
             })];
     }
+
+    public static IList<ComponentDTO> ToDTO(IList<Component> components)
+    {
+        // Map each Component to a new ComponentDTO instance
+        return [.. components
+            .Select(entity => new ComponentDTO
+            {
+                Type = entity.Type,
+                Text = entity.Text
+            })];
+    }
 }
