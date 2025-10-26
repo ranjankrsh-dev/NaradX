@@ -15,12 +15,8 @@ using System.Threading.Tasks;
 
 namespace NaradX.Infrastructure
 {
-    public class NaradXDbContext : DbContext
+    public class NaradXDbContext(DbContextOptions<NaradXDbContext> options) : DbContext(options)
     {
-        public NaradXDbContext(DbContextOptions<NaradXDbContext> options) : base(options)
-        {
-        }
-
         // DbSets will be added here
         public DbSet<User> Users { get; set; }
         public DbSet<Tenant> Tenants { get; set; }
@@ -37,15 +33,18 @@ namespace NaradX.Infrastructure
         public DbSet<ConfigValue> ConfigValues { get; set; }
         public DbSet<Country> Countries { get; set; }
         public DbSet<Language> Languages { get; set; }
+        public DbSet<WhatsAppTemplate> WhatsAppTemplates { get; set; }
+        public DbSet<Component> Components { get; set; }
+        public DbSet<Button> Buttons { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<UserRole>()
-        .HasOne(ur => ur.Role)
-        .WithMany()
-        .HasForeignKey(ur => ur.RoleId);
+                .HasOne(ur => ur.Role)
+                .WithMany()
+                .HasForeignKey(ur => ur.RoleId);
 
             modelBuilder.Entity<UserRole>()
                 .HasOne(ur => ur.User)
@@ -61,6 +60,18 @@ namespace NaradX.Infrastructure
                 .HasOne(rp => rp.Permission)
                 .WithMany()
                 .HasForeignKey(rp => rp.PermissionId);
+
+            modelBuilder.Entity<WhatsAppTemplate>()
+                .HasMany(wt => wt.Components)
+                .WithOne() // No navigation property from Component to WhatsAppTemplate
+                .HasForeignKey(c => c.Id)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Component>()
+                .HasMany(c => c.Buttons)
+                .WithOne() // No navigation property from Button to Component
+                .HasForeignKey(b => b.Id)
+                .OnDelete(DeleteBehavior.Cascade);
 
             // Apply all configurations from assembly
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());

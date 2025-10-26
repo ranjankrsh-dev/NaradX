@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NaradX.Infrastructure;
 
@@ -11,9 +12,11 @@ using NaradX.Infrastructure;
 namespace NaradX.Infrastructure.Migrations
 {
     [DbContext(typeof(NaradXDbContext))]
-    partial class NaradXDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251026094226_RedoDBCreation")]
+    partial class RedoDBCreation
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -886,11 +889,15 @@ namespace NaradX.Infrastructure.Migrations
             modelBuilder.Entity("NaradX.Domain.Entities.Template.Button", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Action")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("ComponentId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
@@ -914,12 +921,15 @@ namespace NaradX.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ComponentId");
+
                     b.ToTable("Buttons");
                 });
 
             modelBuilder.Entity("NaradX.Domain.Entities.Template.Component", b =>
                 {
                     b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("CreatedBy")
@@ -945,9 +955,14 @@ namespace NaradX.Infrastructure.Migrations
                     b.Property<DateTime?>("UpdatedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid?>("WhatsAppTemplateId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ExampleId");
+
+                    b.HasIndex("WhatsAppTemplateId");
 
                     b.ToTable("Components");
                 });
@@ -1262,9 +1277,7 @@ namespace NaradX.Infrastructure.Migrations
                 {
                     b.HasOne("NaradX.Domain.Entities.Template.Component", null)
                         .WithMany("Buttons")
-                        .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ComponentId");
                 });
 
             modelBuilder.Entity("NaradX.Domain.Entities.Template.Component", b =>
@@ -1275,9 +1288,7 @@ namespace NaradX.Infrastructure.Migrations
 
                     b.HasOne("NaradX.Domain.Entities.Template.WhatsAppTemplate", null)
                         .WithMany("Components")
-                        .HasForeignKey("Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("WhatsAppTemplateId");
 
                     b.Navigation("Example");
                 });
