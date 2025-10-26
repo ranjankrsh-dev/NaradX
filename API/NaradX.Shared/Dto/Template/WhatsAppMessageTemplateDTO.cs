@@ -14,5 +14,5 @@ public class WhatsAppMessageTemplateDTO
     public string Category { get; set; }
     
     [JsonPropertyName("components")]
-    public List<ComponentDTO> Components { get; set; }
+    public List<ComponentDTO>? Components { get; set; }
 }

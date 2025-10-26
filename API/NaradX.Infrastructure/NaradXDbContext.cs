@@ -37,6 +37,9 @@ namespace NaradX.Infrastructure
         public DbSet<ConfigValue> ConfigValues { get; set; }
         public DbSet<Country> Countries { get; set; }
         public DbSet<Language> Languages { get; set; }
+        public DbSet<WhatsAppTemplate> WhatsAppTemplates { get; set; }
+        public DbSet<Component> Components { get; set; }
+        public DbSet<Button> Buttons { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
