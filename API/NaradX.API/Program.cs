@@ -7,19 +7,20 @@ using NaradX.Infrastructure.Data.Seed;
 var builder = WebApplication.CreateBuilder(args);
 var configuration=builder.Configuration;
 
-builder.Services.AddAutoMapper(cfg =>
-{
-    //cfg.AddProfile<ContactProfile>();
-    //cfg.AddProfile<PaginatedListProfile>();
-}, typeof(Program).Assembly);
-
 
 // ========= SERVICE REGISTRATION =========
 builder.Services.AddApiServices();                    // API-related services
-builder.Services.AddThirdPartyServices();             // CORS, Health Checks, Auth
+builder.Services.AddThirdPartyServices(configuration);             // CORS, Health Checks, Auth
 builder.Services.AddInfrastructureServices(configuration); // DbContext, External services
 builder.Services.AddRepositoryServices();             // All repositories
 builder.Services.AddApplicationServices();            // Business logic services
+
+builder.Services
+    .AddApiServices()                 // API framework setup
+    .AddThirdPartyServices() // CORS, Health Checks, ALL AUTH/AUTHZ
+    .AddInfrastructureServices(configuration) // DB Context, Distributed Cache, Config
+    .AddRepositoryServices()          // Data repositories
+    .AddApplicationServices();       // Business logic, MediatR, AutoMapper
 
 var app = builder.Build();
 

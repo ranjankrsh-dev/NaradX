@@ -1,9 +1,32 @@
-﻿namespace NaradX.API.Extensions
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using NaradX.Business.Common.Models;
+using System.Text;
+
+namespace NaradX.API.Extensions
 {
     public static class ThirdPartyServiceExtensions
     {
-        public static IServiceCollection AddThirdPartyServices(this IServiceCollection services)
+        public static IServiceCollection AddThirdPartyServices(this IServiceCollection services, IConfiguration configuration)
         {
+            // JWT Authentication
+            var jwtSettings = configuration.GetSection("JwtSettings").Get<JwtSettings>();
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuerSigningKey = true,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtSettings.Secret)),
+                        ValidateIssuer = true,
+                        ValidIssuer = jwtSettings.Issuer,
+                        ValidateAudience = true,
+                        ValidAudience = jwtSettings.Audience,
+                        ValidateLifetime = true,
+                        ClockSkew = TimeSpan.Zero
+                    };
+                });
+
             // CORS
             services.AddCors(options =>
             {

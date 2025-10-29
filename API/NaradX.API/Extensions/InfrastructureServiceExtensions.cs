@@ -32,23 +32,7 @@ namespace NaradX.API.Extensions
             services.AddScoped<ITenantService, TenantService>();
             services.AddScoped<ICommonServices, CommonServices>();
 
-            // JWT Authentication
-            var jwtSettings = configuration.GetSection("JwtSettings").Get<JwtSettings>();
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options =>
-                {
-                    options.TokenValidationParameters = new TokenValidationParameters
-                    {
-                        ValidateIssuerSigningKey = true,
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(jwtSettings.Secret)),
-                        ValidateIssuer = true,
-                        ValidIssuer = jwtSettings.Issuer,
-                        ValidateAudience = true,
-                        ValidAudience = jwtSettings.Audience,
-                        ValidateLifetime = true,
-                        ClockSkew = TimeSpan.Zero
-                    };
-                });
+
 
 
             return services;

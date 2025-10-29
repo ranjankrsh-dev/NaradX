@@ -8,6 +8,9 @@ namespace NaradX.API.Extensions
     {
         public static IServiceCollection AddRepositoryServices(this IServiceCollection services)
         {
+            // Unit of Work
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+
             // Generic Repository
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
 
@@ -16,15 +19,7 @@ namespace NaradX.API.Extensions
             services.AddScoped<ITenantRepository, TenantRepository>();
             services.AddScoped<IRoleRepository, RoleRepository>();
             services.AddScoped<IContactRepository, ContactRepository>();
-
-            // Add new repositories here as they are created
-            // services.AddScoped<ICampaignRepository, CampaignRepository>();
-            // services.AddScoped<ITemplateRepository, TemplateRepository>();
-
             services.AddScoped<IRepository<RefreshToken>, Repository<RefreshToken>>();
-
-            // Unit of Work
-            services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             return services;
         }

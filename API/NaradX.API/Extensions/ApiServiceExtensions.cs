@@ -12,8 +12,13 @@
             services.AddSwaggerGen();
             services.AddMemoryCache();
 
+            services.AddAutoMapper(cfg =>
+            {
+                //cfg.AddProfile<ContactProfile>();
+            }, typeof(Program).Assembly);
+
             // API Versioning (if needed)
-            // services.AddApiVersioning();
+            //services.AddApiVersioning();
 
             return services;
         }
