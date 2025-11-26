@@ -22,4 +22,11 @@ public interface IWhatsAppApiGateway
         [Query] string name,
         [Header("Authorization")] string authorization
     );
+
+    [Post("/v18.0/{phoneNumberId}/messages")]
+    Task<ApiResponse<string>> SendMessageAsync(
+        [AliasAs("phoneNumberId")] string phoneNumberId,
+        [Body] object payload,
+        [Header("Authorization")] string authorization);
+
 }

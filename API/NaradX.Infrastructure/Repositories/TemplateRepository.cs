@@ -118,4 +118,9 @@ public class TemplateRepository(
             throw;
         }
     }
+
+    public async Task<bool> SendWhatsAppTextMessage(string phoneNumberId, string recipientPhone)
+    {
+
+    }
 }
