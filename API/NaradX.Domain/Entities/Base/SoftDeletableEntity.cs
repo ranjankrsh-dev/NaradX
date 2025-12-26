@@ -1,16 +1,22 @@
-﻿using NaradX.Domain.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// <copyright file="SoftDeletableEntity.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace NaradX.Domain.Entities.Base
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using NaradX.Domain.Interfaces;
+
     public abstract class SoftDeletableEntity<TKey> : BaseEntity<TKey>, ISoftDeletableEntity
     {
         public bool IsDeleted { get; set; } = false;
+
         public DateTime? DeletedOn { get; set; }
+
         public string? DeletedBy { get; set; }
     }
 

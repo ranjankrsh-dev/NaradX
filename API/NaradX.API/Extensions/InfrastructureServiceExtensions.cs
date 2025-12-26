@@ -1,17 +1,21 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
-using NaradX.Business.Common.Interfaces;
-using NaradX.Business.Common.Models;
-using NaradX.Business.Common.Services;
-using NaradX.Infrastructure;
-using NaradX.Infrastructure.Gateways.WhatsApp;
-using Refit;
-using System.Text;
-using System.Text.Json;
+﻿// <copyright file="InfrastructureServiceExtensions.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace NaradX.API.Extensions
 {
+    using System.Text;
+    using System.Text.Json;
+    using Microsoft.AspNetCore.Authentication.JwtBearer;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.IdentityModel.Tokens;
+    using NaradX.Business.Common.Interfaces;
+    using NaradX.Business.Common.Models;
+    using NaradX.Business.Common.Services;
+    using NaradX.Infrastructure;
+    using NaradX.Infrastructure.Gateways.WhatsApp;
+    using Refit;
+
     public static class InfrastructureServiceExtensions
     {
         public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)

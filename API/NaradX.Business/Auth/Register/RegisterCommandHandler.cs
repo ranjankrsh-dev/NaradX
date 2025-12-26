@@ -1,16 +1,20 @@
-﻿using MediatR;
-using Microsoft.Extensions.Logging;
-using NaradX.Business.Common.Interfaces;
-using NaradX.Domain.Entities.Auth;
-using NaradX.Domain.Repositories.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// <copyright file="RegisterCommandHandler.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace NaradX.Business.Auth.Register
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using MediatR;
+    using Microsoft.Extensions.Logging;
+    using NaradX.Business.Common.Interfaces;
+    using NaradX.Domain.Entities.Auth;
+    using NaradX.Domain.Repositories.Interfaces;
+
     public class RegisterCommandHandler : IRequestHandler<RegisterCommand, RegisterResponse>
     {
         private readonly IUserRepository _userRepository;

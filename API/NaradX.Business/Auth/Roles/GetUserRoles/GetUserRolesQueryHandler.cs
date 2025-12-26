@@ -1,14 +1,18 @@
-﻿using MediatR;
-using Microsoft.Extensions.Logging;
-using NaradX.Domain.Repositories.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// <copyright file="GetUserRolesQueryHandler.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace NaradX.Business.Auth.Roles.GetUserRoles
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using MediatR;
+    using Microsoft.Extensions.Logging;
+    using NaradX.Domain.Repositories.Interfaces;
+
     public class GetUserRolesQueryHandler : IRequestHandler<GetUserRolesQuery, GetUserRolesResponse>
     {
         private readonly IRoleRepository _roleRepository;

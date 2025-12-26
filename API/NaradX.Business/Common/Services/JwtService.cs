@@ -1,18 +1,22 @@
-﻿using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
-using NaradX.Business.Common.Interfaces;
-using NaradX.Business.Common.Models;
-using NaradX.Domain.Entities.Auth;
-using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
+﻿// <copyright file="JwtService.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace NaradX.Business.Common.Services
 {
+    using System;
+    using System.Collections.Generic;
+    using System.IdentityModel.Tokens.Jwt;
+    using System.Linq;
+    using System.Security.Claims;
+    using System.Text;
+    using System.Threading.Tasks;
+    using Microsoft.Extensions.Options;
+    using Microsoft.IdentityModel.Tokens;
+    using NaradX.Business.Common.Interfaces;
+    using NaradX.Business.Common.Models;
+    using NaradX.Domain.Entities.Auth;
+
     public class JwtService : IJwtService
     {
         private readonly JwtSettings _jwtSettings;

@@ -1,15 +1,19 @@
-﻿using Microsoft.EntityFrameworkCore;
-using NaradX.Domain.Entities.Tenancy;
-using NaradX.Domain.Enums;
-using NaradX.Domain.Repositories.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// <copyright file="TenantRepository.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace NaradX.Infrastructure.Repositories
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using Microsoft.EntityFrameworkCore;
+    using NaradX.Domain.Entities.Tenancy;
+    using NaradX.Domain.Enums;
+    using NaradX.Domain.Repositories.Interfaces;
+
     public class TenantRepository : Repository<Tenant>, ITenantRepository
     {
         private readonly NaradXDbContext _appDbContext;

@@ -1,10 +1,14 @@
-﻿using MediatR;
-using Microsoft.AspNetCore.Mvc;
-using NaradX.Business.Template.Commands;
-using NaradX.Business.Template.Query;
-using NaradX.Shared.Dto.Template;
+﻿// <copyright file="TemplateController.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace NaradX.API.Controllers;
+
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using NaradX.Business.Dtos.Template;
+using NaradX.Business.Template.Commands;
+using NaradX.Business.Template.Query;
 
 [Route("api/[controller]")]
 [ApiController]

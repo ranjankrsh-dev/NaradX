@@ -1,16 +1,20 @@
-﻿using AutoMapper;
-using MediatR;
-using NaradX.Business.Common.Interfaces;
-using NaradX.Domain.Repositories.Interfaces;
-using NaradX.Shared.Dto.Contact;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// <copyright file="GetContactByIdQueryHandler.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace NaradX.Business.Contacts.Queries.GetContactById
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using AutoMapper;
+    using MediatR;
+    using NaradX.Business.Common.Interfaces;
+    using NaradX.Domain.Repositories.Interfaces;
+    using NaradX.Business.Dtos.Contact;
+
     public class GetContactByIdQueryHandler : IRequestHandler<GetContactByIdQuery, ContactDto?>
     {
         private readonly IContactRepository _contactRepository;

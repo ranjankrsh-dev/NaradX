@@ -1,15 +1,19 @@
-﻿using MediatR;
-using Microsoft.Extensions.Logging;
-using NaradX.Domain.Entities.Tenancy;
-using NaradX.Domain.Repositories.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// <copyright file="CreateTenantCommandHandler.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace NaradX.Business.Tenants.CreateTenant
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using MediatR;
+    using Microsoft.Extensions.Logging;
+    using NaradX.Domain.Entities.Tenancy;
+    using NaradX.Domain.Repositories.Interfaces;
+
     public class CreateTenantCommandHandler : IRequestHandler<CreateTenantCommand, CreateTenantResponse>
     {
         private readonly ITenantRepository _tenantRepository;

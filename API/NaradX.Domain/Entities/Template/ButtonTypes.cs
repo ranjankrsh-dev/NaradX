@@ -1,6 +1,10 @@
-using System.Text.Json.Serialization;
+// <copyright file="ButtonTypes.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace NaradX.Domain.Entities.Template;
+
+using System.Text.Json.Serialization;
 
 public static class ButtonTypes
 {

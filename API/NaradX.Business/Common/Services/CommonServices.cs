@@ -1,18 +1,22 @@
-﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Caching.Memory;
-using NaradX.Business.Common.Interfaces;
-using NaradX.Domain.Entities.Common;
-using NaradX.Domain.Repositories.Interfaces;
-using NaradX.Shared.Dto.Common;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// <copyright file="CommonServices.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace NaradX.Business.Common.Services
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using AutoMapper;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.Caching.Memory;
+    using NaradX.Business.Common.Interfaces;
+    using NaradX.Domain.Entities.Common;
+    using NaradX.Domain.Repositories.Interfaces;
+    using NaradX.Business.Dtos.Common;
+
     public class CommonServices : ICommonServices
     {
         private readonly IUnitOfWork context;

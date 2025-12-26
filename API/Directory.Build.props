@@ -1,0 +1,23 @@
+<Project>
+    <PropertyGroup Label="Global Project Properties">
+        <TargetFramework>net9.0</TargetFramework>
+        <NoWarn>$(NoWarn);NU1507;CS1591;SA1600;SYSLIB0011;CS0436</NoWarn>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+    <PropertyGroup Label="Global Test Project Properties">
+    </PropertyGroup>
+    <PropertyGroup Label="Global Project Analyzers">
+        <EnableNetAnalyzers>true</EnableNetAnalyzers>
+        <AnalysisMode>All</AnalysisMode>
+        <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    </PropertyGroup>
+    <ItemGroup Label="Global Package References">
+        <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" PrivateAssets="all" />
+        <PackageReference Include="StyleCop.Analyzers">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+    </ItemGroup>
+</Project>

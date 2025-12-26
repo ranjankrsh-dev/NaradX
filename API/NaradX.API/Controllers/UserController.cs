@@ -1,11 +1,15 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using NaradX.Domain.Repositories.Interfaces;
-using System.Security.Claims;
+﻿// <copyright file="UserController.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace NaradX.API.Controllers
 {
+    using System.Security.Claims;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc;
+    using NaradX.Domain.Repositories.Interfaces;
+
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]

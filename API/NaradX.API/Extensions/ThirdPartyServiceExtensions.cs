@@ -1,4 +1,8 @@
-﻿namespace NaradX.API.Extensions
+﻿// <copyright file="ThirdPartyServiceExtensions.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+namespace NaradX.API.Extensions
 {
     public static class ThirdPartyServiceExtensions
     {

@@ -1,16 +1,20 @@
-﻿using MediatR;
-using Microsoft.Extensions.Logging;
-using NaradX.Business.Auth.Login;
-using NaradX.Business.Common.Interfaces;
-using NaradX.Domain.Repositories.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// <copyright file="RefreshTokenCommandHandler.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace NaradX.Business.Auth.RefreshToken
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using MediatR;
+    using Microsoft.Extensions.Logging;
+    using NaradX.Business.Auth.Login;
+    using NaradX.Business.Common.Interfaces;
+    using NaradX.Domain.Repositories.Interfaces;
+
     public class RefreshTokenCommandHandler : IRequestHandler<RefreshTokenCommand, LoginResponse>
     {
         private readonly IRefreshTokenService _refreshTokenService;

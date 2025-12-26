@@ -1,9 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore;
-using NaradX.Shared.Dto.Template;
-using NaradX.Shared.Models;
-using Refit;
+﻿// <copyright file="IWhatsAppApiGateway.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace NaradX.Infrastructure.Gateways.WhatsApp;
+
+using Microsoft.EntityFrameworkCore;
+using NaradX.Business.Dtos.Template;
+using Refit;
 
 public interface IWhatsAppApiGateway
 {

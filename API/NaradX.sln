@@ -11,8 +11,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NaradX.Domain", "NaradX.Dom
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NaradX.Infrastructure", "NaradX.Infrastructure\NaradX.Infrastructure.csproj", "{6F1F0BCB-96F2-432E-8ED2-3A71241D7541}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NaradX.Shared", "NaradX.Shared\NaradX.Shared.csproj", "{3A599EDB-8420-46CE-BED9-30C6A2663F96}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,10 +33,6 @@ Global
 		{6F1F0BCB-96F2-432E-8ED2-3A71241D7541}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6F1F0BCB-96F2-432E-8ED2-3A71241D7541}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6F1F0BCB-96F2-432E-8ED2-3A71241D7541}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3A599EDB-8420-46CE-BED9-30C6A2663F96}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3A599EDB-8420-46CE-BED9-30C6A2663F96}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3A599EDB-8420-46CE-BED9-30C6A2663F96}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3A599EDB-8420-46CE-BED9-30C6A2663F96}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

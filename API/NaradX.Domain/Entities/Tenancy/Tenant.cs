@@ -1,15 +1,19 @@
-﻿using NaradX.Domain.Entities.Auth;
-using NaradX.Domain.Entities.Base;
-using NaradX.Domain.Entities.ManageContact;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// <copyright file="Tenant.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace NaradX.Domain.Entities.Tenancy
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using NaradX.Domain.Entities.Auth;
+    using NaradX.Domain.Entities.Base;
+    using NaradX.Domain.Entities.ManageContact;
+
     public class Tenant : FullAuditableEntity
     {
         [Required]
@@ -33,13 +37,17 @@ namespace NaradX.Domain.Entities.Tenancy
         public string? Address { get; set; }
 
         public DateTime SubscriptionStartDate { get; set; } = DateTime.UtcNow;
+
         public DateTime? SubscriptionEndDate { get; set; }
 
         public int MaxUsers { get; set; } = 5;
+
         public int MaxContacts { get; set; } = 1000;
+
         public int MaxMessagesPerMonth { get; set; } = 10000;
 
         public virtual ICollection<User> Users { get; set; } = new List<User>();
+
         public virtual ICollection<Contact> Contacts { get; set; } = new List<Contact>();
     }
 }

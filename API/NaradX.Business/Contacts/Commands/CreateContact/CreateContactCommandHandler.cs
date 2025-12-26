@@ -1,11 +1,15 @@
-﻿using MediatR;
-using NaradX.Business.Common.Interfaces;
-using NaradX.Domain.Entities.ManageContact;
-using NaradX.Domain.Enums;
-using NaradX.Domain.Repositories.Interfaces;
+﻿// <copyright file="CreateContactCommandHandler.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace NaradX.Business.Contacts.Commands.CreateContact
 {
+    using MediatR;
+    using NaradX.Business.Common.Interfaces;
+    using NaradX.Domain.Entities.ManageContact;
+    using NaradX.Domain.Enums;
+    using NaradX.Domain.Repositories.Interfaces;
+
     public class CreateContactCommandHandler : IRequestHandler<CreateContactCommand, int>
     {
         private readonly IContactRepository _contactRepository;

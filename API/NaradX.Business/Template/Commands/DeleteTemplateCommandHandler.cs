@@ -1,7 +1,11 @@
-﻿using MediatR;
-using NaradX.Domain.Repositories.Interfaces;
+﻿// <copyright file="DeleteTemplateCommandHandler.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace NaradX.Business.Template.Commands;
+
+using MediatR;
+using NaradX.Domain.Repositories.Interfaces;
 
 public class DeleteTemplateCommandHandler(ITemplateRepository templateRepository) : IRequestHandler<DeleteTemplateCommand, bool>
 {

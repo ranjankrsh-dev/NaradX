@@ -1,7 +1,11 @@
-﻿using NaradX.Domain.Entities.Template;
-using NaradX.Shared.Dto.Template;
+﻿// <copyright file="WhatsApTemplateMapper.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace NaradX.Infrastructure.Mappers;
+
+using NaradX.Business.Dtos.Template;
+using NaradX.Domain.Entities.Template;
 
 public class WhatsAppTemplateMapper
 {

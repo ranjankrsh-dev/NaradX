@@ -1,15 +1,19 @@
-﻿using Microsoft.EntityFrameworkCore;
-using NaradX.Domain.Entities.Base;
-using NaradX.Domain.Repositories.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
+﻿// <copyright file="Repository.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace NaradX.Infrastructure.Repositories
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Linq.Expressions;
+    using System.Text;
+    using System.Threading.Tasks;
+    using Microsoft.EntityFrameworkCore;
+    using NaradX.Domain.Entities.Base;
+    using NaradX.Domain.Repositories.Interfaces;
+
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : BaseEntity<int>
     {
         protected readonly NaradXDbContext _context;

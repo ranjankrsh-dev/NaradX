@@ -1,15 +1,19 @@
+// <copyright file="TemplateRepository.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
+namespace NaradX.Infrastructure.Repositories;
+
+using System.Text.Json;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using NaradX.Business.Dtos.Template;
+using NaradX.Domain.Entities.Template;
 using NaradX.Domain.Repositories.Interfaces;
 using NaradX.Infrastructure.Gateways.WhatsApp;
 using NaradX.Infrastructure.Mappers;
-using NaradX.Shared.Dto.Template;
-using NaradX.Shared.Models;
 using Refit;
-using System.Text.Json;
-
-namespace NaradX.Infrastructure.Repositories;
 
 public class TemplateRepository(
     IWhatsAppApiGateway whatsAppApi,
@@ -23,18 +27,21 @@ public class TemplateRepository(
     private static readonly JsonSerializerOptions _jsonSerializerOptions = new() { WriteIndented = true };
 
     // Implementation of the TemplateRepository class
-    public async Task<CreateTemplateResponse> CreateWhatsAppMessageTemplateAsync(WhatsAppMessageTemplateDTO whatsappMessageTemplate, CancellationToken cancellationToken)
+    public async Task<object> CreateWhatsAppMessageTemplateAsync(object whatsappMessageTemplate, CancellationToken cancellationToken)
     {
         try
         {
+            var dto = whatsappMessageTemplate as WhatsAppMessageTemplateDTO ?? throw new ArgumentException("Invalid template format");
+
             // Log request details
-            logger.LogInformation("Creating WhatsApp template with:\nBusinessId: {BusinessId}\nTemplate: {Template}",
+            logger.LogInformation(
+                "Creating WhatsApp template with:\nBusinessId: {BusinessId}\nTemplate: {Template}",
                 _options.BusinessId,
-                JsonSerializer.Serialize(whatsappMessageTemplate, _jsonSerializerOptions));
+                JsonSerializer.Serialize(dto, _jsonSerializerOptions));
 
             var response = await whatsAppApi.CreateTemplateAsync(
                 _options.BusinessId,
-                whatsappMessageTemplate,
+                dto,
                 $"Bearer {_options.AccessToken}");
 
             logger.LogInformation("WhatsApp API Response: {Response}",
@@ -42,7 +49,7 @@ public class TemplateRepository(
 
             if (response != null)
             {
-                var entity = WhatsAppTemplateMapper.ToEntity(whatsappMessageTemplate);
+                var entity = WhatsAppTemplateMapper.ToEntity(dto);
                 await context.AddAsync(entity, cancellationToken);
                 await context.SaveChangesAsync(cancellationToken);
                 logger.LogInformation("WhatsApp template saved to database with ID: {TemplateId}", entity.Id);
@@ -68,18 +75,18 @@ public class TemplateRepository(
         }
     }
 
-    public Task<List<WhatsAppMessageTemplateDTO>> GetAllWhatsAppMessageTemplatesAsync(CancellationToken cancellationToken)
+    public async Task<List<object>> GetAllWhatsAppMessageTemplatesAsync(CancellationToken cancellationToken)
     {
         var templates = context.WhatsAppTemplates
             .Select(WhatsAppTemplateMapper.ToDTO)
             .ToList();
-        return Task.FromResult(templates);
+        return await Task.FromResult(templates.Cast<object>().ToList());
     }
 
-    public async Task<WhatsAppMessageTemplateDTO?> GetWhatsAppMessageTemplateByNameAsync(string templateName, CancellationToken cancellationToken)
+    public async Task<object?> GetWhatsAppMessageTemplateByNameAsync(string templateName, CancellationToken cancellationToken)
     {
-        var template = await context.WhatsAppTemplates.FirstAsync(x => x.Name == templateName, cancellationToken: cancellationToken);
-        return WhatsAppTemplateMapper.ToDTO(template);
+        var template = await context.WhatsAppTemplates.FirstOrDefaultAsync(x => x.Name == templateName, cancellationToken: cancellationToken);
+        return template != null ? (object)WhatsAppTemplateMapper.ToDTO(template) : null;
     }
 
     public async Task<bool> DeleteWhatsAppMessageTemplateByNameAsync(string templateName, CancellationToken cancellationToken)
@@ -121,6 +128,18 @@ public class TemplateRepository(
 
     public async Task<bool> SendWhatsAppTextMessage(string phoneNumberId, string recipientPhone)
     {
-
+        // return await whatsAppApi.SendTextMessageAsync(
+        //     phoneNumberId,
+        //     new
+        //     {
+        //         to = recipientPhone,
+        //         type = "text",
+        //         text = new
+        //         {
+        //             body = "This is a test message from NaradX."
+        //         }
+        //     },
+        //     $"Bearer {_options.AccessToken}").ConfigureAwait(false);
+        return true;
     }
 }

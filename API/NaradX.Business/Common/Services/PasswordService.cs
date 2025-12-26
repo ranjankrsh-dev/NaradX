@@ -1,14 +1,18 @@
-﻿using Microsoft.AspNetCore.Cryptography.KeyDerivation;
-using NaradX.Business.Common.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
+﻿// <copyright file="PasswordService.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace NaradX.Business.Common.Services
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Security.Cryptography;
+    using System.Text;
+    using System.Threading.Tasks;
+    using Microsoft.AspNetCore.Cryptography.KeyDerivation;
+    using NaradX.Business.Common.Interfaces;
+
     public class PasswordService : IPasswordService
     {
         private const int SaltSize = 16;

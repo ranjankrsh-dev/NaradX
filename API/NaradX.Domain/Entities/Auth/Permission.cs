@@ -1,13 +1,17 @@
-﻿using NaradX.Domain.Entities.Base;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// <copyright file="Permission.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace NaradX.Domain.Entities.Auth
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using NaradX.Domain.Entities.Base;
+
     public class Permission : BaseEntity
     {
         [Required]
@@ -34,10 +38,12 @@ namespace NaradX.Domain.Entities.Auth
     public class RolePermission : BaseEntity
     {
         public int RoleId { get; set; }
+
         public int PermissionId { get; set; }
 
         // Navigation properties
         public virtual Role Role { get; set; } = null!;
+
         public virtual Permission Permission { get; set; } = null!;
     }
 }

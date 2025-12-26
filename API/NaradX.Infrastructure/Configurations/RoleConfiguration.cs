@@ -1,14 +1,18 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using NaradX.Domain.Entities.Auth;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// <copyright file="RoleConfiguration.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace NaradX.Infrastructure.Configurations
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore.Metadata.Builders;
+    using NaradX.Domain.Entities.Auth;
+
     public class RoleConfiguration : IEntityTypeConfiguration<Role>
     {
         public void Configure(EntityTypeBuilder<Role> builder)
@@ -16,6 +20,9 @@ namespace NaradX.Infrastructure.Configurations
             builder.ToTable("Roles");
 
             builder.HasKey(r => r.Id);
+
+            builder.Property(r => r.Id)
+                .ValueGeneratedOnAdd();
 
             builder.Property(r => r.Name)
                 .IsRequired()

@@ -1,12 +1,16 @@
-﻿using Microsoft.EntityFrameworkCore;
-using NaradX.Domain.Entities.Base;
-using NaradX.Domain.Repositories.Interfaces;
-using NaradX.Shared.Models.Common;
-using System.Linq;
-using System.Linq.Expressions;
+﻿// <copyright file="RepositoryExtensions.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace NaradX.API.Extensions
 {
+    using System.Linq;
+    using System.Linq.Expressions;
+    using Microsoft.EntityFrameworkCore;
+    using NaradX.Domain.Entities.Base;
+    using NaradX.Domain.Repositories.Interfaces;
+    using NaradX.Domain.Common;
+
     public static class RepositoryExtensions
     {
         public static async Task<PaginatedList<TEntity>> GetPaginatedAsync<TEntity>(

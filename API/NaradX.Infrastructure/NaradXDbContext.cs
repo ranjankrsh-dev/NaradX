@@ -1,40 +1,61 @@
-﻿using Microsoft.EntityFrameworkCore;
-using NaradX.Domain.Entities.Auth;
-using NaradX.Domain.Entities.Common;
-using NaradX.Domain.Entities.ManageContact;
-using NaradX.Domain.Entities.Template;
-using NaradX.Domain.Entities.Tenancy;
-using NaradX.Domain.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+﻿// <copyright file="NaradXDbContext.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace NaradX.Infrastructure
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Linq.Expressions;
+    using System.Reflection;
+    using System.Text;
+    using System.Threading.Tasks;
+    using Microsoft.EntityFrameworkCore;
+    using NaradX.Domain.Entities.Auth;
+    using NaradX.Domain.Entities.Common;
+    using NaradX.Domain.Entities.ManageContact;
+    using NaradX.Domain.Entities.Template;
+    using NaradX.Domain.Entities.Tenancy;
+    using NaradX.Domain.Interfaces;
+
     public class NaradXDbContext(DbContextOptions<NaradXDbContext> options) : DbContext(options)
     {
         // DbSets will be added here
         public DbSet<User> Users { get; set; }
+
         public DbSet<Tenant> Tenants { get; set; }
+
         public DbSet<Role> Roles { get; set; }
+
         public DbSet<Permission> Permissions { get; set; }
+
         public DbSet<RolePermission> RolePermissions { get; set; }
+
         public DbSet<UserRole> UserRoles { get; set; }
+
         public DbSet<RefreshToken> RefreshTokens { get; set; }
+
         public DbSet<Contact> Contacts { get; set; }
+
         public DbSet<ChannelPreference> ChannelPreferences { get; set; }
+
         public DbSet<Tag> Tags { get; set; }
+
         public DbSet<ContactTag> ContactTags { get; set; }
+
         public DbSet<ConfigMaster> ConfigMasters { get; set; }
+
         public DbSet<ConfigValue> ConfigValues { get; set; }
+
         public DbSet<Country> Countries { get; set; }
+
         public DbSet<Language> Languages { get; set; }
+
         public DbSet<WhatsAppTemplate> WhatsAppTemplates { get; set; }
+
         public DbSet<Component> Components { get; set; }
+
         public DbSet<Button> Buttons { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

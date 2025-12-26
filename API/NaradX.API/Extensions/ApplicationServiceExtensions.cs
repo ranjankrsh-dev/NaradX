@@ -1,13 +1,17 @@
-﻿using FluentValidation;
-using Microsoft.Extensions.DependencyInjection;
-using NaradX.Business;
-using NaradX.Business.Auth.Register;
-using NaradX.Business.Common.Interfaces;
-using NaradX.Business.Common.Services;
-using AutoMapper;
+﻿// <copyright file="ApplicationServiceExtensions.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace NaradX.API.Extensions
 {
+    using AutoMapper;
+    using FluentValidation;
+    using Microsoft.Extensions.DependencyInjection;
+    using NaradX.Business;
+    using NaradX.Business.Auth.Register;
+    using NaradX.Business.Common.Interfaces;
+    using NaradX.Business.Common.Services;
+
     public static class ApplicationServiceExtensions
     {
         public static IServiceCollection AddApplicationServices(this IServiceCollection services)

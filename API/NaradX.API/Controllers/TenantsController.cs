@@ -1,12 +1,16 @@
-﻿using MediatR;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using NaradX.Business.Tenants.CreateTenant;
-using NaradX.Domain.Repositories.Interfaces;
+﻿// <copyright file="TenantsController.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace NaradX.API.Controllers
 {
+    using MediatR;
+    using Microsoft.AspNetCore.Authorization;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc;
+    using NaradX.Business.Tenants.CreateTenant;
+    using NaradX.Domain.Repositories.Interfaces;
+
     [ApiController]
     [Route("api/[controller]")]
     //[Authorize(Roles = "SuperAdmin")]

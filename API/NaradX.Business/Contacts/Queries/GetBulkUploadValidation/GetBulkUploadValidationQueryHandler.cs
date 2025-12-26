@@ -1,34 +1,40 @@
-﻿using ClosedXML.Excel;
-using MediatR;
-using Microsoft.AspNetCore.Antiforgery;
-using Microsoft.Extensions.Caching.Memory;
-using Microsoft.Extensions.Logging;
-using NaradX.Business.Common.Services;
-using NaradX.Domain.Entities.ManageContact;
-using NaradX.Domain.Repositories.Interfaces;
-using NaradX.Shared.Dto.BulkUpload;
-using NaradX.Shared.Dto.Contact;
-using NaradX.Shared.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// <copyright file="GetBulkUploadValidationQueryHandler.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace NaradX.Business.Contacts.Queries.GetBulkUploadValidation
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using ClosedXML.Excel;
+    using MediatR;
+    using Microsoft.AspNetCore.Antiforgery;
+    using Microsoft.Extensions.Caching.Memory;
+    using Microsoft.Extensions.Logging;
+    using NaradX.Business.Common.Services;
+    using NaradX.Business.Common.Utilities;
+    using NaradX.Business.Dtos.BulkUpload;
+    using NaradX.Business.Dtos.Contact;
+    using NaradX.Domain.Entities.ManageContact;
+    using NaradX.Domain.Repositories.Interfaces;
+
     public class GetBulkUploadValidationQueryHandler : IRequestHandler<GetBulkUploadValidationQuery, BulkUploadValidateResponse>
     {
         private const int CACHE_EXPIRATION_MINUTES = 30;
         private readonly IMemoryCache memoryCache;
         private readonly ILogger<GetBulkUploadValidationQueryHandler> logger;
         private readonly IRepository<Contact> contactRepository;
+
         public GetBulkUploadValidationQueryHandler(IMemoryCache memoryCache, ILogger<GetBulkUploadValidationQueryHandler> logger, IRepository<Contact> contactRepository)
         {
             this.memoryCache = memoryCache;
             this.logger = logger;
             this.contactRepository = contactRepository;
         }
+
         public async Task<BulkUploadValidateResponse> Handle(GetBulkUploadValidationQuery request, CancellationToken cancellationToken)
         {
             var response = new BulkUploadValidateResponse();

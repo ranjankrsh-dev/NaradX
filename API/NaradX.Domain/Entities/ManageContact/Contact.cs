@@ -1,19 +1,24 @@
-﻿using NaradX.Domain.Entities.Base;
-using NaradX.Domain.Entities.Common;
-using NaradX.Domain.Entities.Tenancy;
-using NaradX.Domain.Enums;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// <copyright file="Contact.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace NaradX.Domain.Entities.ManageContact
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel.DataAnnotations;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using NaradX.Domain.Entities.Base;
+    using NaradX.Domain.Entities.Common;
+    using NaradX.Domain.Entities.Tenancy;
+    using NaradX.Domain.Enums;
+
     public class Contact : FullAuditableEntity
     {
         public int TenantId { get; set; }
+
         public virtual Tenant Tenant { get; set; } = null!;
 
         [Required]
@@ -38,9 +43,11 @@ namespace NaradX.Domain.Entities.ManageContact
         public string? Email { get; set; }
 
         public int CountryId { get; set; }
+
         public virtual Country Country { get; set; } = null!;
 
         public int LanguageId { get; set; }
+
         public virtual Language Language { get; set; } = null!;
 
         [MaxLength(50)]
@@ -68,12 +75,14 @@ namespace NaradX.Domain.Entities.ManageContact
 
         // ===== COMPLIANCE & PREFERENCES =====
         public OptInStatus OptInStatus { get; set; } = OptInStatus.OptedIn;
+
         public DateTime? OptInDate { get; set; } = DateTime.UtcNow;
 
         [MaxLength(50)]
         public string? OptInSource { get; set; }
 
         public virtual ICollection<ChannelPreference> ChannelPreferences { get; set; } = new List<ChannelPreference>();
+
         public virtual ICollection<ContactTag> ContactTags { get; set; } = new List<ContactTag>();
     }
 }

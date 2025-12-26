@@ -1,15 +1,19 @@
-﻿using Microsoft.EntityFrameworkCore;
-using NaradX.Domain.Entities.Auth;
-using NaradX.Domain.Enums;
-using NaradX.Domain.Repositories.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// <copyright file="UserRepository.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace NaradX.Infrastructure.Repositories
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using Microsoft.EntityFrameworkCore;
+    using NaradX.Domain.Entities.Auth;
+    using NaradX.Domain.Enums;
+    using NaradX.Domain.Repositories.Interfaces;
+
     public class UserRepository : Repository<User>, IUserRepository
     {
         private readonly NaradXDbContext _appDbContext;

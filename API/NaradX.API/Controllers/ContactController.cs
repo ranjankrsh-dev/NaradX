@@ -1,23 +1,26 @@
-﻿using MediatR;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using NaradX.Business.Common.Interfaces;
-using NaradX.Business.Contacts.Commands.BulkUploadContact;
-using NaradX.Business.Contacts.Commands.CreateContact;
-using NaradX.Business.Contacts.Commands.DeleteContact;
-using NaradX.Business.Contacts.Commands.UpdateContact;
-using NaradX.Business.Contacts.Queries.GetBulkUploadValidation;
-using NaradX.Business.Contacts.Queries.GetContactById;
-using NaradX.Business.Contacts.Queries.GetContacts;
-using NaradX.Shared.Dto.BulkUpload;
-using NaradX.Shared.Dto.Common;
-using NaradX.Shared.Dto.Contact;
-using NaradX.Shared.Helpers;
-using NaradX.Shared.Models.Common;
-using NaradX.Shared.Models.Contact;
+﻿// <copyright file="ContactController.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace NaradX.API.Controllers
 {
+    using MediatR;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc;
+    using NaradX.Business.Common.Interfaces;
+    using NaradX.Business.Common.Utilities;
+    using NaradX.Business.Contacts.Commands.BulkUploadContact;
+    using NaradX.Business.Contacts.Commands.CreateContact;
+    using NaradX.Business.Contacts.Commands.DeleteContact;
+    using NaradX.Business.Contacts.Commands.UpdateContact;
+    using NaradX.Business.Contacts.Queries.GetBulkUploadValidation;
+    using NaradX.Business.Contacts.Queries.GetContactById;
+    using NaradX.Business.Contacts.Queries.GetContacts;
+    using NaradX.Business.Dtos.BulkUpload;
+    using NaradX.Business.Dtos.Common;
+    using NaradX.Business.Dtos.Contact;
+    using NaradX.Domain.Common;
+
     [Route("api/contact")]
     [ApiController]
     public class ContactController : ControllerBase

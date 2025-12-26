@@ -1,18 +1,22 @@
-﻿using MediatR;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using NaradX.Business.Common.Interfaces;
-using NaradX.Business.Common.Models;
-using NaradX.Business.Common.Services;
-using NaradX.Domain.Repositories.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// <copyright file="LoginCommandHandler.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace NaradX.Business.Auth.Login
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using MediatR;
+    using Microsoft.Extensions.Logging;
+    using Microsoft.Extensions.Options;
+    using NaradX.Business.Common.Interfaces;
+    using NaradX.Business.Common.Models;
+    using NaradX.Business.Common.Services;
+    using NaradX.Domain.Repositories.Interfaces;
+
     public class LoginCommandHandler : IRequestHandler<LoginCommand, LoginResponse>
     {
         private readonly IUserRepository _userRepository;

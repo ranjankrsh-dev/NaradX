@@ -1,19 +1,24 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using NaradX.Business.Common.Interfaces;
-using NaradX.Business.Common.Services;
-using NaradX.Domain.Entities.Common;
-using NaradX.Shared.Dto.Common;
+﻿// <copyright file="BaseController.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace NaradX.API.Controllers
 {
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc;
+    using Microsoft.EntityFrameworkCore;
+    using NaradX.Business.Common.Interfaces;
+    using NaradX.Business.Common.Services;
+    using NaradX.Business.Dtos.Common;
+    using NaradX.Domain.Entities.Common;
+
     [Route("api/base")]
     [ApiController]
     public class BaseController : ControllerBase
     {
         private readonly ILogger<BaseController> logger;
         private readonly ICommonServices commonServices;
+
         public BaseController(ILogger<BaseController> logger, ICommonServices commonServices)
         {
             this.logger = logger;

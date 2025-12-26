@@ -1,16 +1,19 @@
-﻿using AutoMapper;
-using NaradX.Business.Common.Mappings;
-using NaradX.Shared.Models.Common;
+﻿// <copyright file="PaginatedListProfile.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
-namespace NaradX.API.Common.Mapping
+namespace NaradX.API.Common.Mapping;
+
+using AutoMapper;
+using NaradX.Business.Common.Mappings;
+using NaradX.Domain.Common;
+
+public class PaginatedListProfile : Profile
 {
-    public class PaginatedListProfile : Profile
+    public PaginatedListProfile()
     {
-        public PaginatedListProfile()
-        {
-            // Generic mapping for any PaginatedList
-            CreateMap(typeof(PaginatedList<>), typeof(PaginatedList<>))
-                .ConvertUsing(typeof(PaginatedListConverter<,>));
-        }
+        // Generic mapping for any PaginatedList
+        this.CreateMap(typeof(PaginatedList<>), typeof(PaginatedList<>))
+            .ConvertUsing(typeof(PaginatedListConverter<,>));
     }
 }

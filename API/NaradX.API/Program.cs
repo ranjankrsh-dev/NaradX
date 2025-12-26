@@ -1,3 +1,7 @@
+// <copyright file="Program.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
+
 using NaradX.API.Extensions;
 using NaradX.Infrastructure.Data.Seed;
 

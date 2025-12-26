@@ -1,17 +1,21 @@
-﻿using Microsoft.Extensions.Options;
-using NaradX.Business.Common.Interfaces;
-using NaradX.Business.Common.Models;
-using NaradX.Domain.Entities.Auth;
-using NaradX.Domain.Repositories.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
+﻿// <copyright file="RefreshTokenService.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace NaradX.Business.Common.Services
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Security.Cryptography;
+    using System.Text;
+    using System.Threading.Tasks;
+    using Microsoft.Extensions.Options;
+    using NaradX.Business.Common.Interfaces;
+    using NaradX.Business.Common.Models;
+    using NaradX.Domain.Entities.Auth;
+    using NaradX.Domain.Repositories.Interfaces;
+
     public class RefreshTokenService : IRefreshTokenService
     {
         private readonly IRepository<RefreshToken> _refreshTokenRepository;

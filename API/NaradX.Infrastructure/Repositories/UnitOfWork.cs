@@ -1,16 +1,20 @@
-﻿using Microsoft.EntityFrameworkCore.Storage;
-using NaradX.Domain.Entities.Auth;
-using NaradX.Domain.Entities.Base;
-using NaradX.Domain.Repositories.Interfaces;
-using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// <copyright file="UnitOfWork.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace NaradX.Infrastructure.Repositories
 {
+    using System;
+    using System.Collections.Concurrent;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using Microsoft.EntityFrameworkCore.Storage;
+    using NaradX.Domain.Entities.Auth;
+    using NaradX.Domain.Entities.Base;
+    using NaradX.Domain.Repositories.Interfaces;
+
     public class UnitOfWork : IUnitOfWork
     {
         private readonly NaradXDbContext _context;
@@ -31,8 +35,11 @@ namespace NaradX.Infrastructure.Repositories
 
         // Repository Properties
         public IUserRepository Users { get; private set; }
+
         public ITenantRepository Tenants { get; private set; }
+
         public IRoleRepository Roles { get; private set; }
+
         public IRepository<UserRole> UserRoles { get; private set; }
 
         // Generic Repository Access

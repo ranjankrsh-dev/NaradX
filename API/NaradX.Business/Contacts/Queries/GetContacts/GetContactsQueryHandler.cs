@@ -1,19 +1,22 @@
-﻿using AutoMapper;
-using MediatR;
-using NaradX.Business.Common.Interfaces;
-using NaradX.Domain.Repositories.Interfaces;
-using NaradX.Shared.Dto.Contact;
-using NaradX.Shared.Models.Common;
-using NaradX.Shared.Models.Contact;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+﻿// <copyright file="GetContactsQueryHandler.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace NaradX.Business.Contacts.Queries.GetContacts
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using AutoMapper;
+    using MediatR;
+    using NaradX.Business.Common.Interfaces;
+    using NaradX.Domain.Repositories.Interfaces;
+    using NaradX.Business.Dtos.Contact;
+    using NaradX.Domain.Common;
+    using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+
     public class GetContactsQueryHandler : IRequestHandler<GetContactsQuery, PaginatedList<ContactDto>>
     {
         private readonly IContactRepository _contactRepository;

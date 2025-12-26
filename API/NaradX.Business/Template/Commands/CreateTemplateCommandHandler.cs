@@ -1,8 +1,12 @@
-using MediatR;
-using NaradX.Domain.Repositories.Interfaces;
-using NaradX.Shared.Models;
+// <copyright file="CreateTemplateCommandHandler.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace NaradX.Business.Template.Commands;
+
+using MediatR;
+using NaradX.Business.Dtos.Template;
+using NaradX.Domain.Repositories.Interfaces;
 
 public class CreateTemplateCommandHandler : IRequestHandler<CreateTemplateCommand, CreateTemplateResponse>
 {
@@ -15,6 +19,7 @@ public class CreateTemplateCommandHandler : IRequestHandler<CreateTemplateComman
 
     public async Task<CreateTemplateResponse> Handle(CreateTemplateCommand request, CancellationToken cancellationToken)
     {
-        return await _templateRepository.CreateWhatsAppMessageTemplateAsync(request.WhatsAppTemplate, cancellationToken);
+        var result = await _templateRepository.CreateWhatsAppMessageTemplateAsync(request.WhatsAppTemplate, cancellationToken);
+        return (CreateTemplateResponse)result;
     }
 }

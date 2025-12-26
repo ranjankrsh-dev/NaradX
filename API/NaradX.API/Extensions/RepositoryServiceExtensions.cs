@@ -1,9 +1,13 @@
-﻿using NaradX.Domain.Entities.Auth;
-using NaradX.Domain.Repositories.Interfaces;
-using NaradX.Infrastructure.Repositories;
+﻿// <copyright file="RepositoryServiceExtensions.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace NaradX.API.Extensions
 {
+    using NaradX.Domain.Entities.Auth;
+    using NaradX.Domain.Repositories.Interfaces;
+    using NaradX.Infrastructure.Repositories;
+
     public static class RepositoryServiceExtensions
     {
         public static IServiceCollection AddRepositoryServices(this IServiceCollection services)

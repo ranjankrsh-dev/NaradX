@@ -1,14 +1,18 @@
-﻿using MediatR;
-using NaradX.Business.Common.Interfaces;
-using NaradX.Domain.Repositories.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// <copyright file="UpdateContactCommandHandler.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace NaradX.Business.Contacts.Commands.UpdateContact
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using MediatR;
+    using NaradX.Business.Common.Interfaces;
+    using NaradX.Domain.Repositories.Interfaces;
+
     public class UpdateContactCommandHandler : IRequestHandler<UpdateContactCommand, int>
     {
         private readonly IContactRepository _contactRepository;

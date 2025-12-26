@@ -1,11 +1,15 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using NaradX.Domain.Repositories.Interfaces;
-using NaradX.Infrastructure;
-using System;
+﻿// <copyright file="TestController.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace NaradX.API.Controllers
 {
+    using System;
+    using Microsoft.AspNetCore.Http;
+    using Microsoft.AspNetCore.Mvc;
+    using NaradX.Domain.Repositories.Interfaces;
+    using NaradX.Infrastructure;
+
     [Route("api/[controller]")]
     [ApiController]
     public class TestController : ControllerBase
@@ -75,6 +79,7 @@ namespace NaradX.API.Controllers
     public class AssignRoleRequest
     {
         public int UserId { get; set; }
+
         public int RoleId { get; set; }
     }
 }

@@ -1,9 +1,13 @@
-﻿using NaradX.Domain.Entities.Template;
-using NaradX.Shared.Dto.Template;
-using System.Collections.Generic;
-using System.Linq;
+﻿// <copyright file="WhatsAppTemplateComponentMapper.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace NaradX.Infrastructure.Mappers;
+
+using System.Collections.Generic;
+using System.Linq;
+using NaradX.Business.Dtos.Template;
+using NaradX.Domain.Entities.Template;
 
 public class WhatsAppTemplateComponentMapper
 {

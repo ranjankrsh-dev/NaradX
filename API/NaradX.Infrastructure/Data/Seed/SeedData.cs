@@ -1,44 +1,41 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using NaradX.Domain.Entities.Auth;
-using NaradX.Domain.Entities.Common;
-using NaradX.Domain.Entities.Tenancy;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// <copyright file="SeedData.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace NaradX.Infrastructure.Data.Seed
 {
+    using Microsoft.EntityFrameworkCore;
+    using Microsoft.Extensions.DependencyInjection;
+    using NaradX.Domain.Entities.Auth;
+    using NaradX.Domain.Entities.Common;
+    using NaradX.Domain.Entities.Tenancy;
+
     public static class SeedData
     {
         public static void Initialize(IServiceProvider serviceProvider)
         {
-            using (var context = new NaradXDbContext(
-                serviceProvider.GetRequiredService<DbContextOptions<NaradXDbContext>>()))
-            {
-                // Seed Roles
-                SeedRoles(context);
+            using var context = new NaradXDbContext(
+                serviceProvider.GetRequiredService<DbContextOptions<NaradXDbContext>>());
+            // Seed Roles
+            SeedRoles(context);
 
-                // Seed Permissions
-                SeedPermissions(context);
+            // Seed Permissions
+            SeedPermissions(context);
 
-                // Seed Role-Permission mappings
-                SeedRolePermissions(context);
+            // Seed Role-Permission mappings
+            SeedRolePermissions(context);
 
-                // Seed Tenants for SuperAdmin User
-                SeedTenantsForSuperAdminUser(context);
+            // Seed Tenants for SuperAdmin User
+            SeedTenantsForSuperAdminUser(context);
 
-                // Seed SuperAdmin User (if not exists)
-                SeedSuperAdminUser(context);
+            // Seed SuperAdmin User (if not exists)
+            SeedSuperAdminUser(context);
 
-                // Seed Config Masters and Values
-                SeedConfigMasterAndValues(context);
+            // Seed Config Masters and Values
+            SeedConfigMasterAndValues(context);
 
-                // Seed Countries and Languages
-                SeedCountriesAndLanguages(context);
-            }
+            // Seed Countries and Languages
+            SeedCountriesAndLanguages(context);
         }
 
         private static void SeedRoles(NaradXDbContext context)
@@ -47,24 +44,21 @@ namespace NaradX.Infrastructure.Data.Seed
             {
                 var roles = new List<Role>
                 {
-                    new Role
-                    {
+                    new() {
                         Name = "SuperAdmin",
                         Description = "Full system administrator with access to all tenants and features",
                         IsSystemRole = true,
                         CreatedBy = "System",
                         CreatedOn = DateTime.UtcNow
                     },
-                    new Role
-                    {
+                    new() {
                         Name = "TenantAdmin",
                         Description = "Administrator for a specific tenant",
                         IsSystemRole = true,
                         CreatedBy = "System",
                         CreatedOn = DateTime.UtcNow
                     },
-                    new Role
-                    {
+                    new() {
                         Name = "User",
                         Description = "Regular user with basic permissions",
                         IsSystemRole = true,
@@ -85,27 +79,27 @@ namespace NaradX.Infrastructure.Data.Seed
                 var permissions = new List<Permission>
                 {
                     // Role Management
-                    new Permission { Name = "Role.Assign", Description = "Assign roles to users", Code = "ROLE_ASSIGN", Category = "RoleManagement", IsEnabled = true, CreatedBy = "System", CreatedOn = DateTime.UtcNow },
-                    new Permission { Name = "Role.Create", Description = "Create new roles", Code = "ROLE_CREATE", Category = "RoleManagement", IsEnabled = true, CreatedBy = "System", CreatedOn = DateTime.UtcNow },
-                    new Permission { Name = "Role.Read", Description = "View roles", Code = "ROLE_READ", Category = "RoleManagement", IsEnabled = true, CreatedBy = "System", CreatedOn = DateTime.UtcNow },
-                    new Permission { Name = "Role.Update", Description = "Update roles", Code = "ROLE_UPDATE", Category = "RoleManagement", IsEnabled = true, CreatedBy = "System", CreatedOn = DateTime.UtcNow },
-                    new Permission { Name = "Role.Delete", Description = "Delete roles", Code = "ROLE_DELETE", Category = "RoleManagement", IsEnabled = true, CreatedBy = "System", CreatedOn = DateTime.UtcNow },
+                    new() { Name = "Role.Assign", Description = "Assign roles to users", Code = "ROLE_ASSIGN", Category = "RoleManagement", IsEnabled = true, CreatedBy = "System", CreatedOn = DateTime.UtcNow },
+                    new() { Name = "Role.Create", Description = "Create new roles", Code = "ROLE_CREATE", Category = "RoleManagement", IsEnabled = true, CreatedBy = "System", CreatedOn = DateTime.UtcNow },
+                    new() { Name = "Role.Read", Description = "View roles", Code = "ROLE_READ", Category = "RoleManagement", IsEnabled = true, CreatedBy = "System", CreatedOn = DateTime.UtcNow },
+                    new() { Name = "Role.Update", Description = "Update roles", Code = "ROLE_UPDATE", Category = "RoleManagement", IsEnabled = true, CreatedBy = "System", CreatedOn = DateTime.UtcNow },
+                    new() { Name = "Role.Delete", Description = "Delete roles", Code = "ROLE_DELETE", Category = "RoleManagement", IsEnabled = true, CreatedBy = "System", CreatedOn = DateTime.UtcNow },
 
                     // User Management
-                    new Permission { Name = "User.Create", Description = "Create new users", Code = "USER_CREATE", Category = "UserManagement", IsEnabled = true, CreatedBy = "System", CreatedOn = DateTime.UtcNow },
-                    new Permission { Name = "User.Read", Description = "View users", Code = "USER_READ", Category = "UserManagement", IsEnabled = true, CreatedBy = "System", CreatedOn = DateTime.UtcNow },
-                    new Permission { Name = "User.Update", Description = "Update users", Code = "USER_UPDATE", Category = "UserManagement", IsEnabled = true, CreatedBy = "System", CreatedOn = DateTime.UtcNow },
-                    new Permission { Name = "User.Delete", Description = "Delete users", Code = "USER_DELETE", Category = "UserManagement", IsEnabled = true, CreatedBy = "System", CreatedOn = DateTime.UtcNow },
+                    new() { Name = "User.Create", Description = "Create new users", Code = "USER_CREATE", Category = "UserManagement", IsEnabled = true, CreatedBy = "System", CreatedOn = DateTime.UtcNow },
+                    new() { Name = "User.Read", Description = "View users", Code = "USER_READ", Category = "UserManagement", IsEnabled = true, CreatedBy = "System", CreatedOn = DateTime.UtcNow },
+                    new() { Name = "User.Update", Description = "Update users", Code = "USER_UPDATE", Category = "UserManagement", IsEnabled = true, CreatedBy = "System", CreatedOn = DateTime.UtcNow },
+                    new() { Name = "User.Delete", Description = "Delete users", Code = "USER_DELETE", Category = "UserManagement", IsEnabled = true, CreatedBy = "System", CreatedOn = DateTime.UtcNow },
 
                     // Permission Management
-                    new Permission { Name = "Permission.Read", Description = "View permissions", Code = "PERMISSION_READ", Category = "PermissionManagement", IsEnabled = true, CreatedBy = "System", CreatedOn = DateTime.UtcNow },
-                    new Permission { Name = "Permission.Assign", Description = "Assign permissions to roles", Code = "PERMISSION_ASSIGN", Category = "PermissionManagement", IsEnabled = true, CreatedBy = "System", CreatedOn = DateTime.UtcNow },
+                    new() { Name = "Permission.Read", Description = "View permissions", Code = "PERMISSION_READ", Category = "PermissionManagement", IsEnabled = true, CreatedBy = "System", CreatedOn = DateTime.UtcNow },
+                    new() { Name = "Permission.Assign", Description = "Assign permissions to roles", Code = "PERMISSION_ASSIGN", Category = "PermissionManagement", IsEnabled = true, CreatedBy = "System", CreatedOn = DateTime.UtcNow },
 
                     // Tenant Management
-                    new Permission { Name = "Tenant.Create", Description = "Create tenants", Code = "TENANT_CREATE", Category = "TenantManagement", IsEnabled = true, CreatedBy = "System", CreatedOn = DateTime.UtcNow },
-                    new Permission { Name = "Tenant.Read", Description = "View tenants", Code = "TENANT_READ", Category = "TenantManagement", IsEnabled = true, CreatedBy = "System", CreatedOn = DateTime.UtcNow },
-                    new Permission { Name = "Tenant.Update", Description = "Update tenants", Code = "TENANT_UPDATE", Category = "TenantManagement", IsEnabled = true, CreatedBy = "System", CreatedOn = DateTime.UtcNow },
-                    new Permission { Name = "Tenant.Delete", Description = "Delete tenants", Code = "TENANT_DELETE", Category = "TenantManagement", IsEnabled = true, CreatedBy = "System", CreatedOn = DateTime.UtcNow }
+                    new() { Name = "Tenant.Create", Description = "Create tenants", Code = "TENANT_CREATE", Category = "TenantManagement", IsEnabled = true, CreatedBy = "System", CreatedOn = DateTime.UtcNow },
+                    new() { Name = "Tenant.Read", Description = "View tenants", Code = "TENANT_READ", Category = "TenantManagement", IsEnabled = true, CreatedBy = "System", CreatedOn = DateTime.UtcNow },
+                    new() { Name = "Tenant.Update", Description = "Update tenants", Code = "TENANT_UPDATE", Category = "TenantManagement", IsEnabled = true, CreatedBy = "System", CreatedOn = DateTime.UtcNow },
+                    new() { Name = "Tenant.Delete", Description = "Delete tenants", Code = "TENANT_DELETE", Category = "TenantManagement", IsEnabled = true, CreatedBy = "System", CreatedOn = DateTime.UtcNow }
                 };
 
                 context.Permissions.AddRange(permissions);
@@ -183,8 +177,7 @@ namespace NaradX.Infrastructure.Data.Seed
             {
                 var tenants = new List<Tenant>
                 {
-                    new Tenant
-                    {
+                    new() {
                         Name = "Default Tenant",
                         Description = "This is the default tenant.",
                         IsActive = true,
@@ -230,18 +223,18 @@ namespace NaradX.Infrastructure.Data.Seed
                 // For CHHANNEL_PREFERENCE
                 var dataSourceValues = new List<ConfigValue>
                 {
-                    new ConfigValue { ConfigMasterId = dataSourceMaster.Id, TenantId = null, ItemValue = "WHATSAPP", ItemText = "Whatsapp", DisplayOrder = 1, IsActive = true, CreatedBy = "System", CreatedOn = DateTime.UtcNow },
-                    new ConfigValue { ConfigMasterId = dataSourceMaster.Id, TenantId = null, ItemValue = "FACEBOOK", ItemText = "Facebook", DisplayOrder = 2, IsActive = true, CreatedBy = "System", CreatedOn = DateTime.UtcNow }
+                    new() { ConfigMasterId = dataSourceMaster.Id, TenantId = null, ItemValue = "WHATSAPP", ItemText = "Whatsapp", DisplayOrder = 1, IsActive = true, CreatedBy = "System", CreatedOn = DateTime.UtcNow },
+                    new() { ConfigMasterId = dataSourceMaster.Id, TenantId = null, ItemValue = "FACEBOOK", ItemText = "Facebook", DisplayOrder = 2, IsActive = true, CreatedBy = "System", CreatedOn = DateTime.UtcNow }
                 };
 
                 // For CONTACT_SOURCE
                 var contactSourceValues = new List<ConfigValue>
                 {
-                    new ConfigValue { ConfigMasterId = contactSourceMaster.Id, TenantId = null, ItemValue = "WEBSITE", ItemText = "Website", DisplayOrder = 1, IsActive = true, CreatedBy = "System", CreatedOn = DateTime.UtcNow },
-                    new ConfigValue { ConfigMasterId = contactSourceMaster.Id, TenantId = null, ItemValue = "EMAIL", ItemText = "Email", DisplayOrder = 2, IsActive = true, CreatedBy = "System", CreatedOn = DateTime.UtcNow },
-                    new ConfigValue { ConfigMasterId = contactSourceMaster.Id, TenantId = null, ItemValue = "WALKIN", ItemText = "Walk-In", DisplayOrder = 3, IsActive = true, CreatedBy = "System", CreatedOn = DateTime.UtcNow },
-                    new ConfigValue { ConfigMasterId = contactSourceMaster.Id, TenantId = null, ItemValue = "FRIENDS", ItemText = "Friends", DisplayOrder = 4, IsActive = true, CreatedBy = "System", CreatedOn = DateTime.UtcNow },
-                    new ConfigValue { ConfigMasterId = contactSourceMaster.Id, TenantId = null, ItemValue = "SOCIAL_MEDIA", ItemText = "Social Media", DisplayOrder = 5, IsActive = true, CreatedBy = "System", CreatedOn = DateTime.UtcNow }
+                    new() { ConfigMasterId = contactSourceMaster.Id, TenantId = null, ItemValue = "WEBSITE", ItemText = "Website", DisplayOrder = 1, IsActive = true, CreatedBy = "System", CreatedOn = DateTime.UtcNow },
+                    new() { ConfigMasterId = contactSourceMaster.Id, TenantId = null, ItemValue = "EMAIL", ItemText = "Email", DisplayOrder = 2, IsActive = true, CreatedBy = "System", CreatedOn = DateTime.UtcNow },
+                    new() { ConfigMasterId = contactSourceMaster.Id, TenantId = null, ItemValue = "WALKIN", ItemText = "Walk-In", DisplayOrder = 3, IsActive = true, CreatedBy = "System", CreatedOn = DateTime.UtcNow },
+                    new() { ConfigMasterId = contactSourceMaster.Id, TenantId = null, ItemValue = "FRIENDS", ItemText = "Friends", DisplayOrder = 4, IsActive = true, CreatedBy = "System", CreatedOn = DateTime.UtcNow },
+                    new() { ConfigMasterId = contactSourceMaster.Id, TenantId = null, ItemValue = "SOCIAL_MEDIA", ItemText = "Social Media", DisplayOrder = 5, IsActive = true, CreatedBy = "System", CreatedOn = DateTime.UtcNow }
                 };
 
                 context.ConfigValues.AddRange(dataSourceValues);
@@ -249,6 +242,7 @@ namespace NaradX.Infrastructure.Data.Seed
                 context.SaveChanges();
             }
         }
+
         private static void SeedCountriesAndLanguages(NaradXDbContext context)
         {
             if (!context.Countries.Any(c => c.Code == "IN"))
@@ -265,8 +259,7 @@ namespace NaradX.Infrastructure.Data.Seed
                     CreatedOn = DateTime.UtcNow,
                     Languages = new List<Language>
                     {
-                        new Language
-                        {
+                        new() {
                             Culture = "hi-IN",
                             Name = "Hindi",
                             LocalName = "हिन्दी",
@@ -275,8 +268,7 @@ namespace NaradX.Infrastructure.Data.Seed
                             CreatedBy = "System",
                             CreatedOn = DateTime.UtcNow
                         },
-                        new Language
-                        {
+                        new() {
                             CountryId=1,
                             Culture = "en-IN",
                             Name = "English",
@@ -286,8 +278,7 @@ namespace NaradX.Infrastructure.Data.Seed
                             CreatedBy = "System",
                             CreatedOn = DateTime.UtcNow
                         },
-            new Language
-            {
+            new() {
                 CountryId=1,
                 Culture = "bn-IN",
                 Name = "Bengali",
@@ -297,8 +288,7 @@ namespace NaradX.Infrastructure.Data.Seed
                 CreatedBy = "System",
                 CreatedOn = DateTime.UtcNow
             },
-            new Language
-            {
+            new() {
                 CountryId = 1,
                 Culture = "te-IN",
                 Name = "Telugu",
@@ -308,8 +298,7 @@ namespace NaradX.Infrastructure.Data.Seed
                 CreatedBy = "System",
                 CreatedOn = DateTime.UtcNow
             },
-            new Language
-            {CountryId = 1,
+            new() {CountryId = 1,
                 Culture = "mr-IN",
                 Name = "Marathi",
                 LocalName = "मराठी",
@@ -318,8 +307,7 @@ namespace NaradX.Infrastructure.Data.Seed
                 CreatedBy = "System",
                 CreatedOn = DateTime.UtcNow
             },
-            new Language
-            {CountryId = 1,
+            new() {CountryId = 1,
                 Culture = "ta-IN",
                 Name = "Tamil",
                 LocalName = "தமிழ்",
@@ -328,8 +316,7 @@ namespace NaradX.Infrastructure.Data.Seed
                 CreatedBy = "System",
                 CreatedOn = DateTime.UtcNow
             },
-            new Language
-            {CountryId = 1,
+            new() {CountryId = 1,
                 Culture = "ur-IN",
                 Name = "Urdu",
                 LocalName = "اردو",
@@ -338,8 +325,7 @@ namespace NaradX.Infrastructure.Data.Seed
                 CreatedBy = "System",
                 CreatedOn = DateTime.UtcNow
             },
-            new Language
-            {CountryId = 1,
+            new() {CountryId = 1,
                 Culture = "gu-IN",
                 Name = "Gujarati",
                 LocalName = "ગુજરાતી",
@@ -348,8 +334,7 @@ namespace NaradX.Infrastructure.Data.Seed
                 CreatedBy = "System",
                 CreatedOn = DateTime.UtcNow
             },
-            new Language
-            {CountryId = 1,
+            new() {CountryId = 1,
                 Culture = "kn-IN",
                 Name = "Kannada",
                 LocalName = "ಕನ್ನಡ",
@@ -358,8 +343,7 @@ namespace NaradX.Infrastructure.Data.Seed
                 CreatedBy = "System",
                 CreatedOn = DateTime.UtcNow
             },
-            new Language
-            {CountryId = 1,
+            new() {CountryId = 1,
                 Culture = "or-IN",
                 Name = "Odia",
                 LocalName = "ଓଡ଼ିଆ",
@@ -368,8 +352,7 @@ namespace NaradX.Infrastructure.Data.Seed
                 CreatedBy = "System",
                 CreatedOn = DateTime.UtcNow
             },
-            new Language
-            {CountryId = 1,
+            new() {CountryId = 1,
                 Culture = "ml-IN",
                 Name = "Malayalam",
                 LocalName = "മലയാളം",
@@ -378,8 +361,7 @@ namespace NaradX.Infrastructure.Data.Seed
                 CreatedBy = "System",
                 CreatedOn = DateTime.UtcNow
             },
-            new Language
-            {CountryId = 1,
+            new() {CountryId = 1,
                 Culture = "pa-IN",
                 Name = "Punjabi",
                 LocalName = "ਪੰਜਾਬੀ",
@@ -388,8 +370,7 @@ namespace NaradX.Infrastructure.Data.Seed
                 CreatedBy = "System",
                 CreatedOn = DateTime.UtcNow
             },
-            new Language
-            {CountryId = 1,
+            new() {CountryId = 1,
                 Culture = "as-IN",
                 Name = "Assamese",
                 LocalName = "অসমীয়া",
@@ -398,8 +379,7 @@ namespace NaradX.Infrastructure.Data.Seed
                 CreatedBy = "System",
                 CreatedOn = DateTime.UtcNow
             },
-            new Language
-            {CountryId = 1,
+            new() {CountryId = 1,
                 Culture = "mai-IN",
                 Name = "Maithili",
                 LocalName = "मैथिली",
@@ -408,8 +388,7 @@ namespace NaradX.Infrastructure.Data.Seed
                 CreatedBy = "System",
                 CreatedOn = DateTime.UtcNow
             },
-            new Language
-            {CountryId = 1,
+            new() {CountryId = 1,
                 Culture = "sat-IN",
                 Name = "Santali",
                 LocalName = "ᱥᱟᱱᱛᱟᱲᱤ",
@@ -418,8 +397,7 @@ namespace NaradX.Infrastructure.Data.Seed
                 CreatedBy = "System",
                 CreatedOn = DateTime.UtcNow
             },
-            new Language
-            {CountryId = 1,
+            new() {CountryId = 1,
                 Culture = "ks-IN",
                 Name = "Kashmiri",
                 LocalName = "कॉशुर",
@@ -428,8 +406,7 @@ namespace NaradX.Infrastructure.Data.Seed
                 CreatedBy = "System",
                 CreatedOn = DateTime.UtcNow
             },
-            new Language
-            {CountryId = 1,
+            new() {CountryId = 1,
                 Culture = "ne-IN",
                 Name = "Nepali",
                 LocalName = "नेपाली",
@@ -438,8 +415,7 @@ namespace NaradX.Infrastructure.Data.Seed
                 CreatedBy = "System",
                 CreatedOn = DateTime.UtcNow
             },
-            new Language
-            {CountryId = 1,
+            new() {CountryId = 1,
                 Culture = "sd-IN",
                 Name = "Sindhi",
                 LocalName = "सिन्धी",
@@ -448,8 +424,7 @@ namespace NaradX.Infrastructure.Data.Seed
                 CreatedBy = "System",
                 CreatedOn = DateTime.UtcNow
             },
-            new Language
-            {CountryId = 1,
+            new() {CountryId = 1,
                 Culture = "kok-IN",
                 Name = "Konkani",
                 LocalName = "कोंकणी",
@@ -458,8 +433,7 @@ namespace NaradX.Infrastructure.Data.Seed
                 CreatedBy = "System",
                 CreatedOn = DateTime.UtcNow
             },
-            new Language
-            {CountryId = 1,
+            new() {CountryId = 1,
                 Culture = "doi-IN",
                 Name = "Dogri",
                 LocalName = "डोगरी",
@@ -468,8 +442,7 @@ namespace NaradX.Infrastructure.Data.Seed
                 CreatedBy = "System",
                 CreatedOn = DateTime.UtcNow
             },
-            new Language
-            {CountryId = 1,
+            new() {CountryId = 1,
                 Culture = "mni-IN",
                 Name = "Manipuri",
                 LocalName = "মৈতৈলোন্",
@@ -478,8 +451,7 @@ namespace NaradX.Infrastructure.Data.Seed
                 CreatedBy = "System",
                 CreatedOn = DateTime.UtcNow
             },
-            new Language
-            {CountryId = 1,
+            new() {CountryId = 1,
                 Culture = "brx-IN",
                 Name = "Bodo",
                 LocalName = "बड़ो",
@@ -488,8 +460,7 @@ namespace NaradX.Infrastructure.Data.Seed
                 CreatedBy = "System",
                 CreatedOn = DateTime.UtcNow
             },
-            new Language
-            {CountryId = 1,
+            new() {CountryId = 1,
                 Culture = "sa-IN",
                 Name = "Sanskrit",
                 LocalName = "संस्कृतम्",

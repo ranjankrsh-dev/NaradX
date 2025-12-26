@@ -1,13 +1,17 @@
-﻿using AutoMapper;
-using NaradX.Shared.Models.Common;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// <copyright file="PaginatedListConverter.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace NaradX.Business.Common.Mappings
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Text;
+    using System.Threading.Tasks;
+    using AutoMapper;
+    using NaradX.Domain.Common;
+
     public class PaginatedListConverter<TSource, TDestination>
     : ITypeConverter<PaginatedList<TSource>, PaginatedList<TDestination>>
     {

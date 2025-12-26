@@ -1,16 +1,20 @@
-﻿using Microsoft.Extensions.Logging;
-using NaradX.Business.Common.Interfaces;
-using NaradX.Domain.Entities.Tenancy;
-using NaradX.Domain.Repositories.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
+﻿// <copyright file="TenantService.cs" company="PlaceholderCompany">
+// Copyright (c) PlaceholderCompany. All rights reserved.
+// </copyright>
 
 namespace NaradX.Business.Common.Services
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Linq;
+    using System.Security.Claims;
+    using System.Text;
+    using System.Threading.Tasks;
+    using Microsoft.Extensions.Logging;
+    using NaradX.Business.Common.Interfaces;
+    using NaradX.Domain.Entities.Tenancy;
+    using NaradX.Domain.Repositories.Interfaces;
+
     public class TenantService : ITenantService
     {
         private readonly IRepository<Tenant> _tenantRepository;
@@ -27,6 +31,7 @@ namespace NaradX.Business.Common.Services
         }
 
         public int? TenantId => _tenantId;
+
         public string? TenantName => _tenantName;
 
         public async Task<bool> SetTenantFromClaimsAsync(ClaimsPrincipal user)
