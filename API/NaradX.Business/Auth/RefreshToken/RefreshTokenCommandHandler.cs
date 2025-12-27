@@ -12,8 +12,8 @@ namespace NaradX.Business.Auth.RefreshToken
     using MediatR;
     using Microsoft.Extensions.Logging;
     using NaradX.Business.Auth.Login;
-    using NaradX.Business.Common.Interfaces;
-    using NaradX.Domain.Repositories.Interfaces;
+    using NaradX.Business.Interfaces;
+    using NaradX.Domain.Interfaces;
 
     public class RefreshTokenCommandHandler : IRequestHandler<RefreshTokenCommand, LoginResponse>
     {

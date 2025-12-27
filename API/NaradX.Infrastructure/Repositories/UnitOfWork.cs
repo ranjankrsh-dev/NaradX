@@ -13,7 +13,7 @@ namespace NaradX.Infrastructure.Repositories
     using Microsoft.EntityFrameworkCore.Storage;
     using NaradX.Domain.Entities.Auth;
     using NaradX.Domain.Entities.Base;
-    using NaradX.Domain.Repositories.Interfaces;
+    using NaradX.Domain.Interfaces;
 
     public class UnitOfWork : IUnitOfWork
     {

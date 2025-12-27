@@ -5,7 +5,7 @@
 namespace NaradX.API.Extensions
 {
     using NaradX.Domain.Entities.Auth;
-    using NaradX.Domain.Repositories.Interfaces;
+    using NaradX.Domain.Interfaces;
     using NaradX.Infrastructure.Repositories;
 
     public static class RepositoryServiceExtensions

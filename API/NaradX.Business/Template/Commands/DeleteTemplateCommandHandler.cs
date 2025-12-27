@@ -5,7 +5,7 @@
 namespace NaradX.Business.Template.Commands;
 
 using MediatR;
-using NaradX.Domain.Repositories.Interfaces;
+using NaradX.Domain.Interfaces;
 
 public class DeleteTemplateCommandHandler(ITemplateRepository templateRepository) : IRequestHandler<DeleteTemplateCommand, bool>
 {

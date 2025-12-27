@@ -2,7 +2,7 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
-namespace NaradX.Domain.Repositories.Interfaces
+namespace NaradX.Domain.Interfaces
 {
     using System;
     using System.Collections.Generic;

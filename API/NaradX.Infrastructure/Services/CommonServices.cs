@@ -2,7 +2,7 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
-namespace NaradX.Business.Common.Services
+namespace NaradX.Infrastructure.Services
 {
     using System;
     using System.Collections.Generic;
@@ -12,10 +12,10 @@ namespace NaradX.Business.Common.Services
     using AutoMapper;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Caching.Memory;
-    using NaradX.Business.Common.Interfaces;
+    using NaradX.Business.Interfaces;
     using NaradX.Domain.Entities.Common;
-    using NaradX.Domain.Repositories.Interfaces;
     using NaradX.Business.Dtos.Common;
+    using NaradX.Domain.Interfaces;
 
     public class CommonServices : ICommonServices
     {

@@ -5,7 +5,7 @@
 namespace NaradX.API.Common.Mapping;
 
 using AutoMapper;
-using NaradX.Business.Common.Mappings;
+using NaradX.Business.Mappings;
 using NaradX.Domain.Common;
 
 public class PaginatedListProfile : Profile

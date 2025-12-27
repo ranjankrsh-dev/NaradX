@@ -11,11 +11,11 @@ namespace NaradX.Business.Contacts.Queries.GetContacts
     using System.Threading.Tasks;
     using AutoMapper;
     using MediatR;
-    using NaradX.Business.Common.Interfaces;
-    using NaradX.Domain.Repositories.Interfaces;
+    using NaradX.Business.Interfaces;
     using NaradX.Business.Dtos.Contact;
     using NaradX.Domain.Common;
     using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+    using NaradX.Domain.Interfaces;
 
     public class GetContactsQueryHandler : IRequestHandler<GetContactsQuery, PaginatedList<ContactDto>>
     {

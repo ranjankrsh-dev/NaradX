@@ -4,12 +4,6 @@
 
 namespace NaradX.Business
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-
     // Marker class for assembly scanning
     public class ApplicationAssembly
     {

@@ -12,7 +12,7 @@ namespace NaradX.Business.Tenants.CreateTenant
     using MediatR;
     using Microsoft.Extensions.Logging;
     using NaradX.Domain.Entities.Tenancy;
-    using NaradX.Domain.Repositories.Interfaces;
+    using NaradX.Domain.Interfaces;
 
     public class CreateTenantCommandHandler : IRequestHandler<CreateTenantCommand, CreateTenantResponse>
     {

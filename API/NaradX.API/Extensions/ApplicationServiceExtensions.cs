@@ -9,8 +9,9 @@ namespace NaradX.API.Extensions
     using Microsoft.Extensions.DependencyInjection;
     using NaradX.Business;
     using NaradX.Business.Auth.Register;
-    using NaradX.Business.Common.Interfaces;
-    using NaradX.Business.Common.Services;
+    using NaradX.Business.Interfaces;
+    using NaradX.Infrastructure.Services;
+    using NaradX.Domain.Interfaces;
 
     public static class ApplicationServiceExtensions
     {

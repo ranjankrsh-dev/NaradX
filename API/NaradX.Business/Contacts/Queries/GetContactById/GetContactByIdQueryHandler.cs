@@ -11,9 +11,9 @@ namespace NaradX.Business.Contacts.Queries.GetContactById
     using System.Threading.Tasks;
     using AutoMapper;
     using MediatR;
-    using NaradX.Business.Common.Interfaces;
-    using NaradX.Domain.Repositories.Interfaces;
+    using NaradX.Business.Interfaces;
     using NaradX.Business.Dtos.Contact;
+    using NaradX.Domain.Interfaces;
 
     public class GetContactByIdQueryHandler : IRequestHandler<GetContactByIdQuery, ContactDto?>
     {

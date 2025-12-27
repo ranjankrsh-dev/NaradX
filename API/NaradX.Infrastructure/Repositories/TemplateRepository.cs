@@ -10,7 +10,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using NaradX.Business.Dtos.Template;
 using NaradX.Domain.Entities.Template;
-using NaradX.Domain.Repositories.Interfaces;
+using NaradX.Domain.Interfaces;
 using NaradX.Infrastructure.Gateways.WhatsApp;
 using NaradX.Infrastructure.Mappers;
 using Refit;

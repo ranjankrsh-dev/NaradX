@@ -2,7 +2,7 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
-namespace NaradX.Domain.Repositories.Interfaces;
+namespace NaradX.Domain.Interfaces;
 
 using NaradX.Domain.Common;
 using NaradX.Domain.Entities.ManageContact;

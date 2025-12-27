@@ -12,10 +12,9 @@ namespace NaradX.Business.Auth.Login
     using MediatR;
     using Microsoft.Extensions.Logging;
     using Microsoft.Extensions.Options;
-    using NaradX.Business.Common.Interfaces;
-    using NaradX.Business.Common.Models;
-    using NaradX.Business.Common.Services;
-    using NaradX.Domain.Repositories.Interfaces;
+    using NaradX.Business.Interfaces;
+    using NaradX.Business.Models;
+    using NaradX.Domain.Interfaces;
 
     public class LoginCommandHandler : IRequestHandler<LoginCommand, LoginResponse>
     {

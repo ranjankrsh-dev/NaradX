@@ -8,8 +8,8 @@ namespace NaradX.API.Extensions
     using System.Linq.Expressions;
     using Microsoft.EntityFrameworkCore;
     using NaradX.Domain.Entities.Base;
-    using NaradX.Domain.Repositories.Interfaces;
     using NaradX.Domain.Common;
+    using NaradX.Domain.Interfaces;
 
     public static class RepositoryExtensions
     {

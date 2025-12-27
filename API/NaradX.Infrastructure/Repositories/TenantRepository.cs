@@ -12,7 +12,7 @@ namespace NaradX.Infrastructure.Repositories
     using Microsoft.EntityFrameworkCore;
     using NaradX.Domain.Entities.Tenancy;
     using NaradX.Domain.Enums;
-    using NaradX.Domain.Repositories.Interfaces;
+    using NaradX.Domain.Interfaces;
 
     public class TenantRepository : Repository<Tenant>, ITenantRepository
     {

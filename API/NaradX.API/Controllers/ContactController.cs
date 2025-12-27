@@ -7,8 +7,8 @@ namespace NaradX.API.Controllers
     using MediatR;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
-    using NaradX.Business.Common.Interfaces;
-    using NaradX.Business.Common.Utilities;
+    using NaradX.Business.Interfaces;
+    using NaradX.Business.Utilities;
     using NaradX.Business.Contacts.Commands.BulkUploadContact;
     using NaradX.Business.Contacts.Commands.CreateContact;
     using NaradX.Business.Contacts.Commands.DeleteContact;

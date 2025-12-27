@@ -18,7 +18,7 @@ namespace NaradX.Business.Contacts.Commands.BulkUploadContact
     using NaradX.Business.Dtos.Contact;
     using NaradX.Domain.Entities.ManageContact;
     using NaradX.Domain.Enums;
-    using NaradX.Domain.Repositories.Interfaces;
+    using NaradX.Domain.Interfaces;
 
     public class BulkUploadContactCommandHandler : IRequestHandler<BulkUploadContactCommand, ResponseDto>
     {

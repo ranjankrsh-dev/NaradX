@@ -11,9 +11,9 @@ namespace NaradX.Business.Auth.Register
     using System.Threading.Tasks;
     using MediatR;
     using Microsoft.Extensions.Logging;
-    using NaradX.Business.Common.Interfaces;
+    using NaradX.Business.Interfaces;
     using NaradX.Domain.Entities.Auth;
-    using NaradX.Domain.Repositories.Interfaces;
+    using NaradX.Domain.Interfaces;
 
     public class RegisterCommandHandler : IRequestHandler<RegisterCommand, RegisterResponse>
     {

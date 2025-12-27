@@ -7,7 +7,7 @@ namespace NaradX.API.Controllers
     using System;
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
-    using NaradX.Domain.Repositories.Interfaces;
+    using NaradX.Domain.Interfaces;
     using NaradX.Infrastructure;
 
     [Route("api/[controller]")]

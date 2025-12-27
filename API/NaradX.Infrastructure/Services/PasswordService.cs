@@ -2,7 +2,7 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
-namespace NaradX.Business.Common.Services
+namespace NaradX.Infrastructure.Services
 {
     using System;
     using System.Collections.Generic;
@@ -11,7 +11,7 @@ namespace NaradX.Business.Common.Services
     using System.Text;
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Cryptography.KeyDerivation;
-    using NaradX.Business.Common.Interfaces;
+    using NaradX.Domain.Interfaces;
 
     public class PasswordService : IPasswordService
     {

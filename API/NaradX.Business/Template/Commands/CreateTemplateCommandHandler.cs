@@ -6,7 +6,7 @@ namespace NaradX.Business.Template.Commands;
 
 using MediatR;
 using NaradX.Business.Dtos.Template;
-using NaradX.Domain.Repositories.Interfaces;
+using NaradX.Domain.Interfaces;
 
 public class CreateTemplateCommandHandler : IRequestHandler<CreateTemplateCommand, CreateTemplateResponse>
 {

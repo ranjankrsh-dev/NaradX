@@ -5,7 +5,7 @@
 namespace NaradX.API.Common.Mapping;
 
 using AutoMapper;
-using NaradX.Business.Common.Mappings;
+using NaradX.Business.Mappings;
 using NaradX.Business.Contacts.Commands.CreateContact;
 using NaradX.Business.Contacts.Commands.UpdateContact;
 using NaradX.Business.Dtos.Contact;

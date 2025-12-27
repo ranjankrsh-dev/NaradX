@@ -14,12 +14,11 @@ namespace NaradX.Business.Contacts.Queries.GetBulkUploadValidation
     using Microsoft.AspNetCore.Antiforgery;
     using Microsoft.Extensions.Caching.Memory;
     using Microsoft.Extensions.Logging;
-    using NaradX.Business.Common.Services;
-    using NaradX.Business.Common.Utilities;
+    using NaradX.Business.Utilities;
     using NaradX.Business.Dtos.BulkUpload;
     using NaradX.Business.Dtos.Contact;
     using NaradX.Domain.Entities.ManageContact;
-    using NaradX.Domain.Repositories.Interfaces;
+    using NaradX.Domain.Interfaces;
 
     public class GetBulkUploadValidationQueryHandler : IRequestHandler<GetBulkUploadValidationQuery, BulkUploadValidateResponse>
     {

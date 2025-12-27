@@ -9,7 +9,7 @@ namespace NaradX.API.Controllers
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using NaradX.Business.Tenants.CreateTenant;
-    using NaradX.Domain.Repositories.Interfaces;
+    using NaradX.Domain.Interfaces;
 
     [ApiController]
     [Route("api/[controller]")]

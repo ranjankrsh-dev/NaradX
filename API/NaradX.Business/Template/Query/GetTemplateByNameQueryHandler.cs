@@ -5,8 +5,8 @@
 namespace NaradX.Business.Template.Query;
 
 using MediatR;
-using NaradX.Domain.Repositories.Interfaces;
 using NaradX.Business.Dtos.Template;
+using NaradX.Domain.Interfaces;
 
 public class GetTemplateByNameQueryHandler(ITemplateRepository templateRepository) : IRequestHandler<GetTemplateByNameQuery, WhatsAppMessageTemplateDTO>
 {

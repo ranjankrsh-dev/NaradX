@@ -11,8 +11,8 @@ namespace NaradX.Business.Auth.ChangePassword
     using System.Threading.Tasks;
     using MediatR;
     using Microsoft.Extensions.Logging;
-    using NaradX.Business.Common.Interfaces;
-    using NaradX.Domain.Repositories.Interfaces;
+    using NaradX.Business.Interfaces;
+    using NaradX.Domain.Interfaces;
 
     public class ChangePasswordCommandHandler : IRequestHandler<ChangePasswordCommand, ChangePasswordResponse>
     {

@@ -2,7 +2,7 @@
 // Copyright (c) PlaceholderCompany. All rights reserved.
 // </copyright>
 
-namespace NaradX.Business.Common.Utilities;
+namespace NaradX.Business.Utilities;
 
 using System;
 using System.Collections.Generic;

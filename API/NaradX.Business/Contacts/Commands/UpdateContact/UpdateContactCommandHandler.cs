@@ -10,8 +10,8 @@ namespace NaradX.Business.Contacts.Commands.UpdateContact
     using System.Text;
     using System.Threading.Tasks;
     using MediatR;
-    using NaradX.Business.Common.Interfaces;
-    using NaradX.Domain.Repositories.Interfaces;
+    using NaradX.Business.Interfaces;
+    using NaradX.Domain.Interfaces;
 
     public class UpdateContactCommandHandler : IRequestHandler<UpdateContactCommand, int>
     {

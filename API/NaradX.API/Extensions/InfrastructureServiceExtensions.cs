@@ -9,9 +9,10 @@ namespace NaradX.API.Extensions
     using Microsoft.AspNetCore.Authentication.JwtBearer;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.IdentityModel.Tokens;
-    using NaradX.Business.Common.Interfaces;
-    using NaradX.Business.Common.Models;
-    using NaradX.Business.Common.Services;
+    using NaradX.Business.Interfaces;
+    using NaradX.Business.Models;
+    using NaradX.Infrastructure.Services;
+    using NaradX.Domain.Interfaces;
     using NaradX.Infrastructure;
     using NaradX.Infrastructure.Gateways.WhatsApp;
     using Refit;
@@ -37,6 +38,7 @@ namespace NaradX.API.Extensions
             services.AddScoped<IJwtService, JwtService>();
             services.AddScoped<ITenantService, TenantService>();
             services.AddScoped<ICommonServices, CommonServices>();
+            services.AddScoped<ITemplateRepository, NaradX.Infrastructure.Repositories.TemplateRepository>();
 
             // JWT Authentication
             var jwtSettings = configuration.GetSection("JwtSettings").Get<JwtSettings>();

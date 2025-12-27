@@ -15,7 +15,7 @@ namespace NaradX.Infrastructure.Repositories
     using NaradX.Business.Dtos.Contact;
     using NaradX.Domain.Common;
     using NaradX.Domain.Entities.ManageContact;
-    using NaradX.Domain.Repositories.Interfaces;
+    using NaradX.Domain.Interfaces;
 
     /// <summary>
     /// Repository for managing Contact entities with pagination, filtering, and search capabilities.

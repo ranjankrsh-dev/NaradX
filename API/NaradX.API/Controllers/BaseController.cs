@@ -7,10 +7,10 @@ namespace NaradX.API.Controllers
     using Microsoft.AspNetCore.Http;
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.EntityFrameworkCore;
-    using NaradX.Business.Common.Interfaces;
-    using NaradX.Business.Common.Services;
+    using NaradX.Business.Interfaces;
     using NaradX.Business.Dtos.Common;
     using NaradX.Domain.Entities.Common;
+    using NaradX.Domain.Interfaces;
 
     [Route("api/base")]
     [ApiController]

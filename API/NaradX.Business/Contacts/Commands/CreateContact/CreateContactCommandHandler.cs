@@ -5,10 +5,10 @@
 namespace NaradX.Business.Contacts.Commands.CreateContact
 {
     using MediatR;
-    using NaradX.Business.Common.Interfaces;
+    using NaradX.Business.Interfaces;
     using NaradX.Domain.Entities.ManageContact;
     using NaradX.Domain.Enums;
-    using NaradX.Domain.Repositories.Interfaces;
+    using NaradX.Domain.Interfaces;
 
     public class CreateContactCommandHandler : IRequestHandler<CreateContactCommand, int>
     {

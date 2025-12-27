@@ -11,7 +11,7 @@ namespace NaradX.Business.Auth.Roles.RemoveRole
     using System.Threading.Tasks;
     using MediatR;
     using Microsoft.Extensions.Logging;
-    using NaradX.Domain.Repositories.Interfaces;
+    using NaradX.Domain.Interfaces;
 
     public class RemoveRoleCommandHandler : IRequestHandler<RemoveRoleCommand, RemoveRoleResponse>
     {
