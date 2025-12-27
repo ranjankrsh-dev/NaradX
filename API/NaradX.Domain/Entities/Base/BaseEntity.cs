@@ -15,7 +15,7 @@ namespace NaradX.Domain.Entities.Base
     public abstract class BaseEntity<TKey> : IAuditableEntity
     {
         [Key]
-        public TKey Id { get; set; }
+        public TKey Id { get; set; } = default!;
 
         public string? CreatedBy { get; set; }
 

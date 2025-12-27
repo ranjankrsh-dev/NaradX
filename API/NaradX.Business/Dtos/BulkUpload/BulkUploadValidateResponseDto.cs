@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 public class BulkUploadValidateResponse
 {
-    public string BatchId { get; set; }
+    public string BatchId { get; set; } = string.Empty;
 
     public int TotalRows { get; set; }
 
@@ -22,5 +22,5 @@ public class BulkUploadValidateResponse
 
     public List<InvalidRowDto> InvalidRows { get; set; } = new();
 
-    public string Message { get; set; }
+    public string Message { get; set; } = string.Empty;
 }

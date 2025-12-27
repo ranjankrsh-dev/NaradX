@@ -92,9 +92,9 @@ public static class ExcelHelper
 
 public class ExcelColumnDefinition<T>
 {
-    public string Header { get; set; }
+    public string Header { get; set; } = string.Empty;
 
-    public string Description { get; set; }
+    public string Description { get; set; } = string.Empty;
 
-    public Func<T, object> ValueSelector { get; set; }
+    public Func<T, object> ValueSelector { get; set; } = null!;
 }
