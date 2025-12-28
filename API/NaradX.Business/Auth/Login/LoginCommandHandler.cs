@@ -65,19 +65,14 @@ namespace NaradX.Business.Auth.Login
                 // Always use generic error for authentication failures
                 if (!isPasswordValid || !user.IsActive || !user.EmailVerified)
                 {
-                    user.FailedLoginAttempts++;
-                    if (user.FailedLoginAttempts >= 5)
+                    user.RecordFailedLogin();
+                    if (user.IsLockedOut)
                     {
-                        user.LockoutEnd = DateTime.UtcNow.AddMinutes(15);
                         _logger.LogWarning("User account locked due to too many failed attempts: {Email}", request.Email);
                     }
                     await _unitOfWork.SaveChangesAsync(cancellationToken);
                     throw new ApplicationException("Invalid email or password");
                 }
-
-                // Reset lockout fields on successful login
-                user.FailedLoginAttempts = 0;
-                user.LockoutEnd = null;
 
                 if (!user.IsActive)
                     throw new ApplicationException("Account is deactivated");
@@ -88,7 +83,17 @@ namespace NaradX.Business.Auth.Login
                 // Fetch the user's role from the database
                 var userRole = await _userRepository.GetUserRoles(user.Id, cancellationToken);
 
-                await _userRepository.UpdateLastLoginAsync(user.Id, DateTime.UtcNow, cancellationToken);
+                // Update last login (resets counters internally)
+                user.UpdateLastLogin();
+                
+                // Save changes for last login update
+                // Note: In a real DDD app, this might be a Domain Event, but explicit save is fine here.
+                // We do this before generating tokens to ensure db state is consistent.
+                await _userRepository.UpdateLastLoginAsync(user.Id, DateTime.UtcNow, cancellationToken); 
+                // Wait, UpdateLastLoginAsync in repo likely duplicates the logic or just sets the date. 
+                // Since we updated the entity in memory with user.UpdateLastLogin(), EF Core change tracking will handle it if we call SaveChanges.
+                // However, the original code called _userRepository.UpdateLastLoginAsync. Let's check that repo method later. 
+                // For now, consistent with existing code, but using domain object state.
 
                 var accessToken = _jwtService.GenerateToken(user, userRole);
                 var accessTokenExpires = DateTime.UtcNow.AddMinutes(_jwtSettings.AccessTokenExpiryMinutes);

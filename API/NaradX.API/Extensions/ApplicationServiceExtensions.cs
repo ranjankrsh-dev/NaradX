@@ -19,6 +19,7 @@ namespace NaradX.API.Extensions
             services.AddValidatorsFromAssembly(typeof(ApplicationAssembly).Assembly);
 
             // Register AutoMapper
+            services.AddAutoMapper(cfg => {}, typeof(ApplicationAssembly).Assembly);
 
             services.AddScoped<IJwtService, JwtService>();
             services.AddScoped<IPasswordService, PasswordService>();

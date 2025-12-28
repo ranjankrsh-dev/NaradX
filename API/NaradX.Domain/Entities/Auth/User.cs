@@ -31,6 +31,13 @@ namespace NaradX.Domain.Entities.Auth
         [Required]
         public byte[] PasswordSalt { get; set; } = Array.Empty<byte>();
 
+        public void SetPassword(byte[] hash, byte[] salt)
+        {
+            PasswordHash = hash;
+            PasswordSalt = salt;
+            UpdatedOn = DateTime.UtcNow;
+        }
+
         [MaxLength(20)]
         public string? PhoneNumber { get; set; }
 
@@ -46,7 +53,30 @@ namespace NaradX.Domain.Entities.Auth
         public virtual ICollection<UserRole> UserRoles { get; set; } = new List<UserRole>();
 
         // Brute force protection fields
-        public int FailedLoginAttempts { get; set; } = 0;
-        public DateTime? LockoutEnd { get; set; }
+        public int FailedLoginAttempts { get; private set; } = 0;
+        public DateTime? LockoutEnd { get; private set; }
+
+        public bool IsLockedOut => LockoutEnd.HasValue && LockoutEnd.Value > DateTime.UtcNow;
+
+        public void RecordFailedLogin()
+        {
+            FailedLoginAttempts++;
+            if (FailedLoginAttempts >= 5)
+            {
+                LockoutEnd = DateTime.UtcNow.AddMinutes(15);
+            }
+        }
+
+        public void ResetLoginAttempts()
+        {
+            FailedLoginAttempts = 0;
+            LockoutEnd = null;
+        }
+
+        public void UpdateLastLogin()
+        {
+             LastLoginDate = DateTime.UtcNow;
+             ResetLoginAttempts();
+        }
     }
 }

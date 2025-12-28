@@ -2,9 +2,9 @@
 using Microsoft.EntityFrameworkCore;
 using NaradX.Domain.Entities.ManageContact;
 using NaradX.Domain.Repositories.Interfaces;
-using NaradX.Shared.Dto.Contact;
-using NaradX.Shared.Models.Common;
-using NaradX.Shared.Models.Contact;
+using NaradX.Business.Dto.Contact;
+using NaradX.Domain.Models.Common;
+using NaradX.Domain.Models.Contact;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -158,29 +158,11 @@ namespace NaradX.Infrastructure.Repositories
             }
         }
 
-        public async Task<int> BulkContactSaveInDatabase(List<ContactDto> validContacts, CancellationToken cancellationToken = default)
+        public async Task<int> BulkContactSaveInDatabase(List<Contact> validContacts, CancellationToken cancellationToken = default)
         {
             using var transaction = await _context.Database.BeginTransactionAsync();
 
-            var contacts = validContacts.Select(c => new Contact
-            {
-                TenantId = 1,
-                FirstName = c.FirstName,
-                LastName = c.LastName,
-                MiddleName = c.MiddleName,
-                CountryId = c.CountryId,
-                LanguageId = c.LanguageId,
-                PhoneNumber = c.PhoneNumber,
-                ContactSource = c.ContactSource,
-                ChannelPreference = c.ChannelPreference,
-                Email = c.Email,
-                Company = c.Company,
-                JobTitle = c.JobTitle,
-                IsActive = true,
-                CreatedOn = DateTime.UtcNow
-            }).ToList();
-
-            await _context.Contacts.AddRangeAsync(contacts, cancellationToken);
+            await _context.Contacts.AddRangeAsync(validContacts, cancellationToken);
             var result = await _context.SaveChangesAsync(cancellationToken);
             await transaction.CommitAsync(cancellationToken);
             return result;

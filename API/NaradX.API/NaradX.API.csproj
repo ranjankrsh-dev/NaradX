@@ -23,7 +23,7 @@
   <ItemGroup>
     <ProjectReference Include="..\NaradX.Business\NaradX.Business.csproj" />
     <ProjectReference Include="..\NaradX.Infrastructure\NaradX.Infrastructure.csproj" />
-    <ProjectReference Include="..\NaradX.Shared\NaradX.Shared.csproj" />
+
   </ItemGroup>
 
   <ItemGroup>

@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
-using Microsoft.EntityFrameworkCore;
+
 using Microsoft.Extensions.Caching.Memory;
 using NaradX.Business.Common.Interfaces;
 using NaradX.Domain.Entities.Common;
 using NaradX.Domain.Repositories.Interfaces;
-using NaradX.Shared.Dto.Common;
+using NaradX.Business.Dto.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,6 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Http;
-using NaradX.Shared.Dto.BulkUpload;
+using NaradX.Business.Dto.BulkUpload;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,6 +1,6 @@
 using MediatR;
-using NaradX.Shared.Dto.Template;
-using NaradX.Shared.Models;
+using NaradX.Business.Dto.Template;
+using NaradX.Business.Models;
 
 namespace NaradX.Business.Template.Commands;
 

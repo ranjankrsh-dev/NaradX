@@ -4,9 +4,9 @@ using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using NaradX.Domain.Entities.ManageContact;
 using NaradX.Domain.Repositories.Interfaces;
-using NaradX.Shared.Dto.BulkUpload;
-using NaradX.Shared.Dto.Common;
-using NaradX.Shared.Dto.Contact;
+using NaradX.Business.Dto.BulkUpload;
+using NaradX.Business.Dto.Common;
+using NaradX.Business.Dto.Contact;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,11 +20,14 @@ namespace NaradX.Business.Contacts.Commands.BulkUploadContact
         private readonly IMemoryCache memoryCache;
         private readonly ILogger<BulkUploadContactCommandHandler> logger;
         private readonly IContactRepository contactRepository;
-        public BulkUploadContactCommandHandler(IMemoryCache memoryCache, ILogger<BulkUploadContactCommandHandler> logger, IContactRepository contactRepository)
+        private readonly AutoMapper.IMapper mapper;
+
+        public BulkUploadContactCommandHandler(IMemoryCache memoryCache, ILogger<BulkUploadContactCommandHandler> logger, IContactRepository contactRepository, AutoMapper.IMapper mapper)
         {
             this.memoryCache = memoryCache;
             this.logger = logger;
             this.contactRepository = contactRepository;
+            this.mapper = mapper;
         }
         public async Task<ResponseDto> Handle(BulkUploadContactCommand request, CancellationToken cancellationToken)
         {
@@ -43,7 +46,13 @@ namespace NaradX.Business.Contacts.Commands.BulkUploadContact
             }
             else
             {
-                var result = await contactRepository.BulkContactSaveInDatabase(batch.ValidContacts, cancellationToken);
+                var validContacts = mapper.Map<List<Contact>>(batch.ValidContacts);
+                validContacts.ForEach(c => {
+                    c.TenantId = 1;
+                    c.IsActive = true;
+                    c.CreatedOn = DateTime.UtcNow;
+                });
+                var result = await contactRepository.BulkContactSaveInDatabase(validContacts, cancellationToken);
 
                 memoryCache.Remove(request.BatchId);
 

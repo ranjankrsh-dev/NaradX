@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using NaradX.Business.Template.Commands;
 using NaradX.Business.Template.Query;
-using NaradX.Shared.Dto.Template;
+using NaradX.Business.Dto.Template;
 
 namespace NaradX.API.Controllers;
 

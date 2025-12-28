@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using NaradX.Business.Common.Interfaces;
 using NaradX.Business.Common.Services;
 using NaradX.Domain.Entities.Common;
-using NaradX.Shared.Dto.Common;
+using NaradX.Business.Dto.Common;
 
 namespace NaradX.API.Controllers
 {

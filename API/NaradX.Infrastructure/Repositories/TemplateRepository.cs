@@ -4,8 +4,8 @@ using Microsoft.Extensions.Options;
 using NaradX.Domain.Repositories.Interfaces;
 using NaradX.Infrastructure.Gateways.WhatsApp;
 using NaradX.Infrastructure.Mappers;
-using NaradX.Shared.Dto.Template;
-using NaradX.Shared.Models;
+using NaradX.Business.Dto.Template;
+using NaradX.Business.Models;
 using Refit;
 using System.Text.Json;
 
@@ -23,10 +23,12 @@ public class TemplateRepository(
     private static readonly JsonSerializerOptions _jsonSerializerOptions = new() { WriteIndented = true };
 
     // Implementation of the TemplateRepository class
-    public async Task<CreateTemplateResponse> CreateWhatsAppMessageTemplateAsync(WhatsAppMessageTemplateDTO whatsappMessageTemplate, CancellationToken cancellationToken)
+    public async Task<NaradX.Domain.Entities.Template.WhatsAppTemplate> CreateWhatsAppMessageTemplateAsync(NaradX.Domain.Entities.Template.WhatsAppTemplate entity, CancellationToken cancellationToken)
     {
         try
         {
+            var whatsappMessageTemplate = WhatsAppTemplateMapper.ToDTO(entity);
+
             // Log request details
             logger.LogInformation("Creating WhatsApp template with:\nBusinessId: {BusinessId}\nTemplate: {Template}",
                 _options.BusinessId,
@@ -42,15 +44,17 @@ public class TemplateRepository(
 
             if (response != null)
             {
-                var entity = WhatsAppTemplateMapper.ToEntity(whatsappMessageTemplate);
+                // entity is already passed in.
+                // Ideally we should capture the external ID from 'response.Id' if the entity supported it.
+                // entity.ExternalId = response.Id; 
+                
                 await context.AddAsync(entity, cancellationToken);
                 await context.SaveChangesAsync(cancellationToken);
                 logger.LogInformation("WhatsApp template saved to database with ID: {TemplateId}", entity.Id);
-                return response;
+                return entity;
             }
 
-            // Return a default instance if response is null to avoid CS8603
-            return new CreateTemplateResponse();
+            throw new ApplicationException("Failed to create template on WhatsApp.");
         }
         catch (ApiException ex)
         {
@@ -68,18 +72,20 @@ public class TemplateRepository(
         }
     }
 
-    public Task<List<WhatsAppMessageTemplateDTO>> GetAllWhatsAppMessageTemplatesAsync(CancellationToken cancellationToken)
+    public Task<List<NaradX.Domain.Entities.Template.WhatsAppTemplate>> GetAllWhatsAppMessageTemplatesAsync(CancellationToken cancellationToken)
     {
         var templates = context.WhatsAppTemplates
-            .Select(WhatsAppTemplateMapper.ToDTO)
+            .Include(x => x.Components) // Include usage related data if needed
             .ToList();
         return Task.FromResult(templates);
     }
 
-    public async Task<WhatsAppMessageTemplateDTO?> GetWhatsAppMessageTemplateByNameAsync(string templateName, CancellationToken cancellationToken)
+    public async Task<NaradX.Domain.Entities.Template.WhatsAppTemplate?> GetWhatsAppMessageTemplateByNameAsync(string templateName, CancellationToken cancellationToken)
     {
-        var template = await context.WhatsAppTemplates.FirstAsync(x => x.Name == templateName, cancellationToken: cancellationToken);
-        return WhatsAppTemplateMapper.ToDTO(template);
+        var template = await context.WhatsAppTemplates
+            .Include(x => x.Components)
+            .FirstOrDefaultAsync(x => x.Name == templateName, cancellationToken: cancellationToken);
+        return template;
     }
 
     public async Task<bool> DeleteWhatsAppMessageTemplateByNameAsync(string templateName, CancellationToken cancellationToken)

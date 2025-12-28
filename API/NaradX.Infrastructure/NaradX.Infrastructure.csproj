@@ -21,7 +21,7 @@
   <ItemGroup>
     <ProjectReference Include="..\NaradX.Business\NaradX.Business.csproj" />
     <ProjectReference Include="..\NaradX.Domain\NaradX.Domain.csproj" />
-    <ProjectReference Include="..\NaradX.Shared\NaradX.Shared.csproj" />
+
   </ItemGroup>
 
 </Project>

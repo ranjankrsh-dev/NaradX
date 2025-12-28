@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using NaradX.Domain.Entities.Common;
-using NaradX.Shared.Dto.Common;
+using NaradX.Business.Dto.Common;
 
 namespace NaradX.API.Common.Mapping
 {

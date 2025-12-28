@@ -9,12 +9,12 @@ using NaradX.Business.Contacts.Commands.UpdateContact;
 using NaradX.Business.Contacts.Queries.GetBulkUploadValidation;
 using NaradX.Business.Contacts.Queries.GetContactById;
 using NaradX.Business.Contacts.Queries.GetContacts;
-using NaradX.Shared.Dto.BulkUpload;
-using NaradX.Shared.Dto.Common;
-using NaradX.Shared.Dto.Contact;
-using NaradX.Shared.Helpers;
-using NaradX.Shared.Models.Common;
-using NaradX.Shared.Models.Contact;
+using NaradX.Business.Dto.BulkUpload;
+using NaradX.Business.Dto.Common;
+using NaradX.Business.Dto.Contact;
+using NaradX.Business.Helpers;
+using NaradX.Domain.Models.Common;
+using NaradX.Domain.Models.Contact;
 
 namespace NaradX.API.Controllers
 {

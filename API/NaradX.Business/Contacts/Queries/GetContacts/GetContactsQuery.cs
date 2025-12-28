@@ -1,7 +1,7 @@
 ﻿using MediatR;
-using NaradX.Shared.Dto.Contact;
-using NaradX.Shared.Models.Common;
-using NaradX.Shared.Models.Contact;
+using NaradX.Business.Dto.Contact;
+using NaradX.Domain.Models.Common;
+using NaradX.Domain.Models.Contact;
 using System;
 using System.Collections.Generic;
 using System.Linq;

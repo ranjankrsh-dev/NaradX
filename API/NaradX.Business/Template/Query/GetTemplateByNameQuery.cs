@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using NaradX.Shared.Dto.Template;
+using NaradX.Business.Dto.Template;
 
 namespace NaradX.Business.Template.Query;
 
