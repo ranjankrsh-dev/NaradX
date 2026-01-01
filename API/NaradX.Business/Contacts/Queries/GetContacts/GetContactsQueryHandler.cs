@@ -2,15 +2,15 @@
 using MediatR;
 using NaradX.Business.Common.Interfaces;
 using NaradX.Domain.Repositories.Interfaces;
-using NaradX.Shared.Dto.Contact;
-using NaradX.Shared.Models.Common;
-using NaradX.Shared.Models.Contact;
+using NaradX.Business.Dto.Contact;
+using NaradX.Domain.Models.Common;
+using NaradX.Domain.Models.Contact;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+
 
 namespace NaradX.Business.Contacts.Queries.GetContacts
 {

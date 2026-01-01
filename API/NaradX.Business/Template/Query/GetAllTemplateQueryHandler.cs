@@ -1,13 +1,14 @@
 ﻿using MediatR;
 using NaradX.Domain.Repositories.Interfaces;
-using NaradX.Shared.Dto.Template;
+using NaradX.Business.Dto.Template;
 
 namespace NaradX.Business.Template.Query;
 
-public class GetAllTemplateQueryHandler(ITemplateRepository templateRepository) : IRequestHandler<GetAllTemplateQuery, List<WhatsAppMessageTemplateDTO>>
+public class GetAllTemplateQueryHandler(ITemplateRepository templateRepository, AutoMapper.IMapper mapper) : IRequestHandler<GetAllTemplateQuery, List<WhatsAppMessageTemplateDTO>>
 {
     public async Task<List<WhatsAppMessageTemplateDTO>> Handle(GetAllTemplateQuery request, CancellationToken cancellationToken)
     {
-        return await templateRepository.GetAllWhatsAppMessageTemplatesAsync(cancellationToken);
+        var templates = await templateRepository.GetAllWhatsAppMessageTemplatesAsync(cancellationToken);
+        return mapper.Map<List<WhatsAppMessageTemplateDTO>>(templates);
     }
 }

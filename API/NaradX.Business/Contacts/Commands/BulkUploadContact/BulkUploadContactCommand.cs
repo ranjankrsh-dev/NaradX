@@ -1,5 +1,5 @@
 ﻿using MediatR;
-using NaradX.Shared.Dto.Common;
+using NaradX.Business.Dto.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;

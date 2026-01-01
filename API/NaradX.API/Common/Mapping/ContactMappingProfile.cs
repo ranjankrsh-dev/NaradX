@@ -3,8 +3,8 @@ using NaradX.Business.Common.Mappings;
 using NaradX.Business.Contacts.Commands.CreateContact;
 using NaradX.Business.Contacts.Commands.UpdateContact;
 using NaradX.Domain.Entities.ManageContact;
-using NaradX.Shared.Dto.Contact;
-using NaradX.Shared.Models.Common;
+using NaradX.Business.Dto.Contact;
+using NaradX.Domain.Models.Common;
 
 namespace NaradX.API.Common.Mapping
 {

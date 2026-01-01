@@ -2,7 +2,7 @@
 using NaradX.Business.Contacts.Commands.CreateContact;
 using NaradX.Business.Contacts.Commands.UpdateContact;
 using NaradX.Domain.Entities.ManageContact;
-using NaradX.Shared.Dto.Contact;
+using NaradX.Business.Dto.Contact;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +15,7 @@ namespace NaradX.Business.Mappings
     {
         public ContactProfile()
         {
-            CreateMap<Contact, ContactDto>();
+            CreateMap<Contact, ContactDto>().ReverseMap();
 
             CreateMap<CreateContactCommand, Contact>();
             CreateMap<UpdateContactCommand, Contact>();

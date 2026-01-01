@@ -1,5 +1,5 @@
 ﻿using NaradX.Domain.Entities.Template;
-using NaradX.Shared.Dto.Template;
+using NaradX.Business.Dto.Template;
 
 namespace NaradX.Infrastructure.Mappers;
 

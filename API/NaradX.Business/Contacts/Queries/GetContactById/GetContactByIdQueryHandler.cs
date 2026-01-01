@@ -2,7 +2,7 @@
 using MediatR;
 using NaradX.Business.Common.Interfaces;
 using NaradX.Domain.Repositories.Interfaces;
-using NaradX.Shared.Dto.Contact;
+using NaradX.Business.Dto.Contact;
 using System;
 using System.Collections.Generic;
 using System.Linq;

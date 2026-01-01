@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NaradX.Domain.Entities.Base;
 using NaradX.Domain.Repositories.Interfaces;
-using NaradX.Shared.Models.Common;
+using NaradX.Domain.Models.Common;
 using System.Linq;
 using System.Linq.Expressions;
 

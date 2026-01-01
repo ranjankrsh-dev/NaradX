@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using NaradX.Business.Auth.Roles.AssignRole;
 using NaradX.Business.Auth.Roles.GetUserRoles;
 using NaradX.Business.Auth.Roles.RemoveRole;
-using NaradX.Shared.Dto.Role;
+using NaradX.Business.Dto.Role;
 
 namespace NaradX.API.Controllers
 {

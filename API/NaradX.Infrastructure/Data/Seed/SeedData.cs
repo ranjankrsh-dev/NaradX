@@ -144,12 +144,16 @@ namespace NaradX.Infrastructure.Data.Seed
 
                 if (superAdminRole != null)
                 {
+                    var passwordService = new NaradX.Business.Common.Services.PasswordService();
+                    var (hash, salt) = passwordService.CreateHash("Admin@123");
+
                     var superAdminUser = new User
                     {
                         Email = "ranjansharma.cs@gmail.com",
                         FirstName = "Ranjan",
                         LastName = "Sharma",
-                        PasswordHash = System.Text.Encoding.UTF8.GetBytes(BCrypt.Net.BCrypt.HashPassword("Admin@123")),
+                        PasswordHash = hash,
+                        PasswordSalt = salt,
                         TenantId = 1,
                         PhoneNumber = "1234567890",
                         EmailVerified = true,
