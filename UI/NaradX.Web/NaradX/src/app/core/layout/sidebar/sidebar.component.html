@@ -1,0 +1,39 @@
+<div class="sidebar">
+  <nav class="sidebar-nav">
+    <ul class="nav">
+      <!-- Dashboard (conditional check removed for now, can be added back with ngIf) -->
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/dashboard"><i class="icon-speedometer"></i> Dashboard</a>
+      </li>
+
+      <li class="nav-title">Contacts</li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="/contacts" routerLinkActive="active">
+          <i class="fa fa-address-book"></i> Manage Contacts
+        </a>
+      </li>
+
+      <!-- Typography (conditional) -->
+      <!--
+      <li class="nav-item">
+        <a href="typography.html" class="nav-link"><i class="icon-pencil"></i> Typography</a>
+      </li>
+      -->
+
+      <li class="nav-title">Components</li>
+      <!-- Base Dropdown (simplified implementation for now, ideally needs a directive for dropdown toggling) -->
+      <li class="nav-item nav-dropdown">
+        <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-puzzle"></i> Base</a>
+        <ul class="nav-dropdown-items">
+          <li class="nav-item">
+            <a class="nav-link" href="#"><i class="icon-puzzle"></i> Breadcrumb</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#"><i class="icon-puzzle"></i> Cards</a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </nav>
+  <button class="sidebar-minimizer brand-minimizer" type="button"></button>
+</div>

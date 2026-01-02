@@ -1,0 +1,42 @@
+<header class="app-header navbar">
+  <button class="navbar-toggler mobile-sidebar-toggler d-lg-none" type="button">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <a class="navbar-brand" href="#"></a>
+  <button class="navbar-toggler sidebar-toggler d-md-down-none" type="button">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  
+  <ul class="nav navbar-nav d-md-down-none mr-auto">
+    <li class="nav-item px-3">
+      <a class="nav-link" href="#">Dashboard</a>
+    </li>
+    <li class="nav-item px-3">
+      <a class="nav-link" href="#">Users</a>
+    </li>
+    <li class="nav-item px-3">
+      <a class="nav-link" href="#">Settings</a>
+    </li>
+  </ul>
+  
+  <ul class="nav navbar-nav ml-auto">
+    <!-- Notifications and Messages dropdowns (Hidden as per original layout) -->
+    
+    <li class="nav-item dropdown" dropdown>
+      <a class="nav-link nav-link" dropdownToggle href="javascript:void(0)" role="button" aria-haspopup="true" aria-expanded="false">
+        <img src="assets/img/avatars/6.jpg" class="img-avatar" alt="User">
+      </a>
+      <div *dropdownMenu class="dropdown-menu dropdown-menu-right">
+        <div class="dropdown-header text-center">
+          <strong>Account</strong>
+        </div>
+        <a class="dropdown-item" href="#"><i class="fa fa-user"></i> Profile</a>
+        <a class="dropdown-item" href="#"><i class="fa fa-wrench"></i> Settings</a>
+        <div class="divider"></div>
+        <a class="dropdown-item" href="javascript:void(0)" (click)="logout()">
+          <i class="fa fa-lock"></i> Logout
+        </a>
+      </div>
+    </li>
+  </ul>
+</header>
