@@ -1,0 +1,93 @@
+<div class="row mb-2">
+  <div class="col-md-12">
+      <h5>Manage Contacts</h5>
+  </div>
+</div>
+
+<!-- Filter Box -->
+<div class="filter-box" id="filterBox" *ngIf="isFilterVisible">
+  <div class="row">
+      <div class="col-md-3">
+          <div class="callout callout-warning mt-0 mb-0">
+              <small class="text-muted font-sm">Name</small>
+              <br>
+              <input type="text" class="form-control font-xs" placeholder="Enter name" [(ngModel)]="filters.name" (keyup.enter)="applyFilter()" title="Name">
+          </div>
+      </div>
+      <div class="col-md-3">
+          <div class="callout callout-success mt-0 mb-0">
+              <small class="text-muted font-sm">Phone No.</small>
+              <br>
+              <input type="text" class="form-control font-xs" placeholder="Enter phone number" [(ngModel)]="filters.phone" (keyup.enter)="applyFilter()" title="Phone">
+          </div>
+      </div>
+      <div class="col-md-3">
+          <div class="callout callout-primary mt-0 mb-0">
+              <small class="text-muted font-sm">Status</small>
+              <br>
+              <select class="form-control font-sm" [(ngModel)]="filters.status" title="Status">
+                  <option [ngValue]="null">All</option>
+                  <option value="enabled">Enabled</option>
+                  <option value="disabled">Disabled</option>
+              </select>
+          </div>
+      </div>
+      <div class="col-md-3 d-flex align-items-end">
+          <button type="button" class="btn btn-outline-danger mr-2" title="Clear All" (click)="clearFilters()">Clear All</button>
+          <button type="button" class="btn btn-outline-primary" title="Apply" (click)="applyFilter()">Apply</button>
+      </div>
+  </div>
+</div>
+
+<!-- Employee Grid -->
+<div class="card nx-card">
+  <div class="card-body nx-card-body">
+      <!-- Search and Actions -->
+      <div class="row mb-2">
+          <div class="col-md-10">
+              <div class="input-group">
+                  <button class="btn btn-outline-secondary" type="button" (click)="toggleFilters()">
+                      <svg class="icon-filter" viewBox="0 0 24 24" width="16" height="16">
+                          <path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z" />
+                      </svg> Filter
+                  </button>
+                  <input type="text" class="form-control" placeholder="Search contacts..." [(ngModel)]="filters.searchTerm" (keyup.enter)="applySearch()">
+                  <button class="btn btn-outline-secondary" type="button" title="Clear" (click)="clearFilters()">
+                      <i class="fa fa-remove"></i>
+                  </button>
+                  <button class="btn btn-outline-secondary" type="button" title="Search" (click)="applySearch()">
+                      <i class="fa fa-search"></i>
+                  </button>
+              </div>
+          </div>
+          <div class="col-md-2">
+              <div class="text-right">
+                  <button class="btn btn-warning text-white font-weight-bold" (click)="openAddContactModal()">
+                      <i class="fa fa-user-plus"></i>  Add Contact
+                  </button>
+              </div>
+          </div>
+      </div>
+
+      <div class="row mb-3">
+          <div class="col-md-3">
+              <button class="btn btn-outline-primary" (click)="openBulkUploadModal()">
+                  <i class="fa fa-cloud-upload"></i>  Bulk Contact Upload
+              </button>
+          </div>
+          <div class="col-md-6"></div>
+          <div class="col-md-3" style="display:none">
+              <a class="nav-link font-weight-bold text-right" href="#"><i class="fa fa-download"></i> Export All</a>
+          </div>
+      </div>
+
+      <div id="contactsTableContainer">
+          <app-contact-table [filters]="filters" (edit)="onEditContact($event)" (delete)="onDeleteContact($event)"></app-contact-table>
+      </div>
+
+  </div>
+</div>
+
+<!-- Modals -->
+<app-add-contact-modal *ngIf="showAddContactModal" [contactId]="selectedContactId" (close)="closeAddContactModal()" (save)="onContactSaved()"></app-add-contact-modal>
+<app-bulk-upload-modal *ngIf="showBulkUploadModal" (close)="closeBulkUploadModal()"></app-bulk-upload-modal>

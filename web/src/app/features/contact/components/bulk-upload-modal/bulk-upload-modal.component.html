@@ -1,0 +1,176 @@
+<div class="modal-dialog modal-lg" role="document">
+  <div class="modal-content">
+      <div class="modal-header">
+          <h5 class="modal-title">Bulk Contact Upload</h5>
+          <button type="button" class="close" (click)="onClose()">
+              <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+      <div class="modal-body">
+          <!-- Wizard Steps Indicator -->
+          <div class="wizard-steps mb-4">
+              <div class="step" [ngClass]="{'active': currentStep === 1, 'completed': currentStep > 1}">
+                  <div class="step-icon">1</div>
+                  <div class="step-label">Upload</div>
+              </div>
+              <div class="step-line"></div>
+              <div class="step" [ngClass]="{'active': currentStep === 2, 'completed': currentStep > 2}">
+                  <div class="step-icon">2</div>
+                  <div class="step-label">Validate</div>
+              </div>
+              <div class="step-line"></div>
+              <div class="step" [ngClass]="{'active': currentStep === 3, 'completed': currentStep > 3}">
+                  <div class="step-icon">3</div>
+                  <div class="step-label">Review</div>
+              </div>
+          </div>
+
+          <!-- Step 1: Upload & Settings -->
+          <div *ngIf="currentStep === 1">
+              <div class="row mb-3">
+                  <div class="col-md-6">
+                      <label class="form-label">Country<span class="text-danger">*</span></label>
+                      <select class="form-control" [(ngModel)]="selectedCountryId" (change)="onCountryChange()">
+                          <option [ngValue]="null">Select Country</option>
+                          <option *ngFor="let country of countries" [ngValue]="country.id">{{ country.name }}</option>
+                      </select>
+                  </div>
+                  <div class="col-md-6">
+                      <label class="form-label">Language<span class="text-danger">*</span></label>
+                      <select class="form-control" [(ngModel)]="selectedLanguageId">
+                          <option [ngValue]="null">Select Language</option>
+                          <option *ngFor="let lang of availableLanguages" [ngValue]="lang.id">{{ lang.name }}</option>
+                      </select>
+                  </div>
+              </div>
+              <div class="row mb-3">
+                  <div class="col-md-6">
+                      <label class="form-label">Contact Source<span class="text-danger">*</span></label>
+                      <select class="form-control" [(ngModel)]="selectedContactSource">
+                          <option [ngValue]="null">Select Source</option>
+                          <option *ngFor="let source of contactSources" [value]="source.value">{{ source.text }}</option>
+                      </select>
+                  </div>
+                  <div class="col-md-6">
+                      <label class="form-label">Channel Preference<span class="text-danger">*</span></label>
+                      <select class="form-control" [(ngModel)]="selectedChannelPreference">
+                          <option [ngValue]="null">Select Preference</option>
+                          <option *ngFor="let channel of channelPreferences" [value]="channel.value">{{ channel.text }}</option>
+                      </select>
+                  </div>
+              </div>
+
+              <div class="upload-area" id="uploadArea" 
+                   (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)" (drop)="onDrop($event)">
+                  <div *ngIf="!selectedFile">
+                      <i class="fa fa-cloud-upload fa-3x text-muted mb-2"></i>
+                      <p>Drag and drop your file here or <a href="javascript:void(0)" (click)="fileInput.click()">browse</a></p>
+                      <small class="text-muted">Supported formats: CSP, XLS, XLSX (Max 10MB)</small>
+                  </div>
+                  <div *ngIf="selectedFile">
+                       <i class="fa fa-file-excel-o fa-2x text-success mb-2"></i>
+                       <p class="mb-0 font-weight-bold">{{ selectedFile.name }}</p>
+                       <small class="text-muted">({{ selectedFileSize }})</small>
+                       <br>
+                       <button class="btn btn-sm btn-outline-danger mt-2" (click)="removeFile()">Remove File</button>
+                  </div>
+                  <input type="file" #fileInput style="display:none" accept=".csv, .xls, .xlsx" (change)="onFileSelected($event)">
+              </div>
+              
+              <div class="text-right mt-2">
+                  <a href="javascript:void(0)" (click)="downloadTemplate()"><i class="fa fa-download"></i> Download Template</a>
+              </div>
+          </div>
+
+          <!-- Step 2: Validation Results -->
+          <div *ngIf="currentStep === 2">
+              <div class="row mb-3">
+                  <div class="col-md-3">
+                      <div class="callout callout-info">
+                          <small class="text-muted">Total Rows</small><br>
+                          <strong class="h4">{{ validationResult?.totalRows }}</strong>
+                      </div>
+                  </div>
+                  <div class="col-md-3">
+                      <div class="callout callout-success">
+                          <small class="text-muted">Valid Rows</small><br>
+                          <strong class="h4">{{ validationResult?.validRowsCount }}</strong>
+                      </div>
+                  </div>
+                  <div class="col-md-3">
+                      <div class="callout callout-danger">
+                          <small class="text-muted">Invalid Rows</small><br>
+                          <strong class="h4">{{ validationResult?.invalidRowsCount }}</strong>
+                      </div>
+                  </div>
+              </div>
+
+              <div *ngIf="validationResult?.invalidRowsCount && validationResult!.invalidRowsCount > 0">
+                  <h6 class="text-danger">Issues Found:</h6>
+                  <div class="table-responsive" style="max-height: 300px; overflow-y: auto;">
+                      <table class="table table-sm table-striped">
+                          <thead>
+                              <tr>
+                                  <th>Row</th>
+                                  <th>Name</th>
+                                  <th>Phone</th>
+                                  <th>Errors</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              <tr *ngFor="let row of validationResult?.invalidRows">
+                                  <td>{{ row.rowNumber }}</td>
+                                  <td>{{ row.firstName }} {{ row.lastName }}</td>
+                                  <td>{{ row.phoneNumber }}</td>
+                                  <td>
+                                      <span class="badge badge-danger mr-1" *ngFor="let err of row.errors">{{ err }}</span>
+                                  </td>
+                              </tr>
+                          </tbody>
+                      </table>
+                  </div>
+              </div>
+              <div *ngIf="validationResult?.invalidRowsCount === 0" class="text-center py-5">
+                  <i class="fa fa-check-circle fa-4x text-success mb-3"></i>
+                  <h5>Validation Successful!</h5>
+                  <p>All records are valid and ready for upload.</p>
+              </div>
+          </div>
+
+          <!-- Step 3: Review & Confirm -->
+          <div *ngIf="currentStep === 3">
+               <div class="alert alert-info">
+                  <i class="fa fa-info-circle"></i> Please review the details below before confirming.
+               </div>
+               <div class="card bg-light">
+                   <div class="card-body">
+                       <dl class="row mb-0">
+                           <dt class="col-sm-4">File Name:</dt> <dd class="col-sm-8">{{ selectedFile?.name }}</dd>
+                           <dt class="col-sm-4">Country:</dt> <dd class="col-sm-8">{{ getCountryName(selectedCountryId) }}</dd>
+                           <dt class="col-sm-4">Language:</dt> <dd class="col-sm-8">{{ getLanguageName(selectedLanguageId) }}</dd>
+                           <dt class="col-sm-4">Source:</dt> <dd class="col-sm-8">{{ getSourceName(selectedContactSource) }}</dd>
+                           <dt class="col-sm-4">Valid Contacts:</dt> <dd class="col-sm-8 text-success font-weight-bold">{{ validationResult?.validRowsCount }}</dd>
+                           <dt class="col-sm-4">Skipped Rows:</dt> <dd class="col-sm-8 text-danger">{{ validationResult?.invalidRowsCount }}</dd>
+                       </dl>
+                   </div>
+               </div>
+          </div>
+
+      </div>
+      <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" *ngIf="currentStep > 1" (click)="prevStep()">Back</button>
+          
+          <button type="button" class="btn btn-primary" *ngIf="currentStep === 1" (click)="validateFile()" [disabled]="!canValidate()">
+              <i class="fa fa-spinner fa-spin" *ngIf="isValidating"></i> Next
+          </button>
+          
+          <button type="button" class="btn btn-primary" *ngIf="currentStep === 2" (click)="nextStep()" [disabled]="!validationResult || validationResult.validRowsCount === 0">
+              Next
+          </button>
+
+          <button type="button" class="btn btn-success" *ngIf="currentStep === 3" (click)="submitUpload()" [disabled]="isSubmitting">
+              <i class="fa fa-spinner fa-spin" *ngIf="isSubmitting"></i> Confirm Upload
+          </button>
+      </div>
+  </div>
+</div>

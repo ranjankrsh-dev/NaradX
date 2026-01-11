@@ -1,0 +1,60 @@
+<div class="app flex-row align-items-center" style="min-height: 100vh;">
+  <div class="container">
+      <div class="row justify-content-center">
+          <div class="col-md-8">
+              <div class="card-group">
+                  <div class="card p-4">
+                      <div class="card-body">
+                          <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                              <h1>Login</h1>
+                              <p class="text-muted">Sign In to your account</p>
+
+                              <div class="mb-3">
+                                  <div class="input-group">
+                                      <div class="input-group-prepend">
+                                          <span class="input-group-text"><i class="icon-user"></i></span>
+                                      </div>
+                                      <input type="text" class="form-control" placeholder="Enter email id" formControlName="email">
+                                  </div>
+                                  <div class="invalid-feedback d-block" *ngIf="loginForm.get('email')?.invalid && (loginForm.get('email')?.dirty || loginForm.get('email')?.touched)">
+                                      <span *ngIf="loginForm.get('email')?.errors?.['required']">Email is required</span>
+                                      <span *ngIf="loginForm.get('email')?.errors?.['email']">Invalid email format</span>
+                                  </div>
+                              </div>
+
+                              <div class="mb-4">
+                                  <div class="input-group">
+                                      <div class="input-group-prepend">
+                                          <span class="input-group-text"><i class="icon-lock"></i></span>
+                                      </div>
+                                      <input type="password" class="form-control" placeholder="Enter password" formControlName="password">
+                                  </div>
+                                  <div class="invalid-feedback d-block" *ngIf="loginForm.get('password')?.invalid && (loginForm.get('password')?.dirty || loginForm.get('password')?.touched)">
+                                      <span *ngIf="loginForm.get('password')?.errors?.['required']">Password is required</span>
+                                  </div>
+                              </div>
+
+                              <div class="row">
+                                  <div class="col-6">
+                                      <button type="submit" class="btn btn-primary px-4" [disabled]="loginForm.invalid || isLoading">
+                                          <i class="fa fa-spinner fa-spin" *ngIf="isLoading"></i> Login
+                                      </button>
+                                  </div>
+                                  <div class="col-6 text-right">
+                                      <button type="button" class="btn btn-link px-0" style="display:none;">Forgot password?</button>
+                                  </div>
+                              </div>
+                          </form>
+                      </div>
+                  </div>
+                  <div class="card text-white bg-primary py-5 d-md-down-none" style="width:44%">
+                      <div class="card-body text-center d-flex align-items-center justify-content-center">
+                        <!-- Corrected path for angular assets -->
+                        <img class="img-thumbnail" src="assets/img/content/messenger.png" alt="NaradX" />
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
