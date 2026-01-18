@@ -1,0 +1,103 @@
+<div class="modal-dialog modal-lg" role="document">
+  <div class="modal-content">
+      <div class="modal-header">
+          <h5 class="modal-title">{{ contactId ? 'Edit' : 'Create new' }} contact</h5>
+          <button type="button" class="close" (click)="onClose()" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+      <div class="modal-body pt-2">
+          <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
+              <div class="row mb-2">
+                  <div class="col-md-6">
+                      <label class="form-label">First Name<span class="text-danger">*</span></label>
+                      <input type="text" class="form-control" placeholder="Enter first name" formControlName="firstName" [ngClass]="{'is-invalid': shouldShowError('firstName')}">
+                      <div class="invalid-feedback" *ngIf="shouldShowError('firstName')">First Name is required</div>
+                  </div>
+                  <div class="col-md-6">
+                      <label class="form-label">Middle Name</label>
+                      <input type="text" class="form-control" placeholder="Enter middle name" formControlName="middleName">
+                  </div>
+              </div>
+              <div class="row mb-2">
+                  <div class="col-md-6">
+                      <label class="form-label">Last Name<span class="text-danger">*</span></label>
+                      <input type="text" class="form-control" placeholder="Enter last name" formControlName="lastName" [ngClass]="{'is-invalid': shouldShowError('lastName')}">
+                      <div class="invalid-feedback" *ngIf="shouldShowError('lastName')">Last Name is required</div>
+                  </div>
+              </div>
+              <div class="row mb-2">
+                  <div class="col-md-6">
+                      <label class="form-label">Country<span class="text-danger">*</span></label>
+                      <select class="form-control" formControlName="countryId" (change)="onCountryChange()" [ngClass]="{'is-invalid': shouldShowError('countryId')}">
+                          <option [ngValue]="null" disabled>Select Country</option>
+                          <option *ngFor="let country of countries" [ngValue]="country.id">{{ country.name }}</option>
+                      </select>
+                      <div class="invalid-feedback" *ngIf="shouldShowError('countryId')">Country is required</div>
+                  </div>
+                  <div class="col-md-6">
+                      <label class="form-label">Language<span class="text-danger">*</span></label>
+                      <select class="form-control" formControlName="languageId" [ngClass]="{'is-invalid': shouldShowError('languageId')}">
+                          <option [ngValue]="null" disabled>Select Language</option>
+                          <option *ngFor="let lang of availableLanguages" [ngValue]="lang.id">{{ lang.name }}</option>
+                      </select>
+                      <div class="invalid-feedback" *ngIf="shouldShowError('languageId')">Language is required</div>
+                  </div>
+              </div>
+              <div class="row mb-2">
+                  <div class="col-md-6">
+                      <label class="form-label">Phone Number<span class="text-danger">*</span></label>
+                      <div class="input-group">
+                          <span class="input-group-prepend">
+                              <span class="input-group-text">+91</span> <!-- TODO: Dynamic phone code based on country? MVC hardcods +91 in HTML? -->
+                          </span>
+                          <input type="tel" class="form-control" placeholder="Enter phone number" formControlName="phoneNumber" [ngClass]="{'is-invalid': shouldShowError('phoneNumber')}">
+                          <div class="invalid-feedback d-block" *ngIf="shouldShowError('phoneNumber')">
+                              <span *ngIf="contactForm.get('phoneNumber')?.errors?.['required']">Phone Number is required</span>
+                              <span *ngIf="contactForm.get('phoneNumber')?.errors?.['pattern']">Invalid phone number format</span>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="col-md-6">
+                      <label class="form-label">Email</label>
+                      <input type="email" class="form-control" placeholder="Enter email address" formControlName="email" [ngClass]="{'is-invalid': shouldShowError('email')}">
+                      <div class="invalid-feedback" *ngIf="shouldShowError('email')">Invalid email format</div>
+                  </div>
+              </div>
+              <div class="row mb-2">
+                  <div class="col-md-6">
+                      <label class="form-label">Company</label>
+                      <input type="text" class="form-control" placeholder="Enter company name" formControlName="company">
+                  </div>
+                  <div class="col-md-6">
+                      <label class="form-label">Job Title/Position</label>
+                      <input type="text" class="form-control" placeholder="Enter job title" formControlName="jobTitle">
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-md-6">
+                      <label class="form-label">Contact Source</label>
+                      <select class="form-control" formControlName="contactSource">
+                          <option [ngValue]="null">Select Source</option>
+                          <option *ngFor="let source of contactSources" [value]="source.value">{{ source.text }}</option>
+                      </select>
+                  </div>
+                  <div class="col-md-6">
+                      <label class="form-label">Channel Preference</label>
+                      <select class="form-control" formControlName="channelPreference">
+                          <option [ngValue]="null">Select Preference</option>
+                          <option *ngFor="let channel of channelPreferences" [value]="channel.value">{{ channel.text }}</option>
+                      </select>
+                  </div>
+              </div>
+
+              <div class="modal-footer mt-3">
+                  <button type="button" class="btn btn-outline-danger mr-3 w-15" (click)="onClose()">Cancel</button>
+                  <button type="submit" class="btn btn-outline-success w-15" [disabled]="contactForm.invalid || isSaving">
+                      <i class="fa fa-spinner fa-spin" *ngIf="isSaving"></i> Save
+                  </button>
+              </div>
+          </form>
+      </div>
+  </div>
+</div>
