@@ -57,3 +57,4 @@ $RECYCLE.BIN/
 # ---- Others you might add later ----
 # environment config files
 .env
+/web/.angular/cache/15.2.11
