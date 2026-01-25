@@ -51,6 +51,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseHttpsRedirection();
+
 app.UseSecurityHeaders(new HeaderPolicyCollection()
     .AddContentTypeOptionsNoSniff() // Only this is really useful for APIs
                                     // Optional: Add these if your API serves to browsers
