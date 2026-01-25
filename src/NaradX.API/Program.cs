@@ -1,8 +1,10 @@
 using NaradX.API.Extensions;
 using NaradX.Infrastructure.Data.Seed;
+using NaradX.Infrastructure;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
-var configuration=builder.Configuration;
+var configuration = builder.Configuration;
 // Add logging
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
@@ -30,6 +32,9 @@ using (var scope = app.Services.CreateScope())
     var services = scope.ServiceProvider;
     try
     {
+        var context = services.GetRequiredService<NaradXDbContext>();
+        context.Database.Migrate();
+
         SeedData.Initialize(services);
     }
     catch (Exception ex)
